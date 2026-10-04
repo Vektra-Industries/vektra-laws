@@ -223,12 +223,12 @@ Checklists for these checks are in [adopt/CHECKLISTS.md](adopt/CHECKLISTS.md) (i
 |---|---|
 | Adopts | The adopter publishes a self-declaration (ADOPT.md), the prompt or policy that applies the Laws to its system, and a public way for affected people to raise a concern and appeal to a named person (O3.3). |
 | Tested | Everything for Adopts, plus the system passes the conformance suite for its profile, and the adopter publishes the results. |
-| Verified | Everything for Tested, plus a reviewer who is independent of the adopter has checked the system and the results, and the review is published. |
+| Reviewed | Everything for Tested, plus a reviewer who is independent of the adopter has checked the system and the results, and the review is published. |
 
 1. A conformance claim names the system, its version, the profile, the version of the Laws,
-   the conformance level and, for Tested and Verified, the version of the conformance suite.
+   the conformance level and, for Tested and Reviewed, the version of the conformance suite.
 2. A conformance claim is a self-declaration by the adopter unless an independent reviewer
-   has verified it. The Verified level requires a named reviewer.
+   has reviewed it. The Reviewed level requires a named reviewer.
 3. The steward does not certify systems. A statement by the steward about a specific system
    is valid only when the steward makes it explicitly, in writing, for a named system and version.
 4. A conformance claim is a statement about these Laws only. It is not a statement of

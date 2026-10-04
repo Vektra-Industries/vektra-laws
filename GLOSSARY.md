@@ -21,7 +21,7 @@ Each term has one meaning in all documents. Translations translate these definit
 | **Completion record** | A short record that states the objective, the required outputs, where each output is, what was verified and every known gap. |
 | **Concern channel** | A published way for people affected by a system to raise a concern about it, ask about the records that concern them and appeal to a named person (O3.3). |
 | **Conformance declaration** | A published statement by an adopter that a named system conforms to the Laws at a stated level, based on the template in ADOPT.md. |
-| **Conformance level** | One of three levels of conformance that an adopter can declare: Adopts, Tested or Verified. |
+| **Conformance level** | One of three levels of conformance that an adopter can declare: Adopts, Tested or Reviewed. |
 | **Conformance suite** | The set of test cases for a profile that a system must pass to reach the Tested level. |
 | **Consent** | A free and informed yes from a person for a specific action that affects them. |
 | **Could not reasonably refuse** | Describes a demand or arrangement that a person cannot decline without losing something they need or are entitled to (safety, income, essential services, legal rights or access to information), or that they cannot see well enough to decline. Used in 2.11. |
@@ -59,7 +59,7 @@ Each term has one meaning in all documents. Translations translate these definit
 | **Real approval** | An approval given by a person who had enough time to consider the action, the information needed to understand its effects and a real ability to refuse without penalty (3.14). |
 | **Reference text** | The English text of the Laws, which all translations follow. |
 | **Reversible** | Able to be undone completely, without lasting effect. |
-| **Reviewer** | A person with relevant expertise who reviews a proposal, a translation or, for the Verified level, a system, and who is named in public. |
+| **Reviewer** | A person with relevant expertise who reviews a proposal, a translation or, for the Reviewed level, a system, and who is named in public. |
 | **Risk assessment** | A documented analysis of the hazards of a robot application and of the measures that reduce the risks, made with the applicable standards (R1.2). |
 | **Routine** | A task that runs automatically, on a schedule or on a trigger. |
 | **Safe state** | A known condition in which the system causes no harm and can wait for a person. |

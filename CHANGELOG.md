@@ -22,6 +22,9 @@ the core clauses are unchanged.
 - docs/reviews/LEGAL-SELF-REVIEW.md and docs/reviews/ROBOTICS-SELF-REVIEW.md (informative).
 
 ### Changed
+- Conformance level "Verified" renamed "Reviewed" (decided by the owner's delegate,
+  2026-10-04). The levels are Adopts, Tested and Reviewed; Reviewed still names the independent
+  reviewer.
 - Robotics: R1.1 (protective stop when a safety function depends on the link), R2.1 (limits from
   the risk assessment and applicable standards; safety functions at the required PL or SIL; the
   collaborative content of ISO/TS 15066 is now in ISO 10218-2:2025), R3.2 (manual control by

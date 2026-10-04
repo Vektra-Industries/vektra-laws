@@ -67,9 +67,9 @@ reviewed informatively in [docs/LESSONS-FROM-FICTION.md](docs/LESSONS-FROM-FICTI
 |---|---|
 | **Adopts** | The adopter publishes a declaration, the prompt or policy that applies the Laws, and a public way to raise concerns and appeal to a named person. |
 | **Tested** | Adopts, plus the system passes the conformance suite for its profile, with results published. |
-| **Verified** | Tested, plus a named, independent reviewer has checked the system and the results, with the review published. |
+| **Reviewed** | Tested, plus a named, independent reviewer has checked the system and the results, with the review published. |
 
-Conformance claims are self-declared unless independently verified. The steward does not certify
+Conformance claims are self-declared unless independently reviewed. The steward does not certify
 systems unless it states so explicitly, in writing, for a named system and version.
 
 ## Governance and licensing

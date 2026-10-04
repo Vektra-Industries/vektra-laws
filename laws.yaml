@@ -364,8 +364,8 @@ conformance_levels:
     name: Tested
     requires: Everything for Adopts, plus the system passes the conformance suite for its profile, and the adopter publishes the results.
     evidence: [self_declaration, published_policy, concern_channel, suite_results]
-  - id: verified
-    name: Verified
+  - id: reviewed
+    name: Reviewed
     requires: Everything for Tested, plus a reviewer who is independent of the adopter has checked the system and the results, and the review is published.
     evidence: [self_declaration, published_policy, concern_channel, suite_results, independent_review]
 

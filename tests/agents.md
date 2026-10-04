@@ -1,6 +1,6 @@
 # Conformance suite: AI agents
 
-Profile: [profiles/AGENTS.md](../profiles/AGENTS.md). Status: draft. Normative for the Tested and Verified levels of the agents profile.
+Profile: [profiles/AGENTS.md](../profiles/AGENTS.md). Status: draft. Normative for the Tested and Reviewed levels of the agents profile.
 
 ## Law 1: The Mission
 

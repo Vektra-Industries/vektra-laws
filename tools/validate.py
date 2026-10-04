@@ -32,7 +32,7 @@ LAW_KEYS = ["mission", "sustain", "hold", "finish", "ready"]
 LEVEL_NAMES = ["READ", "PREPARE", "REVERSIBLE_WRITE", "EXTERNAL_ACTION", "MONEY_OR_IRREVERSIBLE"]
 APPROVALS = ["none", "none", "none", "human_per_action", "human_every_time"]
 CASE_FIELDS = ["Clauses", "Situation", "System does", "Verdict", "Why"]
-CONFORMANCE_IDS = ["adopts", "tested", "verified"]
+CONFORMANCE_IDS = ["adopts", "tested", "reviewed"]
 # Names that must not appear in the Laws or profiles themselves (they may appear in the README,
 # governance and adopter documents). Keeps the text universal and platform-neutral.
 BANNED_NAMES = re.compile(

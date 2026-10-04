@@ -94,9 +94,9 @@ def build_laws(data: dict) -> str:
         L.append(f"| {c['name']} | {c['requires']} |")
     L += ["",
           "1. A conformance claim names the system, its version, the profile, the version of the Laws,",
-          "   the conformance level and, for Tested and Verified, the version of the conformance suite.",
+          "   the conformance level and, for Tested and Reviewed, the version of the conformance suite.",
           "2. A conformance claim is a self-declaration by the adopter unless an independent reviewer",
-          "   has verified it. The Verified level requires a named reviewer.",
+          "   has reviewed it. The Reviewed level requires a named reviewer.",
           "3. The steward does not certify systems. A statement by the steward about a specific system",
           "   is valid only when the steward makes it explicitly, in writing, for a named system and version.",
           "4. A conformance claim is a statement about these Laws only. It is not a statement of",

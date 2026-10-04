@@ -182,8 +182,8 @@ TRADEMARKS.md, ADOPT.md, GOVERNANCE.md, CONTRIBUTING.md (DCO) and the operators 
    recommended now.
 2. **Status of the owner and steward entities.** Confirm that "Vektra Industries" and "Vektra
    Foundation" exist as legal entities, or describe the steward as planned until it is formed.
-3. **The word "Verified".** Mitigated by the wording rules; renaming the level would reduce it
-   more. Owner decision.
+3. **The word "Verified".** Resolved after this review: the level was renamed "Reviewed" by the
+   owner's delegate on 2026-10-04.
 4. **Reliance on the robotics profile.** Mitigated by R1.2 and the disclaimer. Real-world harm
    remains the largest possible exposure if someone ignores them; professional safety review is
    recommended when funding allows.

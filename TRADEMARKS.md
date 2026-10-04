@@ -30,7 +30,7 @@ copy and adapt the text under CC BY 4.0, with attribution.
 - Using the names in a way that suggests endorsement, certification, sponsorship or partnership
   by Vektra Industries or the Vektra Foundation, when there is none.
 - Using the names, or the conformance levels, as a badge, seal or logo, or in a label such as
-  "Vektra Verified" or "Vektra certified". The steward issues no badge and certifies nothing
+  "Vektra Reviewed", "Vektra Verified" or "Vektra certified". The steward issues no badge and certifies nothing
   (see [ADOPT.md](ADOPT.md)).
 - Publishing an adapted or modified version of the Laws under the name "Vektra Laws" or a
   confusingly similar name. An adapted version uses a different name. It can, and under CC BY
