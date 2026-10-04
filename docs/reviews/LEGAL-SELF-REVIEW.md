@@ -17,7 +17,7 @@ TRADEMARKS.md, ADOPT.md, GOVERNANCE.md, CONTRIBUTING.md (DCO) and the operators 
 
 | # | Area | Finding | Action |
 |---|---|---|---|
-| 1 | Name | A registered U.S. mark VECTRA (Reg. No. 4,778,111) belongs to an AI cybersecurity company. "Vektra" differs by one letter and is used for AI. | Residual risk 1. No change to the name; search before launch. |
+| 1 | Name | A registered U.S. mark VECTRA (Reg. No. 4,778,111) belongs to an AI cybersecurity company. "Vektra" differs by one letter and is used for AI. | Residual risk 1. No change to the name. A free self-search is in [TRADEMARK-SELF-SEARCH.md](TRADEMARK-SELF-SEARCH.md); take advice before launch. |
 | 2 | Conformance wording | "Verified" could look like a certification mark if the steward ever controlled its use, or if adopters used it as a badge. | Fixed: no badges, seals or logos; "Verified" only in a full sentence naming the reviewer; never "Vektra Verified" (ADOPT.md rules 8 to 10, TRADEMARKS.md, GOVERNANCE.md). |
 | 3 | Licenses | LICENSE put "all Markdown and YAML files" under CC BY 4.0 and also put `.github/` (which holds YAML) under MIT: an overlap. | Fixed: text is every Markdown and YAML file except those in `tools/` and `.github/`, which are MIT. |
 | 4 | Disclaimer | It disclaimed warranties but did not mention the limitation of liability in CC BY 4.0 Section 5(b) or say that references do not imply endorsement. | Fixed in laws.yaml (all generated documents) and README. |

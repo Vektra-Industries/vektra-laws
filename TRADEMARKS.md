@@ -16,6 +16,11 @@ suggestion of endorsement (Section 2(a)(6)). This page is a policy on the names 
 restrict any right that CC BY 4.0 or the MIT license grants in the text or the code: anyone can
 copy and adapt the text under CC BY 4.0, with attribution.
 
+Other parties own registered marks that are similar to VEKTRA (for example VECTRA, and VEKTRA
+in other fields). The Vektra Laws are not affiliated with any of them. A free self-search, which
+is not legal advice, is in
+[docs/reviews/TRADEMARK-SELF-SEARCH.md](docs/reviews/TRADEMARK-SELF-SEARCH.md).
+
 ## Permitted uses
 
 - **Factual statements of conformance.** For example: "This system declares conformance to the

@@ -8,7 +8,7 @@ does in the meantime.*
 | # | Question | Needed by | Current draft |
 |---|---|---|---|
 | 1 | Whether the record in clause 5.4 must be signed or keyed (MUST), instead of SHOULD. | v1.0 | SHOULD. |
-| 2 | The project name is close to a registered mark in the AI field (see [LEGAL-SELF-REVIEW.md](reviews/LEGAL-SELF-REVIEW.md), residual risk 1). Search, take advice and decide on the name before a public launch. | v1.0 | Name unchanged; no registration claimed. |
+| 2 | The project name is close to registered marks in the AI and software field (see [LEGAL-SELF-REVIEW.md](reviews/LEGAL-SELF-REVIEW.md), residual risk 1, and the free self-search in [TRADEMARK-SELF-SEARCH.md](reviews/TRADEMARK-SELF-SEARCH.md)). Take advice and decide on the name before a public launch. | v1.0 | Name unchanged; no registration claimed. |
 | 3 | Confirm that the owner and steward named in the text exist as legal entities, or describe the steward as planned (legal residual risk 2). | v1.0 | Named as owner and steward. |
 | 4 | Professional legal and robot-safety review, when funding allows. | Recommended before v1.0 | Self-reviews only (docs/reviews). |
 
