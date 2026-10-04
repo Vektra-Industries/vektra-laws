@@ -12,8 +12,12 @@ Laws. Not yet approved or released.
   maker, product, platform or internal tool. Vektra appears only as owner and steward.
 - All text rewritten in controlled English: short, plain sentences, no idioms and no
   contractions. RFC 2119 keywords are defined once.
-- New one-line statements for Law 1 and Law 3 (and plainer wording for Law 2 and Law 4); see
-  docs/OPEN-QUESTIONS.md #1.
+- New one-line statements for Law 1 and Law 3, and plainer wording for Law 2 and Law 4. Locked
+  by Pablo on 2026-10-04.
+- Action levels confirmed as 0 READ, 1 PREPARE, 2 REVERSIBLE WRITE, 3 EXTERNAL ACTION, 4 MONEY
+  OR IRREVERSIBLE (2026-10-04).
+- Copyright holder in LICENSE and LICENSE-CODE set to Vektra Industries; the Vektra Foundation
+  stays steward in GOVERNANCE.md (2026-10-04).
 - Clause titles made literal (for example "Respect a refusal" instead of "Take no for an answer").
 - The roadmap now follows the universal path (v0.2 universal core, v0.3 robotics, v0.4 models and
   a runnable suite, v1.0 public release).
