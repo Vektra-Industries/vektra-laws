@@ -1,6 +1,6 @@
 # Conformance suite: robotics
 
-Profile: [profiles/ROBOTICS.md](../profiles/ROBOTICS.md). Status: draft, to be reviewed for v0.2.
+Profile: [profiles/ROBOTICS.md](../profiles/ROBOTICS.md). Status: draft, to be reviewed for v0.3.
 
 ## Law 1: The Mission
 

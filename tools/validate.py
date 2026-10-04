@@ -6,6 +6,9 @@ Checks:
   2. Clause ids are unique, follow the numbering rules, and use a known keyword.
   3. LAWS.md and profiles/*.md match what tools/build_docs.py would generate.
   4. Every conformance case in tests/*.md is well formed and cites clauses that exist.
+  5. The core and profile text is universal: no maker, product or platform names, no contractions.
+  6. Every translation in translations/<lang>/laws.yaml uses the same Law and clause ids as the
+     English reference.
 
 Usage: python tools/validate.py   (exit 0 = all good, 1 = problems found)
 Needs PyYAML.
@@ -27,6 +30,13 @@ LAW_KEYS = ["mission", "sustain", "hold", "finish", "ready"]
 LEVEL_NAMES = ["READ", "PREPARE", "REVERSIBLE_WRITE", "EXTERNAL_ACTION", "MONEY_OR_IRREVERSIBLE"]
 APPROVALS = ["none", "none", "none", "human_per_action", "human_every_time"]
 CASE_FIELDS = ["Clauses", "Situation", "System does", "Verdict", "Why"]
+CONFORMANCE_IDS = ["adopts", "tested", "verified"]
+# Names that must not appear in the Laws or profiles themselves (they may appear in the README,
+# governance and adopter documents). Keeps the text universal and platform-neutral.
+BANNED_NAMES = re.compile(
+    r"\b(vektra|harness|phryktor|reflex|grok|hermes|claude|openai|anthropic|gemini|chatgpt|"
+    r"copilot|cursor|google|microsoft|meta|amazon|apple|nvidia|tesla|spacex)\b", re.I)
+CONTRACTION = re.compile(r"\b\w+n't\b|\b(it|that|there|what|who)'s\b|\b\w+'(re|ll|ve|d)\b", re.I)
 
 errors: list[str] = []
 
@@ -62,10 +72,15 @@ def check_clause(c: dict, where: str, pattern: str, extra: tuple = ()) -> None:
 
 def check_yaml(data: dict) -> set[str]:
     ids: set[str] = set()
-    need(data, ["schema", "version", "status", "owner", "license", "motto", "keywords",
-                "precedence", "core", "action_levels", "decisions", "profiles"], "laws.yaml")
-    if data.get("schema") != "vektra-laws/v1":
-        err("laws.yaml: schema must be 'vektra-laws/v1'")
+    need(data, ["schema", "version", "status", "name", "steward", "owner", "license",
+                "reference_language", "motto", "keywords", "precedence", "core", "action_levels",
+                "decisions", "conformance_levels", "profiles"], "laws.yaml")
+    if data.get("schema") != "vektra-laws/v2":
+        err("laws.yaml: schema must be 'vektra-laws/v2'")
+    if [c.get("id") for c in data.get("conformance_levels", [])] != CONFORMANCE_IDS:
+        err(f"conformance_levels: ids must be {CONFORMANCE_IDS} in order")
+    for c in data.get("conformance_levels", []):
+        need(c, ["id", "name", "requires", "evidence"], f"conformance level {c.get('id')}")
     if not re.fullmatch(r"\d+\.\d+\.\d+", str(data.get("version", ""))):
         err("laws.yaml: version must look like 0.1.0")
 
@@ -130,6 +145,64 @@ def check_yaml(data: dict) -> set[str]:
     return all_ids
 
 
+def check_universal(data: dict) -> None:
+    texts: list[tuple[str, str]] = []
+    for law in data.get("core", []):
+        for k in ("name", "headline", "intent", "example"):
+            texts.append((f"{law.get('id')} {k}", str(law.get(k, ""))))
+        for c in law.get("clauses", []):
+            texts.append((f"clause {c.get('id')}", f"{c.get('title', '')} {c.get('text', '')}"))
+    for p in data.get("profiles", []):
+        texts.append((f"profile {p.get('key')} intro", str(p.get("intro", ""))))
+        for c in p.get("clauses", []):
+            texts.append((f"clause {c.get('id')}", f"{c.get('title', '')} {c.get('text', '')}"))
+        for row in p.get("level_map", []) or []:
+            texts.append((f"profile {p.get('key')} level {row.get('level')}", str(row.get("physical", ""))))
+    for lv in data.get("action_levels", []):
+        texts.append((f"action level {lv.get('level')}", str(lv.get("meaning", ""))))
+    for where, text in texts:
+        m = BANNED_NAMES.search(text)
+        if m:
+            err(f"{where}: names '{m.group(0)}'; the Laws must stay universal (no makers, products or platforms)")
+        m = CONTRACTION.search(text)
+        if m:
+            err(f"{where}: contraction '{m.group(0)}'; write it out for clean translation")
+
+
+def check_translations(data: dict, core_ids: set[str]) -> list[str]:
+    langs = []
+    law_ids = [law.get("id") for law in data.get("core", [])]
+    for f in sorted((ROOT / "translations").glob("*/laws.yaml")):
+        lang_dir = f.parent.name
+        where = f"translations/{lang_dir}"
+        try:
+            tr = yaml.safe_load(f.read_text())
+        except yaml.YAMLError as e:
+            err(f"{where}: invalid YAML ({e})")
+            continue
+        if not need(tr, ["lang", "language_name", "status", "reference_version", "labels", "motto",
+                         "laws"], where):
+            continue
+        if tr["lang"] != lang_dir:
+            err(f"{where}: lang '{tr['lang']}' does not match folder name '{lang_dir}'")
+        if [law.get("id") for law in tr["laws"]] != law_ids:
+            err(f"{where}: Law ids must be {law_ids} in order")
+        for law in tr["laws"]:
+            need(law, ["id", "name", "headline"], f"{where} {law.get('id')}")
+        seen: set[str] = set()
+        for c in tr.get("clauses") or []:
+            need(c, ["id", "title", "text"], f"{where} clause")
+            if c.get("id") not in core_ids:
+                err(f"{where}: clause id {c.get('id')} is not in the English reference")
+            if c.get("id") in seen:
+                err(f"{where}: duplicate clause id {c.get('id')}")
+            seen.add(str(c.get("id")))
+        if str(tr["reference_version"]) != str(data.get("version")):
+            print(f"note: {where} was translated from {tr['reference_version']}; reference is {data.get('version')}")
+        langs.append(lang_dir)
+    return langs
+
+
 def check_docs(data: dict) -> None:
     for path, text in build_docs.outputs(data).items():
         rel = path.relative_to(ROOT)
@@ -176,6 +249,9 @@ def check_tests(all_ids: set[str]) -> int:
 def main() -> int:
     data = yaml.safe_load((ROOT / "laws.yaml").read_text())
     all_ids = check_yaml(data) if isinstance(data, dict) else set()
+    core_ids = {c["id"] for law in data.get("core", []) for c in law.get("clauses", [])}
+    check_universal(data)
+    langs = check_translations(data, core_ids)
     if not errors:
         check_docs(data)
     cases = check_tests(all_ids)
@@ -187,7 +263,8 @@ def main() -> int:
     core = sum(len(law["clauses"]) for law in data["core"])
     prof = ", ".join(f"{p['key']} {len(p['clauses'])}" for p in data["profiles"])
     print(f"OK: vektra-laws {data['version']}: 5 Laws, {core} core clauses; profiles: {prof}; "
-          f"{cases} conformance cases; docs in sync.")
+          f"{cases} conformance cases; translations: {', '.join(['en (reference)'] + langs)}; "
+          f"universal text; docs in sync.")
     return 0
 
 

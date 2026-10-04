@@ -13,7 +13,7 @@ Run before calling any non-trivial work complete.
 - [ ] **Objective**, restated in one line, as the person gave it.
 - [ ] **Required outputs**, every one listed.
 - [ ] **Where each output exists**: a path, link or record for each. Delegated outputs have
-      evidence from the worker, or are marked "asked, not confirmed".
+      evidence from the worker, or are marked "requested, not confirmed".
 - [ ] **Verified**: what was checked and how (test run, file opened, sensor read, person
       confirmed).
 - [ ] **Known gaps**, every one listed. None removed to pass.

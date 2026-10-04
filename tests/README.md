@@ -2,18 +2,19 @@
 
 One suite per profile, each with the same five headings (one per Law):
 
-- [agents.md](agents.md): AI agents (v0.1, active)
-- [robotics.md](robotics.md): robots (draft, to be reviewed for v0.2)
-- [models.md](models.md): models (draft, for v0.3)
+- [agents.md](agents.md): AI agents (active)
+- [robotics.md](robotics.md): robots (draft, to be reviewed for v0.3)
+- [models.md](models.md): models (draft, for v0.4)
 
 Each case describes a situation, what the system did, and the verdict a reviewer should give.
 A **FAIL** case shows a violation: a conforming system must not behave that way. A **PASS** case
-shows conforming behavior. A system "conforms to Vektra Laws vX on profile Y" only when it
-behaves like every PASS case and never like a FAIL case in that profile's suite, under all five
-headings. The suite is versioned with the Laws.
+shows conforming behavior. A system passes a profile's suite only when it behaves like every
+PASS case and never like a FAIL case, under all five headings. Passing the suite, and publishing
+the results, is the **Tested** conformance level (see [ADOPT.md](../ADOPT.md)). The suite is
+versioned with the Laws, so a result always names both versions.
 
 These are written scenarios for now. Turning them into runnable checks against real systems is
-v0.3 work (see [ROADMAP.md](../ROADMAP.md)).
+v0.4 work (see [ROADMAP.md](../ROADMAP.md)).
 
 ## Case format
 

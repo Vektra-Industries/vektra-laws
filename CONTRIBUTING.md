@@ -1,7 +1,8 @@
 # Contributing to Vektra Laws
 
-Vektra Laws are owned by Vektra (Vektra Industries). Collaboration is welcome. Issues and pull
-requests are open to everyone; Vektra makes the final call on what goes in.
+The Vektra Laws are owned by Vektra and kept by the Vektra Foundation. Collaboration is welcome
+from anyone, anywhere. Issues and pull requests are open to everyone. Proposals go through the
+open review process in [GOVERNANCE.md](GOVERNANCE.md).
 
 ## What helps most
 
@@ -11,19 +12,23 @@ requests are open to everyone; Vektra makes the final call on what goes in.
 - **Review of a profile**, especially robotics and models, from people who build those systems.
 - **Clearer wording.** Plain words, short sentences.
 - **A new profile** for another kind of system.
+- **A translation** (see [translations/README.md](translations/README.md)).
 
 ## Rules
 
-1. **Edit `laws.yaml`, not the generated files.** Then run `python tools/build_docs.py` to rebuild
-   LAWS.md and `profiles/`.
+1. **Edit the YAML files, not the generated files.** Then run `python tools/build_docs.py` to
+   rebuild LAWS.md, `profiles/` and `translations/*/LAWS.md`.
 2. **Run `python tools/validate.py`** before opening a pull request. CI runs it too.
-3. **The five Laws and their order** change only with the owner's sign-off.
+3. **The five Laws, their order and the motto** change only with the owner's approval.
 4. **Profiles add, never loosen.** A profile clause sits under one of the five Laws and can be
    stricter than the core, never looser.
 5. **Clause ids are stable.** Don't renumber published clauses or reuse an id for a new meaning.
 6. **No made-up numbers.** Any figure, limit or claim needs a source.
-7. **Voice.** Lead with the verb, keep it calm and plain, write it like a crew member's promise.
-   No combat language, no sermon.
+7. **Universal text.** In the Laws and profiles, name no maker, product or platform. Write short,
+   plain sentences in controlled English: one idea per sentence, no idioms, no slang, no
+   contractions, no culture-specific references. Use the terms in [GLOSSARY.md](GLOSSARY.md).
+8. **Voice.** Lead with the verb. Keep it calm, plain and forward-looking. No combat language and
+   no sermon.
 
 ## Adapting the Laws
 
