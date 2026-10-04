@@ -23,8 +23,10 @@
    affected clause ids and the supporting evidence.
 2. **Public comment.** The proposal stays open for comment. The steward sets a longer comment
    period for larger changes.
-3. **Review.** At least one reviewer with relevant expertise reviews the proposal. A translation is
-   reviewed by a fluent speaker of the language who did not write it.
+3. **Review.** At least one reviewer with relevant expertise reviews the proposal. For a
+   translation, review by a fluent speaker of the language is optional. A translation that has not
+   been reviewed carries the label "unreviewed draft translation" and states that the English text
+   is the reference.
 4. **Decision.** The steward accepts the proposal, requests changes, or declines it, and records
    the reason in public.
 5. **Publication.** Accepted changes are published in the next version and recorded in the
