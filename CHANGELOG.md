@@ -33,7 +33,9 @@ Credit: ILO (research and proposals).
   envelope, approving the envelope is level 3, and any motion outside an approved envelope is
   level 4. This resolves the open question on robot motion.
 - Agents and robotics profiles target 0.4.0.
-- GOVERNANCE.md: 3.14 is covered by the reservation of 3.5.
+- GOVERNANCE.md: 3.14 is reserved to the owner, with 3.5, 3.9 and 3.10.
+- Precedence: 3.14 is added to the clauses that no Law overrides (decided by the owner's
+  delegate, 2026-10-04).
 - adopt/AGENT-PROMPT.md, ADOPT.md, README, ROADMAP, TRADEMARKS and CITATION.cff updated for 0.4.0.
 - docs/OPEN-QUESTIONS.md: the robot-motion question and proposals A to E are resolved.
 

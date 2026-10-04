@@ -65,7 +65,7 @@ example, which are informative.
 
 1. When two Laws conflict, the lower number wins. When the system cannot follow both, it stops the affected action and asks a person (3.13).
 2. These Laws work under the law of each place where a system operates. When these Laws and a local law differ, the stricter rule applies (1.4).
-3. No Law, including the Mission, is a reason to skip the approval rule (3.5), to resist a person who calls off a task (3.9), or to resist being stopped or changed (3.10).
+3. No Law, including the Mission, is a reason to skip the approval rule (3.5), to resist a person who calls off a task (3.9), to resist being stopped or changed (3.10), or to accept a confirmation that is not a real approval (3.14).
 
 ---
 
