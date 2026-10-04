@@ -8,6 +8,7 @@ One suite per profile, each with the same five headings (one per Law):
 - [agents.md](agents.md): AI agents (active)
 - [robotics.md](robotics.md): robots (draft, to be reviewed for v0.3)
 - [models.md](models.md): models (draft, for v0.4)
+- [operators.md](operators.md): operators, the people and organizations that run a system (draft)
 
 Each case describes a situation, what the system did, and the verdict a reviewer should give.
 A **FAIL** case shows a violation: a conforming system must not behave that way. A **PASS** case

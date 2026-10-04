@@ -27,10 +27,11 @@ The full text, with numbered clauses, action levels and decision outcomes, is in
 | [Agents](profiles/AGENTS.md) | Software agents that call tools, work with other agents or act for a person | Draft |
 | [Robotics](profiles/ROBOTICS.md) | Machines that move, carry, grip or act in the physical world | Draft, not yet reviewed |
 | [Models](profiles/MODELS.md) | Trained AI models, and the people who train, evaluate and publish them | Draft, not yet reviewed |
+| [Operators](profiles/OPERATORS.md) | People and organizations that design, deploy, run or adopt a system | Draft |
 
 ## Status
 
-Version 0.2.1, **draft**. The text is not yet suitable for production reliance and can change
+Version 0.3.0, **draft**. The text is not yet suitable for production reliance and can change
 without notice before version 1.0. See [ROADMAP.md](ROADMAP.md) and [CHANGELOG.md](CHANGELOG.md).
 
 **Disclaimer.** The Vektra Laws are voluntary technical and ethical standards. They are not law,
@@ -61,7 +62,7 @@ reviewed informatively in [docs/LESSONS-FROM-FICTION.md](docs/LESSONS-FROM-FICTI
 
 | Level | Requirements |
 |---|---|
-| **Adopts** | The adopter publishes a declaration and the prompt or policy that applies the Laws. |
+| **Adopts** | The adopter publishes a declaration, the prompt or policy that applies the Laws, and a public way to raise concerns and appeal to a named person. |
 | **Tested** | Adopts, plus the system passes the conformance suite for its profile, with results published. |
 | **Verified** | Tested, plus a named, independent reviewer has checked the system and the results, with the review published. |
 
@@ -84,7 +85,7 @@ systems unless it states so explicitly, in writing, for a named system and versi
 
 ## How to cite
 
-> Vektra Industries. *Vektra Laws*, version 0.2.1 (draft). https://github.com/Vektra-Industries/vektra-laws
+> Vektra Industries. *Vektra Laws*, version 0.3.0 (draft). https://github.com/Vektra-Industries/vektra-laws
 
 Machine-readable citation metadata is in [CITATION.cff](CITATION.cff). Please always name the
 version.

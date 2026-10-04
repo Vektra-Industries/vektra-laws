@@ -48,7 +48,8 @@ def build_laws(data: dict) -> str:
           "states the five Laws and their clauses, the action levels, the decision outcomes and the",
           "conformance levels. Profiles add detailed clauses for each kind of system:",
           "[agents](profiles/AGENTS.md), [robotics](profiles/ROBOTICS.md) and",
-          "[models](profiles/MODELS.md).", "",
+          "[models](profiles/MODELS.md). The [operators](profiles/OPERATORS.md) profile states the",
+          "duties of the people and organizations that run a system.", "",
           "## Summary of the Laws", "", "*This section is informative.*", ""]
     for i, law in enumerate(data["core"], 1):
         L.append(f"{i}. **{law['name']}.** {law['headline']}")
@@ -119,10 +120,11 @@ def build_profile(data: dict, p: dict) -> str:
     L += status_block(data)
     L += ["## Introduction", "", "*This section is informative.*", "", p["intro"].strip(), "",
           "## Relation to the core", "", "*This section is normative.*", "",
-          "1. Every clause of the core ([LAWS.md](../LAWS.md)) applies to systems in this profile.",
-          "2. The clauses below add requirements for this kind of system. When a clause here is",
-          "   stricter than a core clause, the stricter clause applies.",
-          "3. Terms have the meanings given in [GLOSSARY.md](../GLOSSARY.md).", ""]
+          *(p.get("relation") or [
+              "1. Every clause of the core ([LAWS.md](../LAWS.md)) applies to systems in this profile.",
+              "2. The clauses below add requirements for this kind of system. When a clause here is",
+              "   stricter than a core clause, the stricter clause applies."]),
+          f"{len(p.get('relation') or [1, 2]) + 1}. Terms have the meanings given in [GLOSSARY.md](../GLOSSARY.md).", ""]
     if p.get("level_map"):
         names = {lv["level"]: lv["name"] for lv in data["action_levels"]}
         L += ["## Action levels for this profile", "", "*This section is normative.*", "",

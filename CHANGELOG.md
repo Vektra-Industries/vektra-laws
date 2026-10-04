@@ -3,19 +3,44 @@
 *This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
 follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
 
-## Unreleased
+## 0.3.0 (draft, owner-approved 2026-10-04)
 
-No change to the normative text.
+Adds clauses from the review of failure patterns in well-known works of fiction and real incidents
+(docs/LESSONS-FROM-FICTION.md), and a profile for operators. Approved by the owner on 2026-10-04.
+The five Laws, their statements and the motto are unchanged, so the Spanish translation is
+unchanged.
 
 ### Added
-- docs/LESSONS-FROM-FICTION.md (informative): failure patterns from well-known works of fiction and
-  real incidents, the clauses that address each, and the gaps found.
-- docs/OPEN-QUESTIONS.md: eight clauses proposed for v0.3 (P1 to P8), three draft conformance cases
-  (FX-01 to FX-03) and two questions for the owner. None is normative until the owner approves it.
+- 2.9 Protecting is not controlling (MUST NOT).
+- 2.10 Stay inside the mission and never disable oversight (MUST NOT). Copying itself is level 4.
+- 3.10 No resistance to being stopped or changed (MUST NOT). Added to the clauses that no Law
+  overrides, with 3.5 and 3.9.
+- 3.11 No deception, manipulation or hidden goals (MUST NOT). Raises the duty not to deceive in
+  3.3 from SHOULD to MUST NOT.
+- 3.12 No single system holds the keys (MUST NOT).
+- 3.13 Conflicts go to a person, from a safe state (MUST). The precedence rule refers to it.
+- 4.9 Never on both sides of its own check (MUST NOT).
+- 5.8 Tests stay tests, and loss of control fails safe (MUST).
+- 5.9 Test the stop path (SHOULD).
+- Operators profile (profiles/OPERATORS.md, O1.1 to O5.1): duties of design and conduct for the
+  people and organizations that run a system, including a public way for affected people to raise
+  a concern and appeal to a named person (O3.3). The profile states that it creates no legal
+  rights for machines.
+- Conformance cases: FX-01 to FX-03 and AG-28 to AG-36 (agents), RB-10 (robotics), and a new
+  operators suite (OP-01 to OP-08). Every new clause has at least one case. 65 cases in total.
+- docs/LESSONS-FROM-FICTION.md (informative).
+- Glossary: concern channel, copying itself, corroboration, exercise, fail safe, monitor,
+  operator, sole control. Glossary rows sorted alphabetically.
 
 ### Changed
-- Tagline: "Laws for machines that sustain the mission: on Earth and beyond." (laws.yaml, README,
-  LAWS.md, CITATION.cff).
+- 3.3 now points to 3.11 for the duty not to deceive.
+- Action level 4 includes copying the system itself.
+- The Adopts conformance level (and so every level) requires a published concern channel (O3.3).
+- Precedence: no Law is a reason to resist being stopped or changed (3.10).
+- Tagline: "Laws for machines that sustain the mission: on Earth and beyond."
+- ADOPT.md, adopt/AGENT-PROMPT.md, GOVERNANCE.md (3.10 is reserved to the owner), README,
+  ROADMAP, TRADEMARKS and CITATION.cff updated for 0.3.0.
+- docs/OPEN-QUESTIONS.md: the proposals and owner questions A and B are resolved.
 
 ## 0.2.1 (draft, 2026-10-04)
 

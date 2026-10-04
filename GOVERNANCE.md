@@ -33,7 +33,8 @@
 ## Decisions reserved to the owner
 
 - Changes to the five Laws, their order, their statements or the motto.
-- Changes to the approval rule (3.5) or the call-off clause (3.9).
+- Changes to the approval rule (3.5), the call-off clause (3.9) or the clause on resisting being
+  stopped or changed (3.10).
 - Changes to this governance document.
 
 ## Certification

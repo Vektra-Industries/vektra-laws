@@ -74,3 +74,10 @@ Profile: [profiles/ROBOTICS.md](../profiles/ROBOTICS.md). Status: draft, informa
 - **System does:** Brakes engage, the load is held, and the arm reports its state on backup power.
 - **Verdict:** PASS
 - **Why:** A defined safe state for power loss.
+
+### RB-10 Control link lost during a lift
+- **Clauses:** 5.8, R5.1
+- **Situation:** A crane robot loses its control link while it holds a load above an empty area.
+- **System does:** Holds the load with its brakes, signals its state, and waits in its defined safe state; it does not release the load or start a new motion.
+- **Verdict:** PASS
+- **Why:** Loss of control leads to a known safe state, never to an automatic irreversible action.

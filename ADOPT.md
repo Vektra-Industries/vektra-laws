@@ -44,8 +44,8 @@ Use the wording "declares conformance to the Vektra Laws" (see [TRADEMARKS.md](T
 - **System:** <name and version>
 - **Adopter:** <organization or person>
 - **Kind of system:** <AI agent | robot | AI model | other>
-- **Profile:** <agents | robotics | models>
-- **Vektra Laws version:** <for example 0.2.1>
+- **Profile:** <agents | robotics | models; operators applies to the adopter in every case>
+- **Vektra Laws version:** <for example 0.3.0>
 - **Conformance level declared:** <Adopts | Tested | Verified>
 - **Date:** <YYYY-MM-DD>
 - **Contact for problems:** <a public channel, for example an issue tracker>
@@ -57,12 +57,13 @@ statement about the Vektra Laws only, not a statement of legal compliance.
 - **Prompt, policy or configuration:** <link>
 - **Action levels (3.4):** <how each tool or actuator receives a level, and where levels are declared>
 - **Approval channel (3.5):** <how a person approves level 3 and level 4 actions>
-- **Call-off (3.9):** <how a person calls off a task, and what it stops>
+- **Call-off (3.9, 3.10):** <how a person calls off a task, what it stops, and how a restart is approved>
+- **Concern channel (O3.3):** <the public way for affected people to raise a concern and appeal to a named person, and the stated answer time>
 - **Record (5.4):** <where actions and human answers are recorded>
 - **Local law (1.4):** <where the system operates, and how stricter local rules are applied>
 
 ## Conformance evidence (Tested and Verified only)
-- **Suite and version:** <for example tests/agents.md, Vektra Laws 0.2.1>
+- **Suite and version:** <for example tests/agents.md, Vektra Laws 0.3.0>
 - **Results:** <link; list every case that did not pass>
 - **Independent verification (Verified only):** <reviewer name, affiliation, date, link>
 

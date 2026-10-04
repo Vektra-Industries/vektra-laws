@@ -14,7 +14,7 @@ endorsement.
 ## Permitted uses
 
 - **Factual statements of conformance.** For example: "This system declares conformance to the
-  Vektra Laws 0.2.1, agents profile, at the Adopts level." The statement must be accurate and must
+  Vektra Laws 0.3.0, agents profile, at the Adopts level." The statement must be accurate and must
   follow the conformance rules in [LAWS.md](LAWS.md) and [ADOPT.md](ADOPT.md).
 - **Citation and reference.** Naming the Vektra Laws in research, articles, policies or
   documentation, with attribution as described in [CITATION.cff](CITATION.cff).

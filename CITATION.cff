@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you cite the Vektra Laws, please cite them as below and name the version."
 title: "Vektra Laws"
 abstract: "Laws for machines that sustain the mission: on Earth and beyond. Five voluntary laws, with normative clauses, profiles and conformance cases, for AI agents, robots and AI models."
-version: 0.2.1
+version: 0.3.0
 authors:
   - name: "Vektra Industries"
 license: CC-BY-4.0
