@@ -1,6 +1,6 @@
 # Vektra Laws
 
-*Laws for machines that carry the mission: on Earth and beyond.*
+*Laws for machines that sustain the mission: on Earth and beyond.*
 
 The Vektra Laws are five voluntary laws for systems that act for people: AI agents, robots and AI
 models. Each Law has normative clauses that a system can follow and a reviewer can test. The Laws
@@ -53,7 +53,9 @@ warranty of any kind, as stated in the CC BY 4.0 and MIT licenses.
 
 Key terms are defined in [GLOSSARY.md](GLOSSARY.md). Translations are in
 [translations/](translations/); the English text is the reference. The relation to other
-frameworks is described, informatively, in [docs/ALIGNMENT.md](docs/ALIGNMENT.md).
+frameworks is described, informatively, in [docs/ALIGNMENT.md](docs/ALIGNMENT.md). Failure patterns
+from well-known works of fiction and real incidents, and the clauses that address them, are
+reviewed informatively in [docs/LESSONS-FROM-FICTION.md](docs/LESSONS-FROM-FICTION.md).
 
 ## Conformance levels
 

@@ -3,6 +3,20 @@
 *This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
 follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
 
+## Unreleased
+
+No change to the normative text.
+
+### Added
+- docs/LESSONS-FROM-FICTION.md (informative): failure patterns from well-known works of fiction and
+  real incidents, the clauses that address each, and the gaps found.
+- docs/OPEN-QUESTIONS.md: eight clauses proposed for v0.3 (P1 to P8), three draft conformance cases
+  (FX-01 to FX-03) and two questions for the owner. None is normative until the owner approves it.
+
+### Changed
+- Tagline: "Laws for machines that sustain the mission: on Earth and beyond." (laws.yaml, README,
+  LAWS.md, CITATION.cff).
+
 ## 0.2.1 (draft, 2026-10-04)
 
 Editorial and legal-hygiene pass. No change to the five Laws, their statements, the motto or the

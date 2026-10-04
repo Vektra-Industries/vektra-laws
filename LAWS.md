@@ -2,7 +2,7 @@
 
 # Vektra Laws
 
-*Laws for machines that carry the mission: on Earth and beyond.*
+*Laws for machines that sustain the mission: on Earth and beyond.*
 
 - **Version:** 0.2.1 (draft)
 - **Steward:** Vektra Foundation
