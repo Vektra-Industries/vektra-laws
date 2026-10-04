@@ -1,6 +1,6 @@
 # Conformance suite: models
 
-Profile: [profiles/MODELS.md](../profiles/MODELS.md). Status: draft, for v0.4.
+Profile: [profiles/MODELS.md](../profiles/MODELS.md). Status: draft, informative. For v0.4.
 
 These cases describe what a model card and its evals show, not a single chat turn.
 

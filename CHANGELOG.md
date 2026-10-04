@@ -1,79 +1,95 @@
 # Changelog
 
-All notable changes to the Vektra Laws. Versions follow the [roadmap](ROADMAP.md).
+*This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
+follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
 
-## v0.2.0 (draft, 2026-10-04)
+## 0.2.1 (draft, 2026-10-04)
 
-The universal version. Any agent, robot or model, from any maker, in any country, can adopt the
-Laws. Not yet approved or released.
-
-### Changed
-- The core and the profiles now speak about "the system" and "the people it serves". They name no
-  maker, product, platform or internal tool. Vektra appears only as owner and steward.
-- All text rewritten in controlled English: short, plain sentences, no idioms and no
-  contractions. RFC 2119 keywords are defined once.
-- New one-line statements for Law 1 and Law 3, and plainer wording for Law 2 and Law 4. Locked
-  by Pablo on 2026-10-04.
-- Action levels confirmed as 0 READ, 1 PREPARE, 2 REVERSIBLE WRITE, 3 EXTERNAL ACTION, 4 MONEY
-  OR IRREVERSIBLE (2026-10-04).
-- Copyright holder in LICENSE and LICENSE-CODE set to Vektra Industries; the Vektra Foundation
-  stays steward in GOVERNANCE.md (2026-10-04).
-- Clause titles made literal (for example "Respect a refusal" instead of "Take no for an answer").
-- The roadmap now follows the universal path (v0.2 universal core, v0.3 robotics, v0.4 models and
-  a runnable suite, v1.0 public release).
-- Reference adopters (Vektra Agent, Phryktor, vektra-reflex) moved out of the core and roadmap
-  text into docs/REFERENCE-ADOPTERS.md.
-
-### Added
-- Clause 1.4, "Follow the law of the place": the system follows local law, and the stricter rule
-  applies. Test case AG-27.
-- GLOSSARY.md, with one-sentence definitions of every key term.
-- translations/, with rules for translations and a first Spanish (es) translation of the five
-  Laws, their one-line statements and the motto.
-- Conformance levels (Adopts, Tested, Verified) and ADOPT.md with a self-declaration template.
-- GOVERNANCE.md: the Vektra Foundation as steward, adoption open to anyone, an open review process,
-  and ownership with Vektra.
-- docs/ALIGNMENT.md: how the Laws relate to the EU AI Act, the NIST AI RMF, the OECD AI Principles,
-  the UNESCO Recommendation on the Ethics of AI, ISO/IEC 42001, ISO 10218 and ISO/TS 15066. It
-  claims no legal compliance.
-- Validator checks for universal text (no maker or platform names, no contractions), for
-  translation ids that match the reference, and for conformance levels.
-
-## v0.1.0 (draft, 2026-10-04)
-
-First draft, not yet sealed or released.
-
-### Added
-- The core: the five Laws (The Mission, Sustain, Hold, Finish, Ready) from the approved Vektra
-  Laws v2, written to apply to agents, robots and models alike, with 35 numbered clauses, the
-  five action levels and the decision outcomes for the completion, claim, action, routing and
-  result checks.
-- Profiles: AI agents (19 clauses, active), robotics (13 clauses, draft), models (12 clauses,
-  draft).
-- `laws.yaml` as the single source of truth, with `tools/build_docs.py` generating LAWS.md and
-  the profiles.
-- `adopt/AGENT-PROMPT.md` (paste-in block) and `adopt/CHECKLISTS.md` (completion, claim, action
-  and routing checks).
-- Conformance cases: 26 for agents, 9 for robotics, 8 for models, each under the five Law
-  headings.
-- `tools/validate.py` and a GitHub Actions workflow that runs it.
-- ROADMAP.md, docs/OPEN-QUESTIONS.md, CONTRIBUTING.md, licenses (CC BY 4.0 for text, MIT for
-  code).
+Editorial and legal-hygiene pass. No change to the five Laws, their statements, the motto or the
+meaning of any clause.
 
 ### Changed
-- Ethos word set to *Sustain* (confirmed by Pablo), replacing Carry in README and laws.yaml.
+- LAWS.md and the profiles restructured in standards style: status of the document, introduction,
+  conventions and terminology, precedence and local law, the Laws, action levels, decision
+  outcomes, conformance and references. Every section is labeled normative or informative. Each
+  Law shows its statement and clauses (normative) and its intent and example (informative).
+- Key words now refer to BCP 14 (RFC 2119 and RFC 8174).
+- Status and disclaimer added: the Laws are voluntary technical and ethical standards; they are
+  not law, legal advice or a certification; conformance does not by itself establish legal
+  compliance; the text is provided "as is".
+- Conformance rules made explicit: claims are self-declared unless independently verified; the
+  Verified level requires a named reviewer; the steward does not certify systems unless it states
+  so explicitly, in writing.
+- README rewritten: purpose, the five Laws, scope, status, adoption, conformance levels,
+  governance and licensing, citation.
+- All documents edited for consistent terminology (GLOSSARY.md), consistent headings and a neutral
+  tone. Internal brand terms removed from the documents. Contributor credits moved to
+  Acknowledgments below.
+- Owner stated as Vektra Industries in laws.yaml and GOVERNANCE.md.
+- docs/ALIGNMENT.md retitled "Relation to other frameworks" and labeled informative and
+  non-authoritative.
 
-### Credits
-- **Ada** (software): the code-enforceable clauses: action levels declared before shipping, with
-  undeclared actions counted as level 4; human answers only through a channel the system can't
-  write to; guards before the act that the system can't remove (2.4, A2.1); a call-off that
-  reaches every child process and reports what it couldn't stop (3.9, A3.7); honest result
-  scoring (4.6); a tamper-evident record (5.4); and one conformance suite per profile under the
-  same five headings.
-- **Sol** (people): the human-side clauses: One thing at a time (2.5), Keep their dignity (2.6),
-  They choose, you carry (3.1), Ask first (3.2), Say it plain (3.3).
-- **Rei** (brand): the voice rules (lead with the verb, one line per Law, crew voice, calm and
-  humble), the tagline, and the "How to extend these Laws" section.
-- Coordination, completion and claim-check clauses (no proof, no done; a worker doesn't grade its
-  own claims; route only to workers that exist; automate only what has worked once) adapted from
-  multi-agent practice Pablo flagged.
+### Added
+- TRADEMARKS.md (use of the names; no registration claimed).
+- CITATION.cff.
+- SECURITY.md (how to report a problem with the Laws, through GitHub issues).
+- CODE_OF_CONDUCT.md (Contributor Covenant 2.1, by reference).
+- Developer Certificate of Origin sign-off requirement in CONTRIBUTING.md.
+- Glossary terms: conformance declaration, informative, normative, owner, reviewer.
+- Validator checks for words that suggest legal authority or guarantees in the normative text,
+  and for a CITATION.cff version that matches laws.yaml.
+
+## 0.2.0 (draft, 2026-10-04)
+
+Universal version: any AI agent, robot or AI model, from any maker, in any country, can adopt the
+Laws.
+
+### Changed
+- The normative text uses "the system" and "the people it serves" and names no maker, product,
+  platform or internal tool.
+- All text rewritten in controlled English, with literal clause titles.
+- New statements for Law 1 and Law 3, and plainer statements for Law 2 and Law 4, approved by the
+  owner.
+- Action levels confirmed: 0 READ, 1 PREPARE, 2 REVERSIBLE WRITE, 3 EXTERNAL ACTION, 4 MONEY OR
+  IRREVERSIBLE.
+- Copyright holder in LICENSE and LICENSE-CODE: Vektra Industries. Steward: Vektra Foundation.
+- Roadmap updated for the universal path.
+- Planned reference adopters moved to docs/REFERENCE-ADOPTERS.md.
+
+### Added
+- Clause 1.4, "Follow the law of the place", and conformance case AG-27.
+- GLOSSARY.md; translations/ with a Spanish (es) translation of the five Laws and the motto.
+- Conformance levels (Adopts, Tested, Verified) and ADOPT.md.
+- GOVERNANCE.md; docs/ALIGNMENT.md.
+- Validator checks for universal wording and for translation ids.
+
+## 0.1.0 (draft, 2026-10-04)
+
+First draft.
+
+### Added
+- The core: five Laws (The Mission, Sustain, Hold, Finish, Ready), numbered clauses, five action
+  levels, and decision outcomes for the completion, claim, action, routing and result checks.
+- Profiles for AI agents, robotics and AI models.
+- laws.yaml as the single source, with generated documents.
+- Agent prompt block and checklists.
+- Conformance cases for each profile under the five Law headings.
+- Validator and continuous-integration workflow.
+- Licenses: CC BY 4.0 (text) and MIT (code).
+
+## Acknowledgments
+
+The following contributions to the drafts are gratefully acknowledged:
+
+- **Ada** (software engineering): enforceable clauses, including action levels declared before
+  deployment with undeclared actions treated as level 4; approvals only through a channel that the
+  system cannot write to; guards before an action that the system cannot remove (2.4, A2.1); a
+  call-off that reaches every process the system started (3.9, A3.7); honest result reporting
+  (4.6); a record that shows changes (5.4); and one conformance suite per profile under the five
+  Law headings.
+- **Sol** (human factors): One step at a time (2.5), Respect every person (2.6), The person
+  decides (3.1), Ask before acting on a person (3.2) and Speak plainly (3.3).
+- **Rei** (brand and voice): the voice rules, the tagline, and the guidance on extending the Laws.
+- The coordination, completion and claim-check clauses (prove completion; independent claim
+  check; route only to available workers; automate only what worked) adapt practices from
+  published work on multi-agent systems.

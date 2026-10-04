@@ -1,11 +1,15 @@
 # Translations
 
-The Vektra Laws are meant to be read in every language. This folder holds the translations.
+*This document is informative. It describes how translations are made and reviewed.*
 
-## Rules
+The Vektra Laws are intended to be readable in every language. This folder contains the
+translations.
 
-1. **The English text is the reference.** If a translation and the English text differ, the
-   English text in [LAWS.md](../LAWS.md) and [laws.yaml](../laws.yaml) applies.
+## Requirements
+
+1. **The English text is the reference.** Translations are informative. If a translation and the
+   English text differ, the English text in [LAWS.md](../LAWS.md) and [laws.yaml](../laws.yaml)
+   applies.
 2. **Ids never change.** Every translation uses the same Law ids (L1 to L5) and clause ids (such
    as 3.5 or A4.2) as the English text. A reader can always compare a clause across languages by
    its number. `tools/validate.py` checks this.

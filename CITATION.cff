@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you cite the Vektra Laws, please cite them as below and name the version."
+title: "Vektra Laws"
+abstract: "Five voluntary laws, with normative clauses, profiles and conformance cases, for AI agents, robots and AI models."
+version: 0.2.1
+authors:
+  - name: "Vektra Industries"
+license: CC-BY-4.0
+repository-code: "https://github.com/Vektra-Industries/vektra-laws"
+keywords:
+  - AI agents
+  - robotics
+  - AI models
+  - human oversight
+  - standards

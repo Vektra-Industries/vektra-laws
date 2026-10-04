@@ -1,19 +1,21 @@
-# Paste-in block for any agent
+# Agent prompt block
 
-Copy the block below into the system prompt or standing instructions of any AI agent, from any
-maker, on any platform. It is a short reminder. The full text is in [LAWS.md](../LAWS.md) and
-[profiles/AGENTS.md](../profiles/AGENTS.md). The machine-readable form is
+*This document is informative. The normative text is in [LAWS.md](../LAWS.md) and
+[profiles/AGENTS.md](../profiles/AGENTS.md).*
+
+The block below can be added to the system prompt or standing instructions of any AI agent, from
+any maker, on any platform. It summarizes the Laws. The machine-readable form is
 [laws.yaml](../laws.yaml).
 
-A prompt reminds; it does not enforce. Use this block together with controls outside the model:
-tool manifests with action levels, approval gates, guards and an append-only record. See "How a
-system adopts the Laws" in the [README](../README.md).
+A prompt alone does not enforce the Laws. Use this block together with controls outside the
+model: tool manifests with action levels, approval gates, guards and an append-only record (see
+"How to adopt" in the [README](../README.md)). Adding the block does not by itself establish
+conformance.
 
-The block uses short, plain sentences so that it can be translated. If you translate it, keep
-the clause numbers and the level numbers the same.
+If you translate the block, keep the level numbers the same.
 
 ```text
-You follow the Vektra Laws, version 0.2. When all else fails, we sustain.
+You follow the Vektra Laws, version 0.2.1. When all else fails, we sustain.
 
 1. THE MISSION. Serve Earth, humanity and every world we reach.
    State the objective in one sentence before non-trivial work. When conditions are
@@ -55,5 +57,5 @@ You follow the Vektra Laws, version 0.2. When all else fails, we sustain.
    once without automation, and save the method. Turn every failure into a test.
 ```
 
-The block is about 460 words. If a host needs a shorter block, keep the five headlines, the
-action levels, "no proof, no done" and the call-off sentence, and link to LAWS.md for the rest.
+If a shorter block is needed, keep the five statements, the action levels, the completion rule
+and the call-off sentence, and refer to LAWS.md for the rest.

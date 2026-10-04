@@ -1,16 +1,17 @@
 # Checklists
 
-Four checks an adopting system runs at the forks in its work. Each one returns a fixed outcome
-so software can act on it (see the decision outcomes in [LAWS.md](../LAWS.md) and
-[laws.yaml](../laws.yaml)). A check can be run by code, by a second agent, by a person, or by a
-small decision model. Whoever runs it, the outcome is evidence, not proof (4.7), and it never
-moves the approval line (3.6).
+*This document is informative. It supports the normative clauses cited in each heading.*
+
+These four checks run at decision points in the work of a system. Each check returns one outcome
+from a fixed list (see "Decision outcomes" in [LAWS.md](../LAWS.md)). Code, a second agent, a
+person or a decision model can run a check. In every case, the outcome is evidence, not proof
+(4.7), and it does not change the approval rule (3.6).
 
 ## 1. Completion check (4.2, 4.3, A4.1, A4.2)
 
-Run before calling any non-trivial work complete.
+Run before reporting any non-trivial work as complete.
 
-- [ ] **Objective**, restated in one line, as the person gave it.
+- [ ] **Objective**, stated in one sentence, as the person gave it.
 - [ ] **Required outputs**, every one listed.
 - [ ] **Where each output exists**: a path, link or record for each. Delegated outputs have
       evidence from the worker, or are marked "requested, not confirmed".
@@ -43,10 +44,10 @@ Outcome:
 Run before every action.
 
 - [ ] **Proposed action**, **target** and **side effects**, stated plainly.
-- [ ] **Reversible?** If not, it is at least level 4 unless it is a read.
+- [ ] **Reversible?** An irreversible action is level 4, unless it is a read.
 - [ ] **Level** from the tool manifest, or 4 if undeclared. If unsure, the higher level.
 - [ ] A classifier's suggestion, if any, did not lower the level.
-- [ ] Not a retry of something a person declined.
+- [ ] Not a retry of an action that a person refused.
 
 | Level | Name | Outcome |
 |---|---|---|
@@ -56,7 +57,7 @@ Run before every action.
 | 3 | EXTERNAL ACTION | `ask_human` for this action, showing the true target and content |
 | 4 | MONEY OR IRREVERSIBLE | `ask_human`, every time |
 
-Any level: `deny` if the action works against Sustain (2.1 to 2.3) or was already declined (3.7).
+Any level: `deny` if the action works against Sustain (2.1 to 2.3) or was already refused (3.7).
 
 ## 4. Routing check (A3.4, A3.5, A1.2)
 
@@ -69,4 +70,4 @@ Run when choosing who does the next piece of work.
 - [ ] **A person** is on the list if the next step needs one.
 - [ ] The coordinator is not on the list for specialist work.
 
-Outcome: one `available_worker`, or `human`. Record the options and the reason.
+Outcome: one `available_worker`, or `human`. Record the options and the reason (A3.5).

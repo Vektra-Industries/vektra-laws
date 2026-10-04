@@ -1,4 +1,7 @@
-# Conformance tests
+# Conformance cases
+
+*This document is normative for the Tested and Verified conformance levels of the agents profile.
+The robotics and models suites are drafts and are informative.*
 
 One suite per profile, each with the same five headings (one per Law):
 

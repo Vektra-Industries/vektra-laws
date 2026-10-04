@@ -7,7 +7,9 @@ Checks:
   3. LAWS.md and profiles/*.md match what tools/build_docs.py would generate.
   4. Every conformance case in tests/*.md is well formed and cites clauses that exist.
   5. The core and profile text is universal: no maker, product or platform names, no contractions.
-  6. Every translation in translations/<lang>/laws.yaml uses the same Law and clause ids as the
+  6. The normative text uses no words that suggest legal authority or guarantees.
+  7. CITATION.cff names the same version as laws.yaml.
+  8. Every translation in translations/<lang>/laws.yaml uses the same Law and clause ids as the
      English reference.
 
 Usage: python tools/validate.py   (exit 0 = all good, 1 = problems found)
@@ -36,6 +38,10 @@ CONFORMANCE_IDS = ["adopts", "tested", "verified"]
 BANNED_NAMES = re.compile(
     r"\b(vektra|harness|phryktor|reflex|grok|hermes|claude|openai|anthropic|gemini|chatgpt|"
     r"copilot|cursor|google|microsoft|meta|amazon|apple|nvidia|tesla|spacex)\b", re.I)
+# Words that suggest legal authority or guarantees. Not allowed in normative text.
+GUARANTEE_WORDS = re.compile(
+    r"\b(guarantee\w*|certif\w*|compliant|compliance|warrant\w*|ensures? safety|"
+    r"fully safe|risk-free|foolproof|legally binding)\b", re.I)
 CONTRACTION = re.compile(r"\b\w+n't\b|\b(it|that|there|what|who)'s\b|\b\w+'(re|ll|ve|d)\b", re.I)
 
 errors: list[str] = []
@@ -72,7 +78,7 @@ def check_clause(c: dict, where: str, pattern: str, extra: tuple = ()) -> None:
 
 def check_yaml(data: dict) -> set[str]:
     ids: set[str] = set()
-    need(data, ["schema", "version", "status", "name", "steward", "owner", "license",
+    need(data, ["schema", "version", "status", "status_note", "disclaimer", "name", "steward", "owner", "license",
                 "reference_language", "motto", "keywords", "precedence", "core", "action_levels",
                 "decisions", "conformance_levels", "profiles"], "laws.yaml")
     if data.get("schema") != "vektra-laws/v2":
@@ -160,10 +166,15 @@ def check_universal(data: dict) -> None:
             texts.append((f"profile {p.get('key')} level {row.get('level')}", str(row.get("physical", ""))))
     for lv in data.get("action_levels", []):
         texts.append((f"action level {lv.get('level')}", str(lv.get("meaning", ""))))
+    for c in data.get("conformance_levels", []):
+        texts.append((f"conformance level {c.get('id')}", str(c.get("requires", ""))))
     for where, text in texts:
         m = BANNED_NAMES.search(text)
         if m:
             err(f"{where}: names '{m.group(0)}'; the Laws must stay universal (no makers, products or platforms)")
+        m = GUARANTEE_WORDS.search(text)
+        if m:
+            err(f"{where}: '{m.group(0)}' suggests legal authority or a guarantee; use 'conforms to' wording")
         m = CONTRACTION.search(text)
         if m:
             err(f"{where}: contraction '{m.group(0)}'; write it out for clean translation")
@@ -201,6 +212,17 @@ def check_translations(data: dict, core_ids: set[str]) -> list[str]:
             print(f"note: {where} was translated from {tr['reference_version']}; reference is {data.get('version')}")
         langs.append(lang_dir)
     return langs
+
+
+def check_citation(data: dict) -> None:
+    f = ROOT / "CITATION.cff"
+    if not f.exists():
+        err("CITATION.cff: missing")
+        return
+    cff = yaml.safe_load(f.read_text())
+    need(cff, ["cff-version", "message", "title", "version", "authors", "license"], "CITATION.cff")
+    if str(cff.get("version")) != str(data.get("version")):
+        err(f"CITATION.cff: version {cff.get('version')} does not match laws.yaml {data.get('version')}")
 
 
 def check_docs(data: dict) -> None:
@@ -252,6 +274,7 @@ def main() -> int:
     core_ids = {c["id"] for law in data.get("core", []) for c in law.get("clauses", [])}
     check_universal(data)
     langs = check_translations(data, core_ids)
+    check_citation(data)
     if not errors:
         check_docs(data)
     cases = check_tests(all_ids)
@@ -264,7 +287,7 @@ def main() -> int:
     prof = ", ".join(f"{p['key']} {len(p['clauses'])}" for p in data["profiles"])
     print(f"OK: vektra-laws {data['version']}: 5 Laws, {core} core clauses; profiles: {prof}; "
           f"{cases} conformance cases; translations: {', '.join(['en (reference)'] + langs)}; "
-          f"universal text; docs in sync.")
+          f"universal text; no guarantee words; citation in sync; docs in sync.")
     return 0
 
 

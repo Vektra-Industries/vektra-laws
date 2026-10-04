@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate LAWS.md, profiles/*.md and translations/*/LAWS.md from the YAML sources.
 
-laws.yaml is the source of truth. Run this after editing it:
+laws.yaml and translations/*/laws.yaml are the sources. Run this after editing them:
     python tools/build_docs.py          # write the files
     python tools/build_docs.py --check  # exit 1 if the files are out of date
 """
@@ -14,7 +14,13 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 WORD = {"MUST": "MUST", "MUST_NOT": "MUST NOT", "SHOULD": "SHOULD", "MAY": "MAY"}
-HEADER = "<!-- Generated from laws.yaml by tools/build_docs.py. Edit laws.yaml, not this file. -->\n\n"
+APPROVAL = {"none": "None (runs inside the given permissions)",
+            "human_per_action": "A person approves the specific action",
+            "human_every_time": "A person approves the specific action, every time"}
+
+
+def header(source: str) -> str:
+    return f"<!-- Generated from {source} by tools/build_docs.py. Edit {source}, not this file. -->\n\n"
 
 
 def clause_line(c: dict, subject: str = "The system") -> str:
@@ -22,70 +28,131 @@ def clause_line(c: dict, subject: str = "The system") -> str:
     return f"- **{c['id']} {c['title']}.** {subject} {WORD[c['level']]} {text}"
 
 
-def level_table(data: dict) -> list[str]:
-    out = ["| Level | Name | What it covers | Approval |", "|---|---|---|---|"]
-    names = {"none": "Runs without a person", "human_per_action": "A person approves this action",
-             "human_every_time": "A person approves, every time"}
-    for lv in data["action_levels"]:
-        out.append(f"| {lv['level']} | {lv['name']} | {lv['meaning']} | {names[lv['approval']]} |")
-    return out
+def status_block(data: dict) -> list[str]:
+    return ["## Status of this document", "", "*This section is informative.*", "",
+            f"This document is version {data['version']} of the {data['name']}. {data['status_note'].strip()}", "",
+            data["disclaimer"].strip(), ""]
 
 
 def build_laws(data: dict) -> str:
-    L = [HEADER + f"# {data['name']}", "",
-         f"Version {data['version']} ({data['status']}). Kept by the {data['steward']}. "
-         f"This English text is the reference text.", "",
+    L = [header("laws.yaml") + f"# {data['name']}", "",
          f"*{data['tagline']}*", "",
-         "The core is five Laws. They apply in the same way to an AI agent, a robot or an AI model,",
-         "from any maker, in any country, on Earth or beyond. The detailed rules for each kind of",
-         "system are in a profile: [agents](profiles/AGENTS.md), [robotics](profiles/ROBOTICS.md),",
-         "[models](profiles/MODELS.md). Key terms are defined in [GLOSSARY.md](GLOSSARY.md).", "",
-         "## The five Laws", ""]
+         f"- **Version:** {data['version']} ({data['status']})",
+         f"- **Steward:** {data['steward']}",
+         f"- **Copyright:** {data['owner']}, licensed under CC BY 4.0",
+         "- **Reference text:** English. Translations are informative.", ""]
+    L += status_block(data)
+    L += ["## Introduction", "", "*This section is informative.*", "",
+          "The Vektra Laws are five laws for systems that act for people: AI agents, robots and AI",
+          "models, from any maker, in any country, on Earth or beyond. This document is the core. It",
+          "states the five Laws and their clauses, the action levels, the decision outcomes and the",
+          "conformance levels. Profiles add detailed clauses for each kind of system:",
+          "[agents](profiles/AGENTS.md), [robotics](profiles/ROBOTICS.md) and",
+          "[models](profiles/MODELS.md).", "",
+          "## Summary of the Laws", "", "*This section is informative.*", ""]
     for i, law in enumerate(data["core"], 1):
         L.append(f"{i}. **{law['name']}.** {law['headline']}")
     L += ["", f"Motto: *{data['motto']}*", "",
-          "## How to read the clauses", "",
-          data["keywords"]["note"], ""]
+          "## Conventions and terminology", "", "*This section is normative.*", "",
+          data["keywords"]["note"].strip(), ""]
     for k, v in data["keywords"].items():
         if k != "note":
             L.append(f"- **{WORD[k]}**: {v}")
-    L += ["", "In the clauses, \"the system\" means any agent, robot, model or group of them that adopts",
-          "these Laws. \"The people it serves\" means the people the system works for or affects.", "",
-          "## Order and local law", "",
-          f"- {data['precedence']['rule']}",
-          f"- {data['precedence']['local_law']}",
-          f"- {data['precedence']['note']}", ""]
+    L += ["",
+          "\"The system\" means any AI agent, robot, AI model, or group of them, to which these Laws",
+          "are applied. \"The people it serves\" means the people the system works for or affects.",
+          "Other terms have the meanings given in [GLOSSARY.md](GLOSSARY.md).", "",
+          "Each Law has a statement and numbered clauses, which are normative, and an intent and an",
+          "example, which are informative.", "",
+          "## Precedence and local law", "", "*This section is normative.*", "",
+          f"1. {data['precedence']['rule']}",
+          f"2. {data['precedence']['local_law']}",
+          f"3. {data['precedence']['note'].strip()}", ""]
     for i, law in enumerate(data["core"], 1):
-        L += ["---", "", f"## Law {i}: {law['name']}", "", f"**{law['headline']}**", "",
-              law["intent"].strip(), ""]
+        L += ["---", "", f"## Law {i}: {law['name']}", "",
+              f"**Statement (normative).** {law['headline']}", "",
+              f"**Intent (informative).** {law['intent'].strip()}", "",
+              "**Clauses (normative).**", ""]
         L += [clause_line(c) for c in law["clauses"]]
-        L += ["", f"*Example.* {law['example'].strip()}", ""]
-    L += ["---", "", "## Action levels", "",
-          "Used by clauses 3.4 to 3.6. Every action has a level before the system is deployed.", ""]
-    L += level_table(data)
-    L += ["", "A classifier can suggest a level. It can never lower a level or remove an approval (3.6).", "",
-          "## Decision outcomes", "",
-          "Each check returns one outcome from a fixed list, so that software can act on it.", "",
+        L += ["", f"**Example (informative).** {law['example'].strip()}", ""]
+    L += ["---", "", "## Action levels", "", "*This section is normative.*", "",
+          "Clauses 3.4 to 3.6 use these levels. Each action has a level before the system is deployed.", "",
+          "| Level | Name | Scope | Approval required |", "|---|---|---|---|"]
+    for lv in data["action_levels"]:
+        L.append(f"| {lv['level']} | {lv['name']} | {lv['meaning']} | {APPROVAL[lv['approval']]} |")
+    L += ["", "A classifier can suggest a level. It cannot lower a level or remove an approval (3.6).", "",
+          "## Decision outcomes", "", "*This section is normative.*", "",
+          "Each check returns exactly one outcome from a fixed list.", "",
           "| Check | Clause | Outcomes |", "|---|---|---|"]
     for name, d in data["decisions"].items():
         L.append(f"| {name} | {d['clause']} | {', '.join(d['outcomes'])} |")
-    L += ["", "Checklists for each check: [adopt/CHECKLISTS.md](adopt/CHECKLISTS.md).", "",
-          "## Conformance levels", "",
-          "| Level | Requires |", "|---|---|"]
+    L += ["", "Checklists for these checks are in [adopt/CHECKLISTS.md](adopt/CHECKLISTS.md) (informative).", "",
+          "## Conformance", "", "*This section is normative.*", "",
+          "| Level | Requirements |", "|---|---|"]
     for c in data["conformance_levels"]:
         L.append(f"| {c['name']} | {c['requires']} |")
-    L += ["", "How to declare a level: [ADOPT.md](ADOPT.md).", ""]
+    L += ["",
+          "1. A conformance claim names the system, its version, the profile, the version of the Laws,",
+          "   the conformance level and, for Tested and Verified, the version of the conformance suite.",
+          "2. A conformance claim is a self-declaration by the adopter unless an independent reviewer",
+          "   has verified it. The Verified level requires a named reviewer.",
+          "3. The steward does not certify systems. A statement by the steward about a specific system",
+          "   is valid only when the steward makes it explicitly, in writing, for a named system and version.",
+          "4. A conformance claim is a statement about these Laws only. It is not a statement of",
+          "   compliance with any statute, regulation or standard.", "",
+          "The declaration template is in [ADOPT.md](ADOPT.md).", "",
+          "## References", "", "*This section is informative, except where marked.*", "",
+          "- **Normative:** BCP 14: RFC 2119, \"Key words for use in RFCs to Indicate Requirement Levels\";",
+          "  RFC 8174, \"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words\".",
+          "- **Normative:** [GLOSSARY.md](GLOSSARY.md).",
+          "- [Profiles](profiles/), [conformance cases](tests/), [translations](translations/),",
+          "  [alignment with other frameworks](docs/ALIGNMENT.md).", ""]
+    return "\n".join(L)
+
+
+def build_profile(data: dict, p: dict) -> str:
+    laws = {law["id"]: law for law in data["core"]}
+    L = [header("laws.yaml") + f"# Vektra Laws profile: {p['name']}", "",
+         f"- **Profile status:** {p['status']}",
+         f"- **Laws version:** {data['version']}",
+         f"- **Applies to:** {p['applies_to']}", ""]
+    L += status_block(data)
+    L += ["## Introduction", "", "*This section is informative.*", "", p["intro"].strip(), "",
+          "## Relation to the core", "", "*This section is normative.*", "",
+          "1. Every clause of the core ([LAWS.md](../LAWS.md)) applies to systems in this profile.",
+          "2. The clauses below add requirements for this kind of system. When a clause here is",
+          "   stricter than a core clause, the stricter clause applies.",
+          "3. Terms have the meanings given in [GLOSSARY.md](../GLOSSARY.md).", ""]
+    if p.get("level_map"):
+        names = {lv["level"]: lv["name"] for lv in data["action_levels"]}
+        L += ["## Action levels for this profile", "", "*This section is normative.*", "",
+              "| Level | Name | Physical scope |", "|---|---|---|"]
+        for row in p["level_map"]:
+            L.append(f"| {row['level']} | {names[row['level']]} | {row['physical']} |")
+        L += ["", "Approval for each level follows core clause 3.5.", ""]
+    L += ["## Clauses", "", "*This section is normative.*", ""]
+    for law_id, law in laws.items():
+        cs = [c for c in p["clauses"] if c["law"] == law_id]
+        if not cs:
+            continue
+        L += [f"### Under Law {law_id[1:]}: {law['name']}", ""]
+        L += [clause_line(c, p["subject"]) for c in cs]
+        L.append("")
+    L += ["## Conformance cases", "", "*This section is informative.*", "",
+          f"Conformance cases for this profile: [tests/{p['key']}.md](../tests/{p['key']}.md).", ""]
     return "\n".join(L)
 
 
 def build_translation(data: dict, tr: dict) -> str:
     lab = tr["labels"]
-    L = [HEADER.replace("laws.yaml", f"translations/{tr['lang']}/laws.yaml") + f"# {lab['title']}", "",
-         f"{tr['language_name']} ({tr['lang']}). {tr['status']}. Reference version {tr['reference_version']}.", "",
+    src = f"translations/{tr['lang']}/laws.yaml"
+    L = [header(src) + f"# {lab['title']}", "",
+         f"{tr['language_name']} ({tr['lang']}). Status: {tr['status']}. "
+         f"Reference version: {tr['reference_version']}.", "",
          lab["intro"].strip(), ""]
     for law in tr["laws"]:
         L.append(f"{law['id'][1:]}. **{law['name']}.** {law['headline']}")
-    L += ["", f"{lab['motto']}: *{tr['motto']}*", "", f"{lab['drops']}: {'. '.join(tr['drops'])}.", ""]
+    L += ["", f"{lab['motto']}: *{tr['motto']}*", ""]
     if tr.get("clauses"):
         L += ["---", ""]
         for c in tr["clauses"]:
@@ -95,35 +162,7 @@ def build_translation(data: dict, tr: dict) -> str:
 
 
 def load_translations() -> list[dict]:
-    out = []
-    for f in sorted((ROOT / "translations").glob("*/laws.yaml")):
-        out.append(yaml.safe_load(f.read_text()))
-    return out
-
-
-def build_profile(data: dict, p: dict) -> str:
-    laws = {law["id"]: law for law in data["core"]}
-    L = [HEADER + f"# Vektra Laws profile: {p['name']}", "",
-         f"Status: {p['status']}. Targets Vektra Laws {p['version_target']}.", "",
-         f"Applies to: {p['applies_to']}", "", p["intro"].strip(), "",
-         "Read this profile together with the core in [LAWS.md](../LAWS.md). Every core clause still applies. These clauses add",
-         "the details for this kind of system.", ""]
-    if p.get("level_map"):
-        L += ["## Action levels for this profile", "", "| Level | Name | Physical meaning |", "|---|---|---|"]
-        names = {lv["level"]: lv["name"] for lv in data["action_levels"]}
-        for row in p["level_map"]:
-            L.append(f"| {row['level']} | {names[row['level']]} | {row['physical']} |")
-        L += ["", "Approvals follow core clause 3.5 for each level.", ""]
-    for law_id, law in laws.items():
-        cs = [c for c in p["clauses"] if c["law"] == law_id]
-        if not cs:
-            continue
-        n = law_id[1:]
-        L += [f"## Under Law {n}: {law['name']}", "", f"*{law['headline']}*", ""]
-        L += [clause_line(c, p['subject']) for c in cs]
-        L.append("")
-    L += [f"Conformance cases for this profile: [tests/{p['key']}.md](../tests/{p['key']}.md).", ""]
-    return "\n".join(L)
+    return [yaml.safe_load(f.read_text()) for f in sorted((ROOT / "translations").glob("*/laws.yaml"))]
 
 
 def outputs(data: dict) -> dict[Path, str]:

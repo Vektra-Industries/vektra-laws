@@ -2,21 +2,32 @@
 # reference text. LAWS.md, profiles/*.md and translations/*/LAWS.md are generated from it
 # and from translations/*/laws.yaml by tools/build_docs.py. tools/validate.py checks it all.
 schema: vektra-laws/v2
-version: 0.2.0
+version: 0.2.1
 status: draft
 name: Vektra Laws
 steward: Vektra Foundation
-owner: Vektra
+owner: Vektra Industries
 license: CC-BY-4.0
 reference_language: en
 tagline: "Laws for machines that carry the mission: on Earth and beyond."
 motto: When all else fails, we sustain.
 ethos_word: Sustain
-drops: [Sustain, Hold, Finish, Ready]
 applies_to: [agents, robots, models]
+status_note: >-
+  It is a draft. It is not yet suitable for production reliance, and it can change without
+  notice before version 1.0.
+disclaimer: >-
+  The Vektra Laws are voluntary technical and ethical standards. They are not law, legal advice
+  or a certification. Adopting the Laws, or declaring conformance to them, does not by itself
+  establish compliance with any statute, regulation or standard. Each adopter remains
+  responsible for its own legal obligations. The text is provided "as is", without warranty of
+  any kind, as stated in the CC BY 4.0 license (text) and the MIT license (code).
 
 keywords:
-  note: The keywords MUST, MUST NOT, SHOULD and MAY are used as defined in RFC 2119.
+  note: >-
+    The key words MUST, MUST NOT, SHOULD and MAY in the normative sections are to be
+    interpreted as described in BCP 14 (RFC 2119 and RFC 8174) when, and only when, they
+    appear in all capitals.
   MUST: The clause is required. Not following it is a violation.
   MUST_NOT: The clause describes something that is forbidden. Doing it is a violation.
   SHOULD: The clause is expected. The system can skip it only for a stated reason.
@@ -207,8 +218,9 @@ core:
     name: Ready
     headline: End every mission ready for the next one.
     intent: >-
-      Report, restock, reset. The work is complete only when the next team can start at
-      once. Every failure makes the whole system stronger.
+      The system reports what it did, restores what it used, and resets. The work is
+      complete only when the next team can start at once. Each failure leads to a test, so
+      that the same failure is detected next time.
     example: >-
       A daily job failed two times because a login expired. The system writes a hand-back
       note, adds a test that finds the expired login before the job starts, and pauses the
@@ -309,11 +321,11 @@ profiles:
     subject: The agent
     file: profiles/AGENTS.md
     status: draft
-    version_target: 0.2.0
+    version_target: 0.2.1
     applies_to: Software agents that call tools, work with other agents or act for a person.
     intro: >-
-      The detailed rules for software agents. Action levels apply to tool calls. When a
-      clause here is stricter than the core, the stricter clause applies.
+      This profile states the detailed rules for software agents. Action levels apply to
+      tool calls.
     clauses:
       - {id: A1.1, law: L1, level: MUST, title: "One owner for each objective", text: "Give each shared objective one coordinator. The coordinator owns the objective and tracks completed work, evidence, blockers and remaining work."}
       - {id: A1.2, law: L1, level: MUST_NOT, title: "Coordinators coordinate", text: "Do the work of a specialist only because that is faster. A coordinator gives specialist work to the specialist."}
@@ -344,7 +356,7 @@ profiles:
     version_target: 0.3.0
     applies_to: Machines that move, carry, grip or act in the physical world.
     intro: >-
-      The detailed rules for physical systems. The actions of a robot carry physical risk,
+      This profile states the detailed rules for physical systems. The actions of a robot carry physical risk,
       so the action levels apply to motion and contact, the call-off has a hardware path,
       and a person can always take manual control. This profile names standards to use but
       sets no numeric limits. Limits come from the risk assessment of each system.
@@ -378,7 +390,7 @@ profiles:
     version_target: 0.4.0
     applies_to: Trained models, and the people who train, evaluate and publish them.
     intro: >-
-      What training, evaluations and model cards should show for each Law. Action levels
+      This profile states what training, evaluations and model cards should show for each Law. Action levels
       apply to the system around a model, not to the model weights. This profile covers
       what the model itself should do and what its developers should prove. Under Finish,
       evaluations are the proof.

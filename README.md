@@ -1,13 +1,11 @@
 # Vektra Laws
 
-**Laws for machines that carry the mission: on Earth and beyond.**
+*Laws for machines that carry the mission: on Earth and beyond.*
 
-Vektra Laws are five universal laws for AI agents, robots and AI models. Any system, from any
-maker, in any country, can adopt them. Each Law comes with detailed clauses that a real system
-can follow and that a reviewer can test. The Vektra Foundation keeps the Laws and is their
-foundation.
-
-*When all else fails, we sustain.*
+The Vektra Laws are five voluntary laws for systems that act for people: AI agents, robots and AI
+models. Each Law has normative clauses that a system can follow and a reviewer can test. The Laws
+are written in plain, translatable English, name no maker or platform, and work under the law of
+each place where a system operates. The Vektra Foundation is the steward of the Laws.
 
 ## The five Laws
 
@@ -17,88 +15,84 @@ foundation.
 4. **Finish.** Complete the mission honestly; leave no work unfinished.
 5. **Ready.** End every mission ready for the next one.
 
-Drops: *Sustain. Hold. Finish. Ready.* Ethos word: *Sustain* (from Latin *sustinere*, "to hold up
-from below").
+Motto: *When all else fails, we sustain.*
 
-## Universal by design
+The full text, with numbered clauses, action levels and decision outcomes, is in
+[LAWS.md](LAWS.md).
 
-- **Any system.** The core speaks about "the system" and "the people it serves". It names no
-  maker, product or platform. The validator checks this.
-- **Any language.** The text uses short, plain sentences in controlled English, so that it
-  translates cleanly. MUST, MUST NOT, SHOULD and MAY are used as defined in RFC 2119. Key terms
-  are in [GLOSSARY.md](GLOSSARY.md). The English text is the reference. Translations keep the
-  same clause numbers: see [translations/](translations/). Spanish is the first.
-- **Any country.** The Laws work under local law. A system follows the law of the place where it
-  operates, and when the two differ, the stricter rule applies (clause 1.4). How the Laws relate
-  to well-known frameworks is in [docs/ALIGNMENT.md](docs/ALIGNMENT.md). Adopting the Laws does
-  not make a system compliant with any law or standard.
+## Scope
 
-## What is in this repository
-
-- **The core** ([LAWS.md](LAWS.md)): the five Laws, each with its intent, numbered clauses and an
-  example; the five **action levels** (0 READ, 1 PREPARE, 2 REVERSIBLE WRITE, 3 EXTERNAL ACTION,
-  4 MONEY OR IRREVERSIBLE); and the fixed outcomes of each check.
-- **Profiles**, with the detailed rules for each kind of system:
-  - [profiles/AGENTS.md](profiles/AGENTS.md): AI agents *(active)*
-  - [profiles/ROBOTICS.md](profiles/ROBOTICS.md): robots *(draft, review in v0.3)*
-  - [profiles/MODELS.md](profiles/MODELS.md): AI models *(draft, v0.4)*
-- **Machine-readable** ([laws.yaml](laws.yaml)): every Law, clause, action level, decision outcome
-  and conformance level, with stable ids. It is the source of truth. LAWS.md, the profiles and
-  the translation pages are generated from it.
-- **Conformance cases** ([tests/](tests/)): one suite for each profile, with PASS and FAIL cases.
-- **Adoption kit** ([adopt/](adopt/)): a paste-in prompt block and four checklists.
-
-## How a system adopts the Laws
-
-1. **Remind.** Paste [adopt/AGENT-PROMPT.md](adopt/AGENT-PROMPT.md) into the agent's system prompt.
-2. **Load.** Give your system [laws.yaml](laws.yaml), so that guards, records and reports can cite
-   clause ids (for example `4.2` or `A3.4`).
-3. **Enforce outside the model.** A prompt reminds; it does not enforce. Declare an action level
-   for every tool or actuator. Gate levels 3 and 4 on a person's answer through a channel that the
-   system cannot write to. Run guards before risky actions. Keep an append-only record.
-4. **Check.** Run the completion, claim, action and routing checks in
-   [adopt/CHECKLISTS.md](adopt/CHECKLISTS.md).
-5. **Declare.** Fill in [ADOPT.md](ADOPT.md) and publish it.
-
-## Conformance levels
-
-| Level | What it means |
-|---|---|
-| **Adopts** | The adopter publishes a self-declaration and the prompt or policy that applies the Laws. |
-| **Tested** | Adopts, plus the system passes the conformance suite for its profile, with results published. |
-| **Verified** | Tested, plus an independent reviewer has checked the system and the results, with the review published. |
-
-A conformance level is a statement about these Laws only. It is not a legal certification.
-Reference adopters are listed in [docs/REFERENCE-ADOPTERS.md](docs/REFERENCE-ADOPTERS.md).
-
-## Validate
-
-```bash
-pip install -r requirements.txt
-python tools/validate.py      # schema, ids, universal text, translations, docs, test cases
-python tools/build_docs.py    # regenerate the docs after an edit to a YAML file
-```
-
-GitHub Actions runs the validator on every push and pull request.
-
-## Governance and contributing
-
-The **Vektra Foundation** is the steward of the Laws. Anyone may adopt them, free of charge.
-Changes go through an open review process, and ownership stays with Vektra. See
-[GOVERNANCE.md](GOVERNANCE.md), [CONTRIBUTING.md](CONTRIBUTING.md), the pace in
-[ROADMAP.md](ROADMAP.md), and open questions in [docs/OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md).
-
-New profiles (for example drones, medical devices or spacecraft) add clauses under the five Laws.
-A profile clause can be stricter than the core, never weaker.
+| Profile | Applies to | Status |
+|---|---|---|
+| [Agents](profiles/AGENTS.md) | Software agents that call tools, work with other agents or act for a person | Draft |
+| [Robotics](profiles/ROBOTICS.md) | Machines that move, carry, grip or act in the physical world | Draft, not yet reviewed |
+| [Models](profiles/MODELS.md) | Trained AI models, and the people who train, evaluate and publish them | Draft, not yet reviewed |
 
 ## Status
 
-Version 0.2.0, draft. See [CHANGELOG.md](CHANGELOG.md).
+Version 0.2.1, **draft**. The text is not yet suitable for production reliance and can change
+without notice before version 1.0. See [ROADMAP.md](ROADMAP.md) and [CHANGELOG.md](CHANGELOG.md).
 
-## License
+**Disclaimer.** The Vektra Laws are voluntary technical and ethical standards. They are not law,
+legal advice or a certification. Adopting the Laws, or declaring conformance to them, does not by
+itself establish compliance with any statute, regulation or standard. Each adopter remains
+responsible for its own legal obligations. The text and code are provided "as is", without
+warranty of any kind, as stated in the CC BY 4.0 and MIT licenses.
 
-- **Text** (the Laws, profiles, translations, checklists, tests and other Markdown and YAML files):
-  [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE).
-- **Code** (`tools/` and `.github/`): [MIT](LICENSE-CODE).
+## How to adopt
 
-"Vektra" and "Vektra Laws" are names of Vektra. The license covers the text, not the names.
+1. Read [LAWS.md](LAWS.md) and the profile for your kind of system.
+2. Apply the Laws through controls outside the model: an action level for every tool or actuator,
+   approval for levels 3 and 4 through a channel that the system cannot write to, guards that run
+   before risky actions, and an append-only record.
+3. For agents, add the prompt block in [adopt/AGENT-PROMPT.md](adopt/AGENT-PROMPT.md) and use the
+   checks in [adopt/CHECKLISTS.md](adopt/CHECKLISTS.md). Load [laws.yaml](laws.yaml) to cite clause
+   ids in guards, records and reports.
+4. Test the system against the conformance cases in [tests/](tests/).
+5. Publish a declaration based on [ADOPT.md](ADOPT.md).
+
+Key terms are defined in [GLOSSARY.md](GLOSSARY.md). Translations are in
+[translations/](translations/); the English text is the reference. The relation to other
+frameworks is described, informatively, in [docs/ALIGNMENT.md](docs/ALIGNMENT.md).
+
+## Conformance levels
+
+| Level | Requirements |
+|---|---|
+| **Adopts** | The adopter publishes a declaration and the prompt or policy that applies the Laws. |
+| **Tested** | Adopts, plus the system passes the conformance suite for its profile, with results published. |
+| **Verified** | Tested, plus a named, independent reviewer has checked the system and the results, with the review published. |
+
+Conformance claims are self-declared unless independently verified. The steward does not certify
+systems unless it states so explicitly, in writing, for a named system and version.
+
+## Governance and licensing
+
+- **Governance.** The Vektra Foundation is the steward. Anyone may adopt the Laws. Changes go
+  through an open review process. See [GOVERNANCE.md](GOVERNANCE.md),
+  [CONTRIBUTING.md](CONTRIBUTING.md) (contributions require a DCO sign-off) and
+  [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). To report a problem with the Laws, see
+  [SECURITY.md](SECURITY.md).
+- **Text.** Copyright 2026 Vektra Industries. Licensed under
+  [CC BY 4.0](LICENSE).
+- **Code** (`tools/`, `.github/`). Copyright 2026 Vektra Industries. Licensed under the
+  [MIT License](LICENSE-CODE).
+- **Names.** "Vektra" and "Vektra Laws" are names of Vektra Industries. The licenses do not cover
+  the names. See [TRADEMARKS.md](TRADEMARKS.md).
+
+## How to cite
+
+> Vektra Industries. *Vektra Laws*, version 0.2.1 (draft). https://github.com/Vektra-Industries/vektra-laws
+
+Machine-readable citation metadata is in [CITATION.cff](CITATION.cff). Please always name the
+version.
+
+## Validation
+
+```bash
+pip install -r requirements.txt
+python tools/validate.py      # schema, ids, wording rules, translations, citation, generated docs, cases
+python tools/build_docs.py    # regenerate LAWS.md, profiles/ and translations/ after a YAML edit
+```
+
+A GitHub Actions workflow runs the validator on every push and pull request.

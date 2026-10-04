@@ -1,15 +1,17 @@
-# Alignment with other frameworks
+# Relation to other frameworks
 
-This page describes, at a high level, how the Vektra Laws relate to some well-known AI and
-robotics frameworks. It is a reading aid, not legal advice.
+*This document is informative and non-authoritative. It is not legal advice.*
 
-**Important.** Adopting the Vektra Laws, or reaching any conformance level, does **not** make a
-system compliant with any law, regulation or standard. Each framework below has its own scope,
-terms and requirements. Read the official text. The Laws work under local law (clause 1.4): when
-a framework that applies to a system is stricter, the stricter rule applies.
+This document describes, at a high level, how the topics of the Vektra Laws relate to some
+well-known AI and robotics frameworks. It does not interpret those frameworks, and it makes no
+claim about any specific article, clause or requirement in them. Each framework has its own
+scope, terms and requirements; consult the official text and qualified advisers.
 
-The descriptions are kept general on purpose. Where a detail is not certain, this page does not
-give article or section numbers. Corrections from reviewers are welcome.
+Adopting the Vektra Laws, or declaring conformance to them, does not by itself establish
+compliance with any of these frameworks or with any statute or regulation. Under clause 1.4, a
+system follows the law of each place where it operates, and the stricter rule applies.
+
+Corrections from reviewers are welcome (see [SECURITY.md](../SECURITY.md)).
 
 ## Summary table
 
@@ -21,8 +23,8 @@ give article or section numbers. Corrections from reviewers are welcome.
 | **4 Finish** (proof of completion; honest claims; records) | Record-keeping, transparency and documentation; accuracy | Measure: test and evaluate; valid and reliable | Transparency and explainability; robustness | Transparency and explainability; responsibility | Performance evaluation; documented information | Verification and validation |
 | **5 Ready** (hand-back; safe state; learn from failure) | Post-market monitoring; incident reporting | Manage: respond and improve | Accountability over the life cycle | Adaptive governance; review | Continual improvement; corrective action | Safe states; information for use |
 
-The table shows where topics overlap. It does not mean that the Laws meet the requirements of any
-framework.
+The table shows where topics overlap. An overlap does not mean that the Laws meet any requirement
+of the framework.
 
 ## EU Artificial Intelligence Act
 
@@ -80,7 +82,7 @@ framework.
 ## ISO/IEC 42001 (AI management systems)
 
 - **What it is.** An international standard, published in 2023, that specifies requirements for an
-  AI management system in an organization. Organizations can be certified against it.
+  AI management system in an organization. Organizations can seek third-party certification against it.
 - **How it works.** It follows the structure of other ISO management-system standards: context,
   leadership, planning, support, operation, performance evaluation and improvement, with AI
   controls.
@@ -101,8 +103,8 @@ framework.
 - **What the Laws do not cover.** Numeric limits, design and integration requirements, and
   risk-assessment methods. The robotics profile sets no numbers of its own.
 
-## How to use this page
+## Use of this document
 
-An adopter can use this table to see which parts of its existing compliance work also support the
-Laws, and which parts of the Laws need their own controls. It should not use this page as a
-compliance claim.
+An adopter can use this document to identify where existing governance work may also support the
+Laws, and where the Laws need their own controls. This document is not a basis for a compliance
+claim.

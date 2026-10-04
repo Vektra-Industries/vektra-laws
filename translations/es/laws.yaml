@@ -3,19 +3,18 @@
 lang: es
 language_name: Español
 status: draft, needs review by a native speaker
-reference_version: 0.2.0
+reference_version: 0.2.1
 translators: [initial draft by the Vektra Laws maintainers]
 reviewers: []
 labels:
   title: Las Leyes de Vektra
   intro: >-
-    Esta es una traducción. El texto de referencia es el inglés (LAWS.md). Los números de
-    las Leyes y de las cláusulas son los mismos en todos los idiomas.
+    Esta es una traducción informativa. El texto de referencia es el inglés (LAWS.md). Si
+    hay diferencias, prevalece el texto en inglés. Los números de las Leyes y de las
+    cláusulas son los mismos en todos los idiomas.
   law: Ley
   motto: Lema
-  drops: Palabras clave
 motto: Cuando todo lo demás falla, sostenemos.
-drops: [Sostener, Respaldar, Cumplir, Listos]
 laws:
   - id: L1
     name: La Misión

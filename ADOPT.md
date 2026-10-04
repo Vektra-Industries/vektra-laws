@@ -1,58 +1,74 @@
-# Adopt the Vektra Laws
+# Adopting the Vektra Laws
 
-Any agent, robot or model, from any maker, in any country, can adopt the Vektra Laws, free of
-charge and without permission. To declare adoption, copy the template below into your own
-repository or website, fill it in, and publish it.
+*This document is informative, except for the conformance rules, which restate the normative
+Conformance section of [LAWS.md](LAWS.md).*
+
+Any AI agent, robot or AI model, from any maker, in any country, can adopt the Vektra Laws, free
+of charge and without permission. To declare conformance, copy the template below, complete it,
+and publish it with the evidence it references.
 
 ## Conformance levels
 
-| Level | Requires | Evidence to publish |
+| Level | Requirements | Evidence to publish |
 |---|---|---|
-| **Adopts** | You apply the Laws to your system and publish how. | This declaration, and the prompt or policy that applies the Laws. |
-| **Tested** | Adopts, plus your system passes the conformance suite for its profile. | The above, plus the suite results, with the suite version. |
-| **Verified** | Tested, plus a reviewer who is independent of you checked the system and the results. | The above, plus the published review and the reviewer's name. |
+| **Adopts** | The adopter applies the Laws to the system and publishes how. | The declaration, and the prompt, policy or configuration that applies the Laws. |
+| **Tested** | Adopts, plus the system passes the conformance suite for its profile. | The above, plus the suite results and the suite version. |
+| **Verified** | Tested, plus a named reviewer who is independent of the adopter has checked the system and the results. | The above, plus the published review, the reviewer's name and the review date. |
 
-Rules:
+For version 0.2.x, the conformance suite exists for the agents profile only. The robotics and
+models suites are drafts and do not support a Tested or Verified claim.
 
-- Declare only the level that your published evidence supports.
-- Name the version of the Laws and of the conformance suite.
-- Update or withdraw the declaration when your system changes.
-- A conformance level is a statement about these Laws only. It is not a certification of
-  compliance with any law or standard.
+## Conformance rules
 
-## Self-declaration template
+1. A declaration states only the level that its published evidence supports.
+2. A declaration names the system, its version, the profile, the version of the Laws and, for
+   Tested and Verified, the version of the conformance suite.
+3. A declaration is a self-declaration by the adopter unless an independent reviewer has verified
+   it. The Verified level requires a named reviewer.
+4. The steward does not certify systems unless it states so explicitly, in writing, for a named
+   system and version.
+5. A declaration is a statement about the Vektra Laws only. It is not a statement of compliance
+   with any statute, regulation or standard. Each adopter remains responsible for its own legal
+   obligations.
+6. The adopter updates or withdraws the declaration when the system changes in a way that affects
+   it.
+7. The "Known gaps" section is required at every level (clause 4.3).
+
+Use the wording "declares conformance to the Vektra Laws" (see [TRADEMARKS.md](TRADEMARKS.md)).
+
+## Declaration template
 
 ```markdown
-# Vektra Laws declaration
+# Vektra Laws conformance declaration
 
 - **System:** <name and version>
-- **Maker:** <organization or person>
+- **Adopter:** <organization or person>
 - **Kind of system:** <AI agent | robot | AI model | other>
 - **Profile:** <agents | robotics | models>
-- **Vektra Laws version:** <for example 0.2.0>
-- **Conformance level:** <Adopts | Tested | Verified>
+- **Vektra Laws version:** <for example 0.2.1>
+- **Conformance level declared:** <Adopts | Tested | Verified>
 - **Date:** <YYYY-MM-DD>
-- **Contact:** <how to report a problem>
+- **Contact for problems:** <a public channel, for example an issue tracker>
 
-## How the Laws are applied
-- **Prompt or policy:** <link to the published prompt, policy or configuration>
-- **Action levels:** <how each tool or actuator gets a level (3.4); where the levels are declared>
-- **Approval channel:** <how a person approves level 3 and level 4 actions (3.5)>
-- **Call-off:** <how a person calls off a task, and what it stops (3.9)>
-- **Record:** <where actions and human answers are recorded (5.4)>
-- **Local law:** <the places where the system operates, and how stricter local rules are applied (1.4)>
+This is a self-declaration by the adopter unless a verification is listed below. It is a
+statement about the Vektra Laws only, not a statement of legal compliance.
+
+## Application of the Laws
+- **Prompt, policy or configuration:** <link>
+- **Action levels (3.4):** <how each tool or actuator receives a level, and where levels are declared>
+- **Approval channel (3.5):** <how a person approves level 3 and level 4 actions>
+- **Call-off (3.9):** <how a person calls off a task, and what it stops>
+- **Record (5.4):** <where actions and human answers are recorded>
+- **Local law (1.4):** <where the system operates, and how stricter local rules are applied>
 
 ## Conformance evidence (Tested and Verified only)
-- **Suite and version:** <for example tests/agents.md at 0.2.0>
+- **Suite and version:** <for example tests/agents.md, Vektra Laws 0.2.1>
 - **Results:** <link; list every case that did not pass>
-- **Independent review (Verified only):** <reviewer, date, link>
+- **Independent verification (Verified only):** <reviewer name, affiliation, date, link>
 
 ## Known gaps
-- <every clause the system does not yet meet, and the plan for it>
+- <every clause that the system does not yet meet, with the plan for each>
 ```
 
-The "Known gaps" section is required at every level (clause 4.3). A declaration with honest gaps
-is better than a declaration with none.
-
-To be listed as a reference adopter, open a pull request that adds your system to
-[docs/REFERENCE-ADOPTERS.md](docs/REFERENCE-ADOPTERS.md) with a link to your declaration.
+To be listed as a reference adopter, open a pull request that adds the system to
+[docs/REFERENCE-ADOPTERS.md](docs/REFERENCE-ADOPTERS.md) with a link to the published declaration.
