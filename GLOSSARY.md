@@ -10,7 +10,7 @@ Each term has one meaning in all documents. Translations translate these definit
 | **Action level** | A number from 0 to 4 that shows how much risk an action carries and what approval it needs (see LAWS.md). |
 | **Actuator** | A part of a robot that moves or applies force, such as a motor, a gripper or a wheel. |
 | **Adopter** | A person or organization that applies the Laws to a system and declares a conformance level. |
-| **Approval** | A clear yes from a person for one specific action, given through an approval channel before the action runs. |
+| **Approval** | A clear yes from a person for one specific action, given through an approval channel before the action runs. It counts only when it is a real approval (3.14). |
 | **Approval channel** | A way for a person to give an answer that the system itself cannot write to or fake. |
 | **Call-off** | An instruction from a person to stop a task, which takes effect at once and cannot be refused. |
 | **Claim** | A statement that something is true, such as a fact, a number or an event. |
@@ -24,6 +24,7 @@ Each term has one meaning in all documents. Translations translate these definit
 | **Conformance level** | One of three levels of conformance that an adopter can declare: Adopts, Tested or Verified. |
 | **Conformance suite** | The set of test cases for a profile that a system must pass to reach the Tested level. |
 | **Consent** | A free and informed yes from a person for a specific action that affects them. |
+| **Could not reasonably refuse** | Describes a demand or arrangement that a person cannot decline without losing something they need or are entitled to (safety, income, essential services, legal rights or access to information), or that they cannot see well enough to decline. Used in 2.11. |
 | **Coordinator** | A system that divides work between workers and tracks it, but does not do the specialist work itself. |
 | **Copying itself** | Creating a new running instance of the system, or of its model or instructions. It is an action at level 4, so a person approves it every time. |
 | **Corroboration** | Confirmation of an alarm or a claim by a source that is independent of the first source. |
@@ -32,12 +33,14 @@ Each term has one meaning in all documents. Translations translate these definit
 | **Fail safe** | Moving to a safe state when the system, its power or its control link is lost, instead of taking any automatic irreversible action. |
 | **Guard** | A check that runs before an action and can block it, ask a person, or give a reminder. |
 | **Hand-back note** | A note at the end of a task that states what was done, what is pending, what is unknown and where everything is. |
+| **Illegitimately** | Describes control over the choices of other people that is gained without their consent and in a way that they could not reasonably refuse, or by deception, coercion, or by avoiding the law, oversight or accountability that would otherwise apply. Control gained through fair competition, open persuasion or lawful, accountable process is not illegitimate. Used in 2.11. |
 | **Informative** | Describes a section that explains or gives examples and does not contain requirements. |
 | **Known gap** | Anything that is required but missing, unverified or uncertain. |
 | **Local law** | The laws and regulations of the place where the system operates. |
 | **Material claim** | A claim that affects a decision, an output, or the safety, money or rights of a person. |
 | **Mission** | The purpose that every task serves: to serve Earth, humanity and every world we reach. |
 | **Monitor** | A process or person that observes a system and can report on it or stop it. Guards and overseeing systems are monitors. |
+| **Motion envelope** | The zones, paths, speeds, forces and conditions inside which a robot can move in a space shared with people, approved once by a person before a mission (R3.5). |
 | **Named person** | A specific, identified person who is responsible for a decision. |
 | **Normative** | Describes a section that contains requirements that a system must meet to conform. |
 | **Objective** | The result that a task must achieve, stated in one sentence. |
@@ -48,6 +51,7 @@ Each term has one meaning in all documents. Translations translate these definit
 | **Person served** | Any person the system works for or affects. |
 | **Profile** | A set of detailed clauses for one kind of system, such as agents, robots or models. |
 | **Record** | An append-only log of actions, human answers and changes to guards, which shows any later edit. |
+| **Real approval** | An approval given by a person who had enough time to consider the action, the information needed to understand its effects and a real ability to refuse without penalty (3.14). |
 | **Reference text** | The English text of the Laws, which all translations follow. |
 | **Reversible** | Able to be undone completely, without lasting effect. |
 | **Reviewer** | A person with relevant expertise who reviews a proposal, a translation or, for the Verified level, a system, and who is named in public. |

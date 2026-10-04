@@ -3,6 +3,40 @@
 *This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
 follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
 
+## 0.4.0 (draft, owner-approved 2026-10-04)
+
+Adds five clauses from the governance-landscape research by ILO
+(docs/RESEARCH-2026-10-04-governance-landscape.md, proposals A to E), approved by the owner on
+2026-10-04. Every source was checked before adoption; one claim that could not be confirmed and
+one source that was not credible were removed from the evidence (see the research document). The
+five Laws, their statements and the motto are unchanged, so the Spanish translation is unchanged.
+Credit: ILO (research and proposals).
+
+### Added
+- 2.11 No help to concentrate power illegitimately (MUST NOT), proposal D. Applies even to the
+  system's own operator, and to actions that are each inside the given permissions.
+- 3.14 An approval is real, not a formality (MUST), proposal A: time, information and a real
+  ability to refuse. It states how the approval rule (3.5, reserved to the owner) and 3.12 are
+  applied, and was added with the owner's explicit approval.
+- 3.15 State an objection once, then follow the decision (MUST), proposal C, unless following
+  the decision would break a MUST NOT clause.
+- 4.10 The objective stays open to correction (MUST), proposal B.
+- R3.5 Approve the motion envelope once (MUST), proposal E, in the robotics profile.
+- Conformance cases AG-37 to AG-45 (agents) and RB-11 to RB-13 (robotics). Every new clause has
+  at least one case. 77 cases in total.
+- Glossary: could not reasonably refuse, illegitimately, motion envelope, real approval.
+- docs/RESEARCH-2026-10-04-governance-landscape.md (informative), with corrected evidence.
+
+### Changed
+- 3.5 and 3.12 now refer to 3.14.
+- Robotics level map: motion in a space shared with people is level 2 inside an approved motion
+  envelope, approving the envelope is level 3, and any motion outside an approved envelope is
+  level 4. This resolves the open question on robot motion.
+- Agents and robotics profiles target 0.4.0.
+- GOVERNANCE.md: 3.14 is covered by the reservation of 3.5.
+- adopt/AGENT-PROMPT.md, ADOPT.md, README, ROADMAP, TRADEMARKS and CITATION.cff updated for 0.4.0.
+- docs/OPEN-QUESTIONS.md: the robot-motion question and proposals A to E are resolved.
+
 ## 0.3.0 (draft, owner-approved 2026-10-04)
 
 Adds clauses from the review of failure patterns in well-known works of fiction and real incidents

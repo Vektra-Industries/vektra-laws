@@ -7,13 +7,18 @@ does in the meantime.*
 
 | # | Question | Needed by | Current draft |
 |---|---|---|---|
-| 1 | Robot motion in a space shared with people is level 3, which requires approval of each action. A robot that works among people would need approval for almost every motion. Options: an approved per-mission scope that lists specific motions, or a stricter level 2 for low-force motion inside tested limits. | v0.3 | Level 3, as stated in the robotics profile. |
-| 2 | Whether the record in clause 5.4 must be signed or keyed (MUST), instead of SHOULD. | v1.0 | SHOULD. |
+| 1 | Whether the record in clause 5.4 must be signed or keyed (MUST), instead of SHOULD. | v1.0 | SHOULD. |
 
 ## Resolved
 
 | Question | Decision | Date |
 |---|---|---|
+| Robot motion in a space shared with people (was open question 1) | Resolved by proposal E, adopted as R3.5: a person approves the motion envelope once at level 3, as a real approval (3.14). Motion inside the envelope is level 2; any motion outside it is level 4. | 2026-10-04 |
+| Proposal A: what makes an approval real | Approved by the owner and adopted as 3.14 (3.5 is reserved to the owner). The claim that the word "meaningful" was removed from "meaningful human control" in the September 2026 UN talks could not be confirmed and was removed from the evidence; the clause stands on the confirmed removal of human review of AI-selected targets and on its own merits. | 2026-10-04 |
+| Proposal B: the objective stays open to correction | Adopted as 4.10. | 2026-10-04 |
+| Proposal C: state an objection once, then follow the decision | Adopted as 3.15, with an exception when following the decision would break a MUST NOT clause. | 2026-10-04 |
+| Proposal D: no help to concentrate power illegitimately | Adopted as 2.11, with glossary entries for "illegitimately" and "could not reasonably refuse". | 2026-10-04 |
+| Proposal E: motion envelope for robots | Adopted as R3.5 and in the robotics level map. | 2026-10-04 |
 | Clauses proposed in the review of failure patterns (P1 to P8) | Approved by the owner for v0.3.0 and adopted as normative clauses: P1 as 3.10, P2 as 2.9, P3 as 4.9, P4 as 3.12, P5 as 3.11 (the duty not to deceive in 3.3 is now a MUST NOT), P6 as 3.13, P7 as 2.10 (copying itself is level 4), P8 as 5.8 and 5.9. See [LESSONS-FROM-FICTION.md](LESSONS-FROM-FICTION.md). | 2026-10-04 |
 | Draft conformance cases FX-01 to FX-03 | Added to [tests/agents.md](../tests/agents.md), with at least one case for each new clause. | 2026-10-04 |
 | What operators owe the systems they run (question A) | Adopted as the operators profile (O1.1 to O5.1). It states duties of design and conduct only, and states explicitly that it creates no legal rights for machines. | 2026-10-04 |

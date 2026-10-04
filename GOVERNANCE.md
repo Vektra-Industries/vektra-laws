@@ -36,7 +36,9 @@
 
 - Changes to the five Laws, their order, their statements or the motto.
 - Changes to the approval rule (3.5), the call-off clause (3.9) or the clause on resisting being
-  stopped or changed (3.10).
+  stopped or changed (3.10), including the definition of a real approval (3.14), which states
+  how 3.5 and 3.12 are applied. Clause 3.14 was added with the approval of the owner on
+  2026-10-04.
 - Changes to this governance document.
 
 ## Certification

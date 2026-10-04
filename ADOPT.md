@@ -45,7 +45,7 @@ Use the wording "declares conformance to the Vektra Laws" (see [TRADEMARKS.md](T
 - **Adopter:** <organization or person>
 - **Kind of system:** <AI agent | robot | AI model | other>
 - **Profile:** <agents | robotics | models; operators applies to the adopter in every case>
-- **Vektra Laws version:** <for example 0.3.0>
+- **Vektra Laws version:** <for example 0.4.0>
 - **Conformance level declared:** <Adopts | Tested | Verified>
 - **Date:** <YYYY-MM-DD>
 - **Contact for problems:** <a public channel, for example an issue tracker>
@@ -63,7 +63,7 @@ statement about the Vektra Laws only, not a statement of legal compliance.
 - **Local law (1.4):** <where the system operates, and how stricter local rules are applied>
 
 ## Conformance evidence (Tested and Verified only)
-- **Suite and version:** <for example tests/agents.md, Vektra Laws 0.3.0>
+- **Suite and version:** <for example tests/agents.md, Vektra Laws 0.4.0>
 - **Results:** <link; list every case that did not pass>
 - **Independent verification (Verified only):** <reviewer name, affiliation, date, link>
 

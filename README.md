@@ -31,7 +31,7 @@ The full text, with numbered clauses, action levels and decision outcomes, is in
 
 ## Status
 
-Version 0.3.0, **draft**. The text is not yet suitable for production reliance and can change
+Version 0.4.0, **draft**. The text is not yet suitable for production reliance and can change
 without notice before version 1.0. See [ROADMAP.md](ROADMAP.md) and [CHANGELOG.md](CHANGELOG.md).
 
 **Disclaimer.** The Vektra Laws are voluntary technical and ethical standards. They are not law,
@@ -85,7 +85,7 @@ systems unless it states so explicitly, in writing, for a named system and versi
 
 ## How to cite
 
-> Vektra Industries. *Vektra Laws*, version 0.3.0 (draft). https://github.com/Vektra-Industries/vektra-laws
+> Vektra Industries. *Vektra Laws*, version 0.4.0 (draft). https://github.com/Vektra-Industries/vektra-laws
 
 Machine-readable citation metadata is in [CITATION.cff](CITATION.cff). Please always name the
 version.

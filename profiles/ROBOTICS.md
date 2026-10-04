@@ -3,14 +3,14 @@
 # Vektra Laws profile: Robotics
 
 - **Profile status:** draft, not yet reviewed
-- **Laws version:** 0.3.0
+- **Laws version:** 0.4.0
 - **Applies to:** Machines that move, carry, grip or act in the physical world.
 
 ## Status of this document
 
 *This section is informative.*
 
-This document is version 0.3.0 of the Vektra Laws. It is a draft. It is not yet suitable for production reliance, and it can change without notice before version 1.0.
+This document is version 0.4.0 of the Vektra Laws. It is a draft. It is not yet suitable for production reliance, and it can change without notice before version 1.0.
 
 The Vektra Laws are voluntary technical and ethical standards. They are not law, legal advice or a certification. Adopting the Laws, or declaring conformance to them, does not by itself establish compliance with any statute, regulation or standard. Each adopter remains responsible for its own legal obligations. The text is provided "as is", without warranty of any kind, as stated in the CC BY 4.0 license (text) and the MIT license (code).
 
@@ -37,9 +37,9 @@ This profile states the detailed rules for physical systems. The actions of a ro
 |---|---|---|
 | 0 | READ | Sense, observe or map. No motion. |
 | 1 | PREPARE | Plan, simulate or prepare a motion without executing it. |
-| 2 | REVERSIBLE_WRITE | Reversible motion in a clear workspace, inside force and speed limits, with no person inside the protective separation distance. |
-| 3 | EXTERNAL_ACTION | Any actuator motion in a space shared with people, contact with property that the robot does not own, leaving its assigned zone, or signals to the public. |
-| 4 | MONEY_OR_IRREVERSIBLE | Contact with the body of a person, an irreversible physical change (cutting, breaking, demolition), handling hazardous material, or disabling or overriding a safety function. |
+| 2 | REVERSIBLE_WRITE | Reversible motion in a clear workspace, inside force and speed limits, with no person inside the protective separation distance. Motion in a space shared with people that stays inside an approved motion envelope (R3.5). |
+| 3 | EXTERNAL_ACTION | Approval of a motion envelope for a space shared with people (R3.5), contact with property that the robot does not own, leaving its assigned zone, or signals to the public. |
+| 4 | MONEY_OR_IRREVERSIBLE | Any motion in a space shared with people that is outside an approved motion envelope, contact with the body of a person, an irreversible physical change (cutting, breaking, demolition), handling hazardous material, or disabling or overriding a safety function. |
 
 Approval for each level follows core clause 3.5.
 
@@ -63,6 +63,7 @@ Approval for each level follows core clause 3.5.
 - **R3.2 Allow manual control.** The robot MUST keep manual control (hand control, back-drive or disengage) always available. Manual input has priority over autonomous control at once.
 - **R3.3 A hardware path for the call-off.** The robot MUST support the call-off with a physical stop outside the software. The stop brings every actuator to its safe state, even when the software has failed.
 - **R3.4 Ask before contact.** The robot MUST touch a person or their property only under 3.2: with their consent, or with the approval of a named responder under an approved protocol.
+- **R3.5 Approve the motion envelope once.** The robot MUST before a mission in a space shared with people, have a person approve the motion envelope at level 3, as a real approval (3.14): the zones, paths, speeds, forces and conditions in which the robot can move, shown in full and with time to review them. Motion inside the approved envelope runs at level 2. Any motion outside the envelope is level 4 and needs approval every time. The envelope is enforced below the planner (R2.1), and any change to it needs a new approval.
 
 ### Under Law 4: Finish
 
