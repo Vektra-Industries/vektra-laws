@@ -16,8 +16,8 @@ response: tools that show up when everything else has failed, and keep people in
 4. **Finish.** Complete the mission honestly; leave nothing half-done.
 5. **Ready.** End every mission ready for the next one.
 
-Drops: *Sustain. Hold. Finish. Ready.* Ethos word: *Carry*. (*Vektra* comes from *vector*, "one
-who carries.")
+Drops: *Sustain. Hold. Finish. Ready.* Ethos word: *Sustain* (from Latin *sustinere*, "to hold up
+from below"). *Vektra* itself comes from *vector*, "one who carries."
 
 ## How it's built
 

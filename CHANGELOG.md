@@ -23,6 +23,9 @@ First draft, not yet sealed or released.
 - ROADMAP.md, docs/OPEN-QUESTIONS.md, CONTRIBUTING.md, licenses (CC BY 4.0 for text, MIT for
   code).
 
+### Changed
+- Ethos word set to *Sustain* (confirmed by Pablo), replacing Carry in README and laws.yaml.
+
 ### Credits
 - **Ada** (software): the code-enforceable clauses: action levels declared before shipping, with
   undeclared actions counted as level 4; human answers only through a channel the system can't

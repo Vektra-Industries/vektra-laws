@@ -8,7 +8,7 @@ owner: Vektra Industries
 license: CC-BY-4.0
 tagline: "Laws for machines that carry the mission: on Earth and beyond."
 motto: When all else fails, we sustain.
-ethos_word: Carry
+ethos_word: Sustain
 drops: [Sustain, Hold, Finish, Ready]
 applies_to: [agents, robots, models]
 

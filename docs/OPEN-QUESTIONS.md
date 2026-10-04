@@ -5,10 +5,9 @@ did in the meantime.
 
 ## For v0.1 (before going public)
 
-1. **Ethos word.** The brief for this repo says *Carry*. The Foundation Charter and CORE.md
-   (Oct 2) say the ethos word changed to *Sustain*, with Carry living on in the name. This draft
-   uses Carry as the ethos word and keeps the motto "When all else fails, we sustain." Which is
-   right for the public repo?
+1. ~~**Ethos word.**~~ **Resolved 2026-10-04:** Pablo confirmed the ethos word is *Sustain*,
+   not Carry. README and laws.yaml now say Sustain. Wording that uses "carry" as a verb (such as
+   the tagline) stays.
 2. **Action level definitions.** This draft uses the levels from the brief: 0 READ, 1 PREPARE,
    2 REVERSIBLE WRITE, 3 EXTERNAL ACTION, 4 MONEY OR IRREVERSIBLE. Ada proposed a different cut
    (1 = reversible change in its own workspace, 2 = reversible change others can see, 3 = hard to
