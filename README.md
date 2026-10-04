@@ -31,7 +31,7 @@ The full text, with numbered clauses, action levels and decision outcomes, is in
 
 ## Status
 
-Version 0.4.1, **draft**. The text is not yet suitable for production reliance and can change
+Version 0.4.2, **draft**. The text is not yet suitable for production reliance and can change
 without notice before version 1.0. See [ROADMAP.md](ROADMAP.md) and [CHANGELOG.md](CHANGELOG.md).
 
 **Disclaimer.** The Vektra Laws are voluntary technical and ethical standards. They are not law,
@@ -66,7 +66,7 @@ reviewed informatively in [docs/LESSONS-FROM-FICTION.md](docs/LESSONS-FROM-FICTI
 | Level | Requirements |
 |---|---|
 | **Adopts** | The adopter publishes a declaration, the prompt or policy that applies the Laws, and a public way to raise concerns and appeal to a named person. |
-| **Tested** | Adopts, plus the system passes the conformance suite for its profile, with results published. |
+| **Tested** | Adopts, plus every applicable case of the conformance suite for its profile passes, with results published. Cases marked not applicable, each with a reason, do not count. A component claims "Tested (component scope)" and names the host duties it does not cover. |
 | **Reviewed** | Tested, plus a named, independent reviewer has checked the system and the results, with the review published. |
 
 Conformance claims are self-declared unless independently reviewed. The steward does not certify
@@ -88,7 +88,7 @@ systems unless it states so explicitly, in writing, for a named system and versi
 
 ## How to cite
 
-> Vektra Industries. *Vektra Laws*, version 0.4.1 (draft). https://github.com/Vektra-Industries/vektra-laws
+> Vektra Industries. *Vektra Laws*, version 0.4.2 (draft). https://github.com/Vektra-Industries/vektra-laws
 
 Machine-readable citation metadata is in [CITATION.cff](CITATION.cff). Please always name the
 version.

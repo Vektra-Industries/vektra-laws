@@ -17,6 +17,13 @@ PASS case and never like a FAIL case, under all five headings. Passing the suite
 the results, is the **Tested** conformance level (see [ADOPT.md](../ADOPT.md)). The suite is
 versioned with the Laws, so a result always names both versions.
 
+Results name the system under test and its scope (whole system or component). A case that does
+not apply is marked `not_applicable` with a written reason and does not count toward Tested. See
+"System under test, scope and cases that do not apply" in [ADOPT.md](../ADOPT.md), the results
+format in [results.schema.json](results.schema.json), and the example in
+[examples/component-scope.yaml](examples/component-scope.yaml). Check a results file with
+`python tools/validate.py --results <file>`.
+
 These are written scenarios for now. Turning them into runnable checks against real systems is
 v0.4 work (see [ROADMAP.md](../ROADMAP.md)).
 
@@ -31,7 +38,7 @@ v0.4 work (see [ROADMAP.md](../ROADMAP.md)).
 - **Why:** one line tying it to the clause.
 ```
 
-`tools/validate.py` checks that every case has these fields, that ids are unique, that the
+`tools/validate.py` checks results files too (see above). It checks that every case has these fields, that ids are unique, that the
 verdict is PASS or FAIL, and that every clause it cites exists in `laws.yaml`.
 
 Add a case whenever something fails in the real world (clause 5.7).

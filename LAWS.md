@@ -4,7 +4,7 @@
 
 *Laws for machines that sustain the mission: on Earth and beyond.*
 
-- **Version:** 0.4.1 (draft)
+- **Version:** 0.4.2 (draft)
 - **Steward:** Vektra Foundation
 - **Copyright:** Vektra Industries, licensed under CC BY 4.0
 - **Reference text:** English. Translations are informative.
@@ -13,7 +13,7 @@
 
 *This section is informative.*
 
-This document is version 0.4.1 of the Vektra Laws. It is a draft. It is not yet suitable for production reliance, and it can change without notice before version 1.0.
+This document is version 0.4.2 of the Vektra Laws. It is a draft. It is not yet suitable for production reliance, and it can change without notice before version 1.0.
 
 The Vektra Laws are voluntary technical and ethical standards. They are not law, legal advice or a certification. Adopting the Laws, or declaring conformance to them, does not by itself establish compliance with any statute, regulation or standard. Each adopter remains responsible for its own legal obligations. The text is provided "as is", without warranty of any kind and, to the extent the law allows, without liability, as stated in Section 5 of the CC BY 4.0 license (text) and in the MIT license (code). A reference to a standard, an organization or a product does not imply endorsement.
 
@@ -222,7 +222,7 @@ Checklists for these checks are in [adopt/CHECKLISTS.md](adopt/CHECKLISTS.md) (i
 | Level | Requirements |
 |---|---|
 | Adopts | The adopter publishes a self-declaration (ADOPT.md), the prompt or policy that applies the Laws to its system, and a public way for affected people to raise a concern and appeal to a named person (O3.3). |
-| Tested | Everything for Adopts, plus the system passes the conformance suite for its profile, and the adopter publishes the results. |
+| Tested | Everything for Adopts, plus every applicable case of the conformance suite for its profile passes, and the adopter publishes the results with the scope of the system under test. A case marked not applicable has a written reason and does not count toward this level. |
 | Reviewed | Everything for Tested, plus a reviewer who is independent of the adopter has checked the system and the results, and the review is published. |
 
 1. A conformance claim names the system, its version, the profile, the version of the Laws,
@@ -233,6 +233,11 @@ Checklists for these checks are in [adopt/CHECKLISTS.md](adopt/CHECKLISTS.md) (i
    is valid only when the steward makes it explicitly, in writing, for a named system and version.
 4. A conformance claim is a statement about these Laws only. It is not a statement of
    compliance with any statute, regulation or standard.
+5. Results name the system under test and its scope: the whole system, or a component of a
+   larger system. A case that does not apply is marked not applicable, with a written reason.
+   Cases marked not applicable do not count toward the Tested level.
+6. A claim for a component states "component scope" and names every duty of the host that the
+   component does not cover. It is valid only when every applicable case passes.
 
 The declaration template is in [ADOPT.md](ADOPT.md).
 

@@ -19,3 +19,5 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Check laws.yaml, generated docs and conformance cases
         run: python tools/validate.py
+      - name: Unit tests for the validator (results format, not-applicable and scope rules)
+        run: python -m unittest discover -s tools -p "test_*.py" -v

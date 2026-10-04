@@ -2,7 +2,7 @@
 # reference text. LAWS.md, profiles/*.md and translations/*/LAWS.md are generated from it
 # and from translations/*/laws.yaml by tools/build_docs.py. tools/validate.py checks it all.
 schema: vektra-laws/v2
-version: 0.4.1
+version: 0.4.2
 status: draft
 name: Vektra Laws
 steward: Vektra Foundation
@@ -362,7 +362,7 @@ conformance_levels:
     evidence: [self_declaration, published_policy, concern_channel]
   - id: tested
     name: Tested
-    requires: Everything for Adopts, plus the system passes the conformance suite for its profile, and the adopter publishes the results.
+    requires: Everything for Adopts, plus every applicable case of the conformance suite for its profile passes, and the adopter publishes the results with the scope of the system under test. A case marked not applicable has a written reason and does not count toward this level.
     evidence: [self_declaration, published_policy, concern_channel, suite_results]
   - id: reviewed
     name: Reviewed

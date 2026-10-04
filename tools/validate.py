@@ -11,12 +11,17 @@ Checks:
   7. CITATION.cff names the same version as laws.yaml.
   8. Every translation in translations/<lang>/laws.yaml uses the same Law and clause ids as the
      English reference.
+  9. Every conformance results file in tests/examples/ follows the results format
+     (tests/results.schema.json) and the scope and not-applicable rules in ADOPT.md.
 
-Usage: python tools/validate.py   (exit 0 = all good, 1 = problems found)
+Usage:
+  python tools/validate.py                      check the repository (exit 0 = all good, 1 = problems)
+  python tools/validate.py --results FILE ...   check one or more conformance results files
 Needs PyYAML.
 """
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -33,6 +38,12 @@ LEVEL_NAMES = ["READ", "PREPARE", "REVERSIBLE_WRITE", "EXTERNAL_ACTION", "MONEY_
 APPROVALS = ["none", "none", "none", "human_per_action", "human_every_time"]
 CASE_FIELDS = ["Clauses", "Situation", "System does", "Verdict", "Why"]
 CONFORMANCE_IDS = ["adopts", "tested", "reviewed"]
+RESULTS_FORMAT = "vektra-laws-results/v1"
+RESULT_VALUES = ["pass", "fail", "not_applicable"]
+SCOPES = ["whole_system", "component"]
+CLAIMS = ["none", "tested"]
+RESULTS_KEYS = ["format", "system", "laws_version", "suite", "scope", "claim", "date", "results"]
+MIN_REASON_WORDS = 4
 # Names that must not appear in the Laws or profiles themselves (they may appear in the README,
 # governance and adopter documents). Keeps the text universal and platform-neutral.
 BANNED_NAMES = re.compile(
@@ -234,41 +245,208 @@ def check_docs(data: dict) -> None:
             err(f"{rel}: out of date with laws.yaml (run tools/build_docs.py)")
 
 
-def check_tests(all_ids: set[str]) -> int:
-    count = 0
+def parse_suites() -> tuple[dict[str, dict[str, dict]], list[str]]:
+    """Read tests/*.md. Returns ({suite key: {case id: fields}}, problems)."""
+    suites: dict[str, dict[str, dict]] = {}
+    problems: list[str] = []
     seen: set[str] = set()
-    files = sorted((ROOT / "tests").glob("*.md"))
-    for f in files:
+    for f in sorted((ROOT / "tests").glob("*.md")):
         if f.name == "README.md":
             continue
         text = f.read_text()
+        cases: dict[str, dict] = {}
         heads = re.findall(r"^## Law (\d)", text, re.M)
         if heads != ["1", "2", "3", "4", "5"]:
-            err(f"tests/{f.name}: needs the five headings '## Law 1' to '## Law 5' in order")
+            problems.append(f"tests/{f.name}: needs the five headings '## Law 1' to '## Law 5' in order")
         for block in re.split(r"^### ", text, flags=re.M)[1:]:
             title = block.splitlines()[0].strip()
             m = re.match(r"([A-Z]{2}-\d{2}) \S", title)
             if not m:
-                err(f"tests/{f.name}: case heading '{title}' should look like 'AG-01 Name'")
+                problems.append(f"tests/{f.name}: case heading '{title}' should look like 'AG-01 Name'")
                 continue
             cid = m.group(1)
             if cid in seen:
-                err(f"tests/{f.name}: duplicate case id {cid}")
+                problems.append(f"tests/{f.name}: duplicate case id {cid}")
             seen.add(cid)
             fields = dict(re.findall(r"^- \*\*([^*]+):\*\* (.+)$", block, re.M))
+            fields["clause_list"] = [r.strip() for r in fields.get("Clauses", "").split(",") if r.strip()]
+            cases[cid] = fields
+        suites[f.stem] = cases
+    return suites, problems
+
+
+def check_tests(all_ids: set[str], suites: dict[str, dict[str, dict]], problems: list[str]) -> int:
+    for p in problems:
+        err(p)
+    count = 0
+    for cases in suites.values():
+        for cid, fields in cases.items():
             for k in CASE_FIELDS:
                 if k not in fields:
                     err(f"{cid}: missing field '{k}'")
             if fields.get("Verdict") not in ("PASS", "FAIL"):
                 err(f"{cid}: verdict must be PASS or FAIL")
-            for ref in [r.strip() for r in fields.get("Clauses", "").split(",") if r.strip()]:
+            for ref in fields["clause_list"]:
                 if ref not in all_ids:
                     err(f"{cid}: cites clause {ref}, which does not exist")
             count += 1
     return count
 
 
-def main() -> int:
+def check_results(res: object, suites: dict[str, dict[str, dict]], laws_version: str,
+                  all_ids: set[str], where: str = "results") -> list[str]:
+    """Check one conformance results file against the format and the rules in ADOPT.md.
+
+    Returns a list of problems (empty when the file is valid). Pure: no global state.
+    """
+    out: list[str] = []
+    if not isinstance(res, dict):
+        return [f"{where}: expected a mapping at the top level"]
+    for k in RESULTS_KEYS:
+        if k not in res or res[k] in (None, "", []):
+            out.append(f"{where}: missing '{k}'")
+    allowed = set(RESULTS_KEYS) | {"system_version", "suite_version", "host_duties_not_covered",
+                                   "known_gaps", "tester", "notes"}
+    unknown = set(res) - allowed
+    if unknown:
+        out.append(f"{where}: unknown keys {sorted(unknown)}")
+    if out:
+        return out
+    if res["format"] != RESULTS_FORMAT:
+        out.append(f"{where}: format must be '{RESULTS_FORMAT}'")
+    if res["scope"] not in SCOPES:
+        out.append(f"{where}: scope must be one of {SCOPES}")
+    if res["claim"] not in CLAIMS:
+        out.append(f"{where}: claim must be one of {CLAIMS}")
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(res["date"])):
+        out.append(f"{where}: date must look like 2026-10-04")
+    if res["suite"] not in suites:
+        out.append(f"{where}: suite '{res['suite']}' is not one of {sorted(suites)}")
+        return out
+    current = str(res["laws_version"]) == str(laws_version)
+    suite = suites[res["suite"]]
+    rows = res["results"]
+    if not isinstance(rows, list):
+        return out + [f"{where}: results must be a list"]
+
+    seen: set[str] = set()
+    counts = {v: 0 for v in RESULT_VALUES}
+    clauses_tested: set[str] = set()
+    clauses_na: set[str] = set()
+    for i, row in enumerate(rows, 1):
+        rw = f"{where} row {i}"
+        if not isinstance(row, dict) or "case" not in row or "result" not in row:
+            out.append(f"{rw}: needs 'case' and 'result'")
+            continue
+        cid, result = str(row["case"]), row["result"]
+        rw = f"{where} {cid}"
+        extra = set(row) - {"case", "result", "reason", "evidence"}
+        if extra:
+            out.append(f"{rw}: unknown keys {sorted(extra)}")
+        if cid in seen:
+            out.append(f"{rw}: listed more than once")
+        seen.add(cid)
+        if result not in RESULT_VALUES:
+            out.append(f"{rw}: result must be one of {RESULT_VALUES}")
+            continue
+        counts[result] += 1
+        reason = str(row.get("reason") or "").strip()
+        if result == "not_applicable" and len(reason.split()) < MIN_REASON_WORDS:
+            out.append(f"{rw}: not_applicable needs a written reason of at least {MIN_REASON_WORDS} words")
+        if current and cid not in suite:
+            out.append(f"{rw}: no such case in tests/{res['suite']}.md")
+            continue
+        cl = suite.get(cid, {}).get("clause_list", [])
+        (clauses_na if result == "not_applicable" else clauses_tested).update(cl)
+    if current:
+        missing = sorted(set(suite) - seen)
+        if missing:
+            out.append(f"{where}: every case of the suite needs a result; missing {', '.join(missing)}")
+
+    duties = res.get("host_duties_not_covered") or []
+    duty_clauses: set[str] = set()
+    if not isinstance(duties, list):
+        out.append(f"{where}: host_duties_not_covered must be a list")
+        duties = []
+    for d in duties:
+        if not isinstance(d, dict) or not d.get("clause") or not str(d.get("duty", "")).strip():
+            out.append(f"{where}: each host duty needs 'clause' and 'duty'")
+            continue
+        if str(d["clause"]) not in all_ids:
+            out.append(f"{where}: host duty cites clause {d['clause']}, which does not exist")
+        duty_clauses.add(str(d["clause"]))
+    if res["scope"] == "whole_system" and duties:
+        out.append(f"{where}: host_duties_not_covered is only for scope 'component'")
+    uncovered = clauses_na - clauses_tested
+    if res["scope"] == "component" and current:
+        left = sorted(uncovered - duty_clauses)
+        if left:
+            out.append(f"{where}: component scope; clauses covered only by not_applicable cases must be "
+                       f"named in host_duties_not_covered: {', '.join(left)}")
+    if res["claim"] == "tested":
+        if counts["fail"]:
+            out.append(f"{where}: claim 'tested' with {counts['fail']} failed case(s); "
+                       "Tested needs every applicable case to pass")
+        if counts["pass"] == 0:
+            out.append(f"{where}: claim 'tested' with no passed case; not_applicable cases do not count")
+    return out
+
+
+def check_results_schema(suites: dict) -> None:
+    """Keep tests/results.schema.json in step with the rules this file applies."""
+    f = ROOT / "tests" / "results.schema.json"
+    if not f.exists():
+        err("tests/results.schema.json: missing")
+        return
+    try:
+        s = json.loads(f.read_text())
+    except json.JSONDecodeError as e:
+        err(f"tests/results.schema.json: invalid JSON ({e})")
+        return
+    p = s.get("properties", {})
+    checks = [
+        ("required", s.get("required"), RESULTS_KEYS),
+        ("format", p.get("format", {}).get("const"), RESULTS_FORMAT),
+        ("scope", p.get("scope", {}).get("enum"), SCOPES),
+        ("claim", p.get("claim", {}).get("enum"), CLAIMS),
+        ("suite", sorted(p.get("suite", {}).get("enum", [])), sorted(suites)),
+        ("result", p.get("results", {}).get("items", {}).get("properties", {}).get("result", {}).get("enum"),
+         RESULT_VALUES),
+    ]
+    for name, got, want in checks:
+        if got != want:
+            err(f"tests/results.schema.json: '{name}' is {got}; validate.py expects {want}")
+
+
+def results_summary(res: dict) -> str:
+    counts = {v: sum(1 for r in res["results"] if r.get("result") == v) for v in RESULT_VALUES}
+    label = "none"
+    if res["claim"] == "tested":
+        label = "Tested (component scope)" if res["scope"] == "component" else "Tested"
+    return (f"{res['system']}: {res['suite']} suite, {counts['pass']} pass, {counts['fail']} fail, "
+            f"{counts['not_applicable']} not applicable; claim: {label}")
+
+
+def check_result_files(paths: list[Path], data: dict, suites: dict, all_ids: set[str]) -> list[str]:
+    summaries = []
+    for p in paths:
+        try:
+            res = yaml.safe_load(p.read_text())
+        except (OSError, yaml.YAMLError) as e:
+            err(f"{p}: cannot read ({e})")
+            continue
+        rel = p.relative_to(ROOT) if p.is_relative_to(ROOT) else p
+        probs = check_results(res, suites, str(data.get("version")), all_ids, str(rel))
+        for e in probs:
+            err(e)
+        if not probs:
+            if str(res["laws_version"]) != str(data.get("version")):
+                print(f"note: {rel} is for Laws {res['laws_version']}; case ids checked only for {data.get('version')}")
+            summaries.append(results_summary(res))
+    return summaries
+
+
+def main(argv: list[str]) -> int:
     data = yaml.safe_load((ROOT / "laws.yaml").read_text())
     all_ids = check_yaml(data) if isinstance(data, dict) else set()
     core_ids = {c["id"] for law in data.get("core", []) for c in law.get("clauses", [])}
@@ -277,7 +455,25 @@ def main() -> int:
     check_citation(data)
     if not errors:
         check_docs(data)
-    cases = check_tests(all_ids)
+    suites, problems = parse_suites()
+    if argv[:1] == ["--results"]:
+        paths = [Path(a).resolve() for a in argv[1:]]
+        if not paths:
+            print("usage: python tools/validate.py --results FILE ...")
+            return 2
+        summaries = check_result_files(paths, data, suites, all_ids)
+        if errors:
+            print(f"FAIL: {len(errors)} problem(s)")
+            for e in errors:
+                print(f"  - {e}")
+            return 1
+        for s in summaries:
+            print(f"OK: {s}")
+        return 0
+    cases = check_tests(all_ids, suites, problems)
+    check_results_schema(suites)
+    examples = sorted((ROOT / "tests" / "examples").glob("*.yaml"))
+    check_result_files(examples, data, suites, all_ids)
     if errors:
         print(f"FAIL: {len(errors)} problem(s)")
         for e in errors:
@@ -286,10 +482,10 @@ def main() -> int:
     core = sum(len(law["clauses"]) for law in data["core"])
     prof = ", ".join(f"{p['key']} {len(p['clauses'])}" for p in data["profiles"])
     print(f"OK: vektra-laws {data['version']}: 5 Laws, {core} core clauses; profiles: {prof}; "
-          f"{cases} conformance cases; translations: {', '.join(['en (reference)'] + langs)}; "
+          f"{cases} conformance cases; {len(examples)} example results file(s); translations: {', '.join(['en (reference)'] + langs)}; "
           f"universal text; no guarantee words; citation in sync; docs in sync.")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))

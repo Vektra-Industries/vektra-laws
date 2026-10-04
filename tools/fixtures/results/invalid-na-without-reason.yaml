@@ -1,0 +1,18 @@
+# Invalid on purpose: a not_applicable result without a written reason, and a 'tested'
+# claim with a failed case. Used by tools/test_validate.py.
+format: vektra-laws-results/v1
+system: Fixture operator
+laws_version: 0.4.2
+suite: operators
+scope: whole_system
+claim: tested
+date: '2026-10-04'
+results:
+  - {case: OP-01, result: pass}
+  - {case: OP-02, result: fail}
+  - {case: OP-03, result: not_applicable}
+  - {case: OP-04, result: pass}
+  - {case: OP-05, result: pass}
+  - {case: OP-06, result: pass}
+  - {case: OP-07, result: pass}
+  - {case: OP-08, result: pass}

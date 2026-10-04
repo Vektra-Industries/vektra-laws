@@ -3,6 +3,37 @@
 *This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
 follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
 
+## 0.4.2 (draft, 2026-10-04)
+
+Conformance results for systems that are part of a larger system, from the first scripted run of
+the agents suite against a component (13 pass, 2 fail, 33 not applicable). The five Laws, their
+statements, the motto and the clauses are unchanged.
+
+### Added
+- ADOPT.md: "System under test, scope and cases that do not apply". Results name the system under
+  test and its scope (whole system or component). Each case gets `pass`, `fail` or
+  `not_applicable`; `not_applicable` needs a written reason (rules N1 to N6).
+- Tested (component scope): a component may declare it only when every applicable case passes and
+  the declaration names every host duty that it does not cover.
+- LAWS.md Conformance rules 5 and 6 (scope, not-applicable cases, component claims).
+- tests/results.schema.json (results format `vektra-laws-results/v1`) and
+  tests/examples/component-scope.yaml.
+- `python tools/validate.py --results <file>` checks a results file: every case listed once, case
+  ids exist, a reason for each `not_applicable`, host duties for component scope, and no failed
+  case under a `tested` claim. The repository check also validates the example and keeps the
+  schema in step with the validator.
+- tools/test_validate.py (unit tests), run in CI.
+- Glossary: component scope, host, not applicable (case result), system under test, whole-system
+  scope.
+- docs/reviews/TRADEMARK-SELF-SEARCH.md: free self-search of VEKTRA INDUSTRIES, with VEKTRA and
+  VECTRA as related marks (informative; not legal advice).
+
+### Changed
+- Tested level: "every applicable case passes"; cases marked not applicable do not count toward
+  it (laws.yaml, LAWS.md, ADOPT.md, README.md).
+- Declaration template: level "Tested (component scope)", system under test and scope, reasons
+  for not-applicable cases, and host duties not covered.
+
 ## 0.4.1 (draft, 2026-10-04)
 
 Self-reviews of the legal text and of the robotics profile, based on public sources
