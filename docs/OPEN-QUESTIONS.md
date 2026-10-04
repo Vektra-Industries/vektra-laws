@@ -8,11 +8,16 @@ does in the meantime.*
 | # | Question | Needed by | Current draft |
 |---|---|---|---|
 | 1 | Whether the record in clause 5.4 must be signed or keyed (MUST), instead of SHOULD. | v1.0 | SHOULD. |
+| 2 | The project name is close to a registered mark in the AI field (see [LEGAL-SELF-REVIEW.md](reviews/LEGAL-SELF-REVIEW.md), residual risk 1). Search, take advice and decide on the name before a public launch. | v1.0 | Name unchanged; no registration claimed. |
+| 3 | Confirm that the owner and steward named in the text exist as legal entities, or describe the steward as planned (legal residual risk 2). | v1.0 | Named as owner and steward. |
+| 4 | Whether to rename the "Verified" conformance level (for example to "Reviewed") to lower the risk that it reads as a certification (legal residual risk 3). | v1.0 | "Verified", with wording rules in ADOPT.md. |
+| 5 | Professional legal and robot-safety review, when funding allows. | Recommended before v1.0 | Self-reviews only (docs/reviews). |
 
 ## Resolved
 
 | Question | Decision | Date |
 |---|---|---|
+| Review of the robotics profile and of the legal text before funding allows professional review | Self-reviews done from public sources (docs/reviews), labeled as not legal advice and not a professional safety assessment. Fixes adopted in 0.4.1: R1.2, R2.4, R3.6 and changes to R1.1, R2.1, R3.2, R3.3, R3.5 and R5.1; notices, names policy, conformance wording and DCO summary. | 2026-10-04 |
 | Robot motion in a space shared with people (was open question 1) | Resolved by proposal E, adopted as R3.5: a person approves the motion envelope once at level 3, as a real approval (3.14). Motion inside the envelope is level 2; any motion outside it is level 4. | 2026-10-04 |
 | Proposal A: what makes an approval real | Approved by the owner and adopted as 3.14 (3.5 is reserved to the owner). The claim that the word "meaningful" was removed from "meaningful human control" in the September 2026 UN talks could not be confirmed and was removed from the evidence; the clause stands on the confirmed removal of human review of AI-selected targets and on its own merits. | 2026-10-04 |
 | Proposal B: the objective stays open to correction | Adopted as 4.10. | 2026-10-04 |

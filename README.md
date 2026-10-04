@@ -25,20 +25,23 @@ The full text, with numbered clauses, action levels and decision outcomes, is in
 | Profile | Applies to | Status |
 |---|---|---|
 | [Agents](profiles/AGENTS.md) | Software agents that call tools, work with other agents or act for a person | Draft |
-| [Robotics](profiles/ROBOTICS.md) | Machines that move, carry, grip or act in the physical world | Draft, not yet reviewed |
+| [Robotics](profiles/ROBOTICS.md) | Machines that move, carry, grip or act in the physical world | Draft, self-reviewed (not a professional safety assessment) |
 | [Models](profiles/MODELS.md) | Trained AI models, and the people who train, evaluate and publish them | Draft, not yet reviewed |
 | [Operators](profiles/OPERATORS.md) | People and organizations that design, deploy, run or adopt a system | Draft |
 
 ## Status
 
-Version 0.4.0, **draft**. The text is not yet suitable for production reliance and can change
+Version 0.4.1, **draft**. The text is not yet suitable for production reliance and can change
 without notice before version 1.0. See [ROADMAP.md](ROADMAP.md) and [CHANGELOG.md](CHANGELOG.md).
 
 **Disclaimer.** The Vektra Laws are voluntary technical and ethical standards. They are not law,
 legal advice or a certification. Adopting the Laws, or declaring conformance to them, does not by
 itself establish compliance with any statute, regulation or standard. Each adopter remains
 responsible for its own legal obligations. The text and code are provided "as is", without
-warranty of any kind, as stated in the CC BY 4.0 and MIT licenses.
+warranty of any kind and, to the extent the law allows, without liability, as stated in Section 5
+of CC BY 4.0 and in the MIT license. A reference to a standard, an organization or a product does
+not imply endorsement. Reviews of the text so far are self-reviews based on public sources, not
+legal advice and not professional safety assessments (see [docs/reviews](docs/reviews/)).
 
 ## How to adopt
 
@@ -85,7 +88,7 @@ systems unless it states so explicitly, in writing, for a named system and versi
 
 ## How to cite
 
-> Vektra Industries. *Vektra Laws*, version 0.4.0 (draft). https://github.com/Vektra-Industries/vektra-laws
+> Vektra Industries. *Vektra Laws*, version 0.4.1 (draft). https://github.com/Vektra-Industries/vektra-laws
 
 Machine-readable citation metadata is in [CITATION.cff](CITATION.cff). Please always name the
 version.

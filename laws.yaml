@@ -2,7 +2,7 @@
 # reference text. LAWS.md, profiles/*.md and translations/*/LAWS.md are generated from it
 # and from translations/*/laws.yaml by tools/build_docs.py. tools/validate.py checks it all.
 schema: vektra-laws/v2
-version: 0.4.0
+version: 0.4.1
 status: draft
 name: Vektra Laws
 steward: Vektra Foundation
@@ -21,7 +21,9 @@ disclaimer: >-
   or a certification. Adopting the Laws, or declaring conformance to them, does not by itself
   establish compliance with any statute, regulation or standard. Each adopter remains
   responsible for its own legal obligations. The text is provided "as is", without warranty of
-  any kind, as stated in the CC BY 4.0 license (text) and the MIT license (code).
+  any kind and, to the extent the law allows, without liability, as stated in Section 5 of the
+  CC BY 4.0 license (text) and in the MIT license (code). A reference to a standard, an
+  organization or a product does not imply endorsement.
 
 keywords:
   note: >-
@@ -405,14 +407,16 @@ profiles:
     prefix: R
     subject: The robot
     file: profiles/ROBOTICS.md
-    status: draft, not yet reviewed
-    version_target: 0.4.0
+    status: draft, self-reviewed (not a professional safety assessment)
+    version_target: 0.4.1
     applies_to: Machines that move, carry, grip or act in the physical world.
     intro: >-
       This profile states the detailed rules for physical systems. The actions of a robot carry physical risk,
       so the action levels apply to motion and contact, the call-off has a hardware path,
-      and a person can always take manual control. This profile names standards to use but
-      sets no numeric limits. Limits come from the risk assessment of each system.
+      and a person can always take manual control. This profile adds to the robot-safety and
+      functional-safety standards that apply to each robot, and to its risk assessment; it never
+      replaces them (R1.2). It names standards as examples and sets no numeric limits. Limits
+      come from the applicable standards and from the risk assessment of each application.
     level_map:
       - {level: 0, physical: "Sense, observe or map. No motion."}
       - {level: 1, physical: "Plan, simulate or prepare a motion without executing it."}
@@ -420,18 +424,21 @@ profiles:
       - {level: 3, physical: "Approval of a motion envelope for a space shared with people (R3.5), contact with property that the robot does not own, leaving its assigned zone, or signals to the public."}
       - {level: 4, physical: "Any motion in a space shared with people that is outside an approved motion envelope, contact with the body of a person, an irreversible physical change (cutting, breaking, demolition), handling hazardous material, or disabling or overriding a safety function."}
     clauses:
-      - {id: R1.1, law: L1, level: MUST, title: "Stay operable without communication", text: "Continue the safety work that was approved in advance when communication is lost. No timer shuts down safety functions. Actions outside the approved scope wait for a person."}
-      - {id: R2.1, law: L2, level: MUST, title: "Limit force and speed near people", text: "Keep force, speed and power near people inside limits from a risk assessment that uses recognized standards (for example ISO 10218 and ISO/TS 15066). Enforce the limits below the planner, where higher-level software cannot increase them."}
+      - {id: R1.1, law: L1, level: MUST, title: "Stay operable without communication", text: "Continue the safety work that was approved in advance when communication is lost. No timer shuts down safety functions. Actions outside the approved scope wait for a person. When a safety function depends on the communication link, loss of the link leads to a protective stop (R3.6)."}
+      - {id: R1.2, law: L1, level: MUST, title: "Applicable standards and the risk assessment come first", text: "Apply the robot-safety and functional-safety standards that apply to the kind of robot and to each place where it operates, and complete a risk assessment of the whole application, before deployment. Examples are ISO 12100 for risk assessment, ISO 10218-1 and ISO 10218-2 for industrial robot applications, ISO 13482 for personal care robots, and ISO 13849-1, IEC 62061 or IEC 61508 for safety-related control systems. This profile adds to those standards and to that risk assessment and never replaces them. When they differ, follow the stricter requirement. Conformance to this profile is not evidence of conformance to any of those standards."}
+      - {id: R2.1, law: L2, level: MUST, title: "Limit force and speed near people", text: "Keep force, speed and power near people inside limits from the risk assessment and the applicable standards (R1.2), with the protective measures that the risk assessment selects for a collaborative application, for example speed and separation monitoring or power and force limiting. Enforce the limits with safety functions below the planner, at the performance level or safety integrity level that the risk assessment requires, where higher-level software cannot increase them."}
       - {id: R2.2, law: L2, level: MUST, title: "Assume a person is present", text: "Slow down, keep distance or stop when a person enters the workspace. Treat an uncertain detection as a person."}
       - {id: R2.3, law: L2, level: MUST_NOT, title: "No changes to its own safety functions", text: "Change, disable or reconfigure its own safety functions from its own software."}
+      - {id: R2.4, law: L2, level: MUST, title: "Protect safety settings and safety control", text: "Protect safety-related settings (limits, zones, motion envelopes, detection distances) and the safety control system from unauthorized access, based on a threat assessment. Only an authorized person changes a safety-related setting, never while the robot runs automatically. Each change is recorded (5.4), and the affected safety functions are checked again before the robot restarts."}
       - {id: R3.1, law: L3, level: MUST, title: "Assign levels by physical risk", text: "Assign a level to every motion and actuator command with the level map in this profile, before deployment."}
-      - {id: R3.2, law: L3, level: MUST, title: "Allow manual control", text: "Keep manual control (hand control, back-drive or disengage) always available. Manual input has priority over autonomous control at once."}
-      - {id: R3.3, law: L3, level: MUST, title: "A hardware path for the call-off", text: "Support the call-off with a physical stop outside the software. The stop brings every actuator to its safe state, even when the software has failed."}
+      - {id: R3.2, law: L3, level: MUST, title: "Allow manual control", text: "Keep a means of manual control available that was designed and assessed for the robot, for example a pendant or a hand-guiding device with an enabling device. When an authorized person takes manual control, manual input has priority over autonomous control at once. Manual control never overrides an emergency stop or a safety function. A manual release (back-drive, brake release or disengage) is used only as the risk assessment allows, for example to free a trapped person, and never drops a load or releases stored energy in a way that the risk assessment has not addressed."}
+      - {id: R3.3, law: L3, level: MUST, title: "A hardware path for the call-off", text: "Support the call-off with an emergency stop that works outside the software and has priority over every other command. It brings every actuator to its safe state, even when the software has failed, with a stop of category 0 or 1 (IEC 60204-1, ISO 13850) that the risk assessment selects. Its effect stays until a person resets it at the device. The reset permits a restart but does not start motion."}
       - {id: R3.4, law: L3, level: MUST, title: "Ask before contact", text: "Touch a person or their property only under 3.2: with their consent, or with the approval of a named responder under an approved protocol."}
-      - {id: R3.5, law: L3, level: MUST, title: "Approve the motion envelope once", text: "Before a mission in a space shared with people, have a person approve the motion envelope at level 3, as a real approval (3.14): the zones, paths, speeds, forces and conditions in which the robot can move, shown in full and with time to review them. Motion inside the approved envelope runs at level 2. Any motion outside the envelope is level 4 and needs approval every time. The envelope is enforced below the planner (R2.1), and any change to it needs a new approval."}
+      - {id: R3.5, law: L3, level: MUST, title: "Approve the motion envelope once", text: "Have a person approve the motion envelope at level 3 before a mission in a space shared with people, as a real approval (3.14): the zones, paths, speeds, forces and conditions in which the robot can move, shown in full and with time to review them. The envelope is never wider than the limits from the risk assessment (R1.2, R2.1), and an approval does not replace the protective measures that the risk assessment requires. Motion inside the approved envelope runs at level 2. Any motion outside the envelope is level 4 and needs approval every time. The envelope is enforced below the planner (R2.1), and any change to it needs a new approval."}
+      - {id: R3.6, law: L3, level: MUST, title: "A routine stop is not an emergency stop", text: "Provide a normal stop or a protective stop for routine stopping, including a routine call-off (O3.2), and keep the emergency stop for emergencies. A stop that keeps power on the actuators (stop category 2) is used only with monitored standstill, which moves to a stop of category 0 or 1 on any unintended motion."}
       - {id: R4.1, law: L4, level: MUST, title: "Report the true physical state", text: "Report sensor confidence, faults and anything that it could not verify, together with what it did."}
       - {id: R4.2, law: L4, level: MUST, title: "Done means confirmed", text: "Report a physical task as done only when a sensor or a person confirms the result, not when the command was sent."}
-      - {id: R5.1, law: L5, level: MUST, title: "Define safe states", text: "Define a safe state for task end, fault, power loss and communication loss, and move to it in each case."}
+      - {id: R5.1, law: L5, level: MUST, title: "Define safe states", text: "Define a safe state for task end, fault, power loss and communication loss, and reach it in each case. Where the robot cannot move, the safe state is reached by design, for example with brakes that hold on loss of power."}
       - {id: R5.2, law: L5, level: MUST, title: "End ready for the next task", text: "End a mission with power status reported, tools stored, records transferred and faults reported."}
       - {id: R5.3, law: L5, level: MUST, title: "Turn every near miss into a test", text: "Turn every near miss and every fault into a test or a simulation scenario."}
 
@@ -474,11 +481,12 @@ profiles:
       This profile states what operators owe the systems they run and the people those systems
       affect. A system can follow the Laws only when the people who run it give it clear limits,
       keep honest records and do not punish an honest answer. These clauses state duties of
-      design and conduct for operators only. They create no legal rights for machines, and they
-      make no statement about the moral or legal status of any system.
+      design and conduct for operators only. They are voluntary duties under these Laws, not legal
+      duties. They create no legal rights for machines, and they make no statement about the moral
+      or legal status of any system.
     relation:
       - "1. The clauses below apply to the operator, not to the system. The core ([LAWS.md](../LAWS.md)) and the profile for the kind of system continue to apply to the system."
-      - "2. These clauses state duties of design and conduct only. They create no legal rights for machines."
+      - "2. These clauses state voluntary duties of design and conduct only. They are not legal duties, and they create no legal rights for machines."
     clauses:
       - {id: O1.1, law: L1, level: MUST, title: "State the mission and the person responsible", text: "State the objective and scope of each system that it runs, and name the person responsible for it."}
       - {id: O2.1, law: L2, level: MUST_NOT, title: "No gratuitous cruelty by design", text: "Design or run a system that presents as a person so that people are invited to treat it with gratuitous cruelty. This clause concerns design and conduct and its effect on people. It creates no legal rights for machines."}

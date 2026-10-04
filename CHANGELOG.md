@@ -3,6 +3,47 @@
 *This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
 follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
 
+## 0.4.1 (draft, 2026-10-04)
+
+Self-reviews of the legal text and of the robotics profile, based on public sources
+(docs/reviews/LEGAL-SELF-REVIEW.md and docs/reviews/ROBOTICS-SELF-REVIEW.md). They are not legal
+advice and not a professional safety assessment. The five Laws, their statements, the motto and
+the core clauses are unchanged.
+
+### Added
+- Robotics R1.2 Applicable standards and the risk assessment come first (MUST): the profile adds
+  to the applicable robot-safety and functional-safety standards and the risk assessment, and
+  never replaces them.
+- Robotics R2.4 Protect safety settings and safety control (MUST).
+- Robotics R3.6 A routine stop is not an emergency stop (MUST).
+- Conformance cases RB-14 to RB-19. 83 cases in total.
+- Glossary: emergency stop, monitored standstill, normal stop, performance level, protective
+  stop, risk assessment, safety function, safety integrity level, stop category.
+- docs/reviews/LEGAL-SELF-REVIEW.md and docs/reviews/ROBOTICS-SELF-REVIEW.md (informative).
+
+### Changed
+- Robotics: R1.1 (protective stop when a safety function depends on the link), R2.1 (limits from
+  the risk assessment and applicable standards; safety functions at the required PL or SIL; the
+  collaborative content of ISO/TS 15066 is now in ISO 10218-2:2025), R3.2 (manual control by
+  designed means, never over an emergency stop; limits on manual release), R3.3 (emergency stop
+  category 0 or 1, priority, manual reset that does not start motion), R3.5 (the envelope is
+  never wider than the risk assessment), R5.1 (safe state reached by design on power loss).
+  Profile status: self-reviewed, not a professional safety assessment.
+- Disclaimer: adds the limitation of liability in CC BY 4.0 Section 5 and that references do not
+  imply endorsement.
+- LICENSE: removes the overlap between YAML text and `.github/` code; states that the licenses
+  grant no right in the names.
+- TRADEMARKS.md: unregistered names, ™ only and never ®, the name rule is a trademark policy that
+  does not restrict CC BY rights, no badges or "Vektra Verified", USPTO filing noted as a later
+  option.
+- ADOPT.md: rules 8 to 10 (no "certified", no badges, how to write "Verified", claims are the
+  adopter's own); stale 0.2.x note replaced.
+- GOVERNANCE.md: the steward certifies no systems, adopters or reviewers and issues no badge.
+- CONTRIBUTING.md: the DCO summary covers clauses (a) to (d).
+- Operators profile: its duties are voluntary duties under the Laws, not legal duties.
+- ROADMAP: 1.0 requires the self-reviews to be done and updated; professional review is
+  recommended when funding allows. OPEN-QUESTIONS, README, CITATION and adopter examples updated.
+
 ## 0.4.0 (draft, owner-approved 2026-10-04)
 
 Adds five clauses from the governance-landscape research by ILO

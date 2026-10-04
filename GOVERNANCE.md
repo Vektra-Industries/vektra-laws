@@ -43,8 +43,10 @@
 
 ## Certification
 
-The steward does not certify systems. A statement by the steward about a specific system is valid
-only when the steward makes it explicitly, in writing, for a named system and version.
+The steward does not certify systems, adopters or reviewers, and it issues no badge, seal or logo
+for conformance. A statement by the steward about a specific system is valid only when the
+steward makes it explicitly, in writing, for a named system and version. Any badge, seal or
+"certification" that claims conformance to the Vektra Laws is not issued by the steward.
 
 ## Stability
 

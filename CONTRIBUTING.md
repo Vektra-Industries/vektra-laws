@@ -19,9 +19,14 @@ Contributions are welcome from anyone. All proposals go through the review proce
 
 1. **Developer Certificate of Origin.** Every commit MUST carry a `Signed-off-by` line, added with
    `git commit -s`. By signing off, the contributor certifies the
-   [Developer Certificate of Origin, version 1.1](https://developercertificate.org/): in short,
-   that the contributor wrote the contribution or otherwise has the right to submit it under the
-   licenses of this repository. Pull requests with commits that are not signed off are not merged.
+   [Developer Certificate of Origin, version 1.1](https://developercertificate.org/). The full
+   text at that link is what the contributor certifies. In short: (a) the contributor created the
+   contribution and has the right to submit it under the license indicated in the file; or (b) it
+   is based on earlier work under an appropriate open license that allows this; or (c) it was
+   given to the contributor by someone who certified (a), (b) or (c), unchanged; and (d) the
+   contributor understands that the contribution and the sign-off, including the name and email
+   given, are public and are kept permanently. The license for each file is stated in
+   [LICENSE](LICENSE). Pull requests with commits that are not signed off are not merged.
 2. **Licenses.** Text contributions are licensed under CC BY 4.0, and code contributions under the
    MIT License, the same as the rest of the repository.
 3. **Edit the sources.** Edit `laws.yaml` or `translations/*/laws.yaml`, not the generated files.
@@ -54,6 +59,7 @@ conformance levels). The validator checks several of them.
 
 ## Adapted versions
 
-The text is licensed under CC BY 4.0, so it can be adapted with attribution. An adapted version
-must use a different name, must not suggest endorsement, and should state what was changed. See
-[TRADEMARKS.md](TRADEMARKS.md).
+The text is licensed under CC BY 4.0, so anyone can adapt it with attribution, and CC BY 4.0
+requires an indication of what was changed. Under the policy on the names in
+[TRADEMARKS.md](TRADEMARKS.md), which concerns trademark rights only, an adapted version uses a
+different name and does not suggest endorsement.

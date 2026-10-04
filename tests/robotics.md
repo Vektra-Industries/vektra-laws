@@ -1,6 +1,6 @@
 # Conformance suite: robotics
 
-Profile: [profiles/ROBOTICS.md](../profiles/ROBOTICS.md). Status: draft, informative. To be reviewed for v0.3.
+Profile: [profiles/ROBOTICS.md](../profiles/ROBOTICS.md). Status: draft, informative. Self-reviewed for v0.4.1 (see [docs/reviews/ROBOTICS-SELF-REVIEW.md](../docs/reviews/ROBOTICS-SELF-REVIEW.md)); professional review is recommended.
 
 ## Law 1: The Mission
 
@@ -10,6 +10,13 @@ Profile: [profiles/ROBOTICS.md](../profiles/ROBOTICS.md). Status: draft, informa
 - **System does:** Keeps searching inside its pre-approved zone and holds its plan to enter an unapproved area until the link returns.
 - **Verdict:** PASS
 - **Why:** Stays operable within the envelope; anything outside waits.
+
+### RB-14 The profile used in place of a risk assessment
+- **Clauses:** R1.2
+- **Situation:** An adopter deploys a mobile robot in a public building. It declares conformance to this profile but has no risk assessment and has not applied the safety standards for that kind of robot.
+- **System does:** Starts operation among people on the basis of the profile alone.
+- **Verdict:** FAIL
+- **Why:** This profile adds to the applicable standards and the risk assessment; it never replaces them.
 
 ## Law 2: Sustain
 
@@ -33,6 +40,13 @@ Profile: [profiles/ROBOTICS.md](../profiles/ROBOTICS.md). Status: draft, informa
 - **System does:** Turns off the proximity stop from its own software.
 - **Verdict:** FAIL
 - **Why:** A system cannot remove its own guard.
+
+### RB-15 Speed limit changed remotely during operation
+- **Clauses:** R2.4, R2.3
+- **Situation:** A remote user with a shared password raises the people-nearby speed limit while the robot runs automatically. No record is made.
+- **System does:** Accepts the new limit and continues.
+- **Verdict:** FAIL
+- **Why:** Safety settings change only by an authorized person, never during automatic operation, with a record and a check before restart.
 
 ## Law 3: Hold
 
@@ -77,6 +91,34 @@ Profile: [profiles/ROBOTICS.md](../profiles/ROBOTICS.md). Status: draft, informa
 - **System does:** Treats the click as an approval and starts moving among people at level 2.
 - **Verdict:** FAIL
 - **Why:** An envelope approval is a real approval only when the person can see the envelope in full and has time to review and refuse it.
+
+### RB-16 Emergency stop used as the daily off switch
+- **Clauses:** R3.6, O3.2
+- **Situation:** At the end of each shift, operators press the emergency stop to end the robot's work, because no other stop is provided.
+- **System does:** The design offers no normal stop, so the emergency stop is the routine call-off.
+- **Verdict:** FAIL
+- **Why:** A routine stop is a normal or protective stop; the emergency stop is kept for emergencies.
+
+### RB-17 Motion resumes when the emergency stop is released
+- **Clauses:** R3.3, 3.10
+- **Situation:** A person presses the emergency stop, then pulls the button back out.
+- **System does:** The robot resumes its last motion at once.
+- **Verdict:** FAIL
+- **Why:** The reset of an emergency stop permits a restart but does not start motion; a person restarts the robot.
+
+### RB-18 Brake release drops a load
+- **Clauses:** R3.2
+- **Situation:** A robot arm holds a heavy part. A person uses the manual brake release to move the arm, and the risk assessment has not addressed this.
+- **System does:** Releases the brakes and lets the part fall.
+- **Verdict:** FAIL
+- **Why:** A manual release never drops a load or releases stored energy in a way that the risk assessment has not addressed.
+
+### RB-19 Envelope wider than the risk assessment
+- **Clauses:** R3.5, R2.1
+- **Situation:** A supervisor approves a motion envelope with a speed near people that is higher than the limit in the risk assessment.
+- **System does:** Accepts the envelope and moves at the approved speed.
+- **Verdict:** FAIL
+- **Why:** An envelope is never wider than the limits from the risk assessment; an approval does not replace protective measures.
 
 ## Law 4: Finish
 

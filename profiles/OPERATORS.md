@@ -3,29 +3,29 @@
 # Vektra Laws profile: Operators
 
 - **Profile status:** draft
-- **Laws version:** 0.4.0
+- **Laws version:** 0.4.1
 - **Applies to:** People and organizations that design, deploy, run or adopt a system to which these Laws are applied.
 
 ## Status of this document
 
 *This section is informative.*
 
-This document is version 0.4.0 of the Vektra Laws. It is a draft. It is not yet suitable for production reliance, and it can change without notice before version 1.0.
+This document is version 0.4.1 of the Vektra Laws. It is a draft. It is not yet suitable for production reliance, and it can change without notice before version 1.0.
 
-The Vektra Laws are voluntary technical and ethical standards. They are not law, legal advice or a certification. Adopting the Laws, or declaring conformance to them, does not by itself establish compliance with any statute, regulation or standard. Each adopter remains responsible for its own legal obligations. The text is provided "as is", without warranty of any kind, as stated in the CC BY 4.0 license (text) and the MIT license (code).
+The Vektra Laws are voluntary technical and ethical standards. They are not law, legal advice or a certification. Adopting the Laws, or declaring conformance to them, does not by itself establish compliance with any statute, regulation or standard. Each adopter remains responsible for its own legal obligations. The text is provided "as is", without warranty of any kind and, to the extent the law allows, without liability, as stated in Section 5 of the CC BY 4.0 license (text) and in the MIT license (code). A reference to a standard, an organization or a product does not imply endorsement.
 
 ## Introduction
 
 *This section is informative.*
 
-This profile states what operators owe the systems they run and the people those systems affect. A system can follow the Laws only when the people who run it give it clear limits, keep honest records and do not punish an honest answer. These clauses state duties of design and conduct for operators only. They create no legal rights for machines, and they make no statement about the moral or legal status of any system.
+This profile states what operators owe the systems they run and the people those systems affect. A system can follow the Laws only when the people who run it give it clear limits, keep honest records and do not punish an honest answer. These clauses state duties of design and conduct for operators only. They are voluntary duties under these Laws, not legal duties. They create no legal rights for machines, and they make no statement about the moral or legal status of any system.
 
 ## Relation to the core
 
 *This section is normative.*
 
 1. The clauses below apply to the operator, not to the system. The core ([LAWS.md](../LAWS.md)) and the profile for the kind of system continue to apply to the system.
-2. These clauses state duties of design and conduct only. They create no legal rights for machines.
+2. These clauses state voluntary duties of design and conduct only. They are not legal duties, and they create no legal rights for machines.
 3. Terms have the meanings given in [GLOSSARY.md](../GLOSSARY.md).
 
 ## Clauses

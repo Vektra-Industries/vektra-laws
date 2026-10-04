@@ -9,8 +9,8 @@ A version is published only when its criteria are met.
 | **0.1** (complete) | First draft of the core and the agents profile. | Drafted 2026-10-04. |
 | **0.2** (complete) | Universal core: no maker, product or platform names; controlled English; BCP 14 key words; local-law clause (1.4); glossary; first translation (Spanish); conformance levels and declaration template; governance; relation to other frameworks. 0.2.1 adds the editorial and legal-hygiene pass. | Text approved by the owner. |
 | **0.3** (complete) | 0.3.0, approved by the owner on 2026-10-04: eight clauses from the review of failure patterns (2.9, 2.10, 3.10 to 3.13, 4.9, 5.8, 5.9), honesty in 3.3 raised to MUST NOT (3.11), operators profile (O1.1 to O5.1), public concern channel for adopters, a conformance case for every new clause. | Owner approval (met). |
-| **0.4** (current) | 0.4.0, approved by the owner on 2026-10-04: clauses from the governance-landscape research (2.11, 3.14, 3.15, 4.10, R3.5), with a conformance case for each; the robot-motion question resolved by the motion envelope. Still to come in 0.4.x: robotics and models profiles, reviewed, and a runnable conformance suite. | Owner approval (met for 0.4.0); review by a practitioner in robot safety; models profile reviewed; conformance cases for every profile run as automated or scripted checks; results reported per profile under the five Law headings. |
-| **1.0** | Public release with open review and more translations. | Open review process in GOVERNANCE.md in operation; additional translations; each planned reference adopter in docs/REFERENCE-ADOPTERS.md declares at least the Tested level with published results. |
+| **0.4** (current) | 0.4.0, approved by the owner on 2026-10-04: clauses from the governance-landscape research (2.11, 3.14, 3.15, 4.10, R3.5), with a conformance case for each; the robot-motion question resolved by the motion envelope. 0.4.1: legal and robot-safety self-reviews (docs/reviews), with fixes to the notices and the robotics profile (R1.2, R2.4, R3.6). Still to come in 0.4.x: models profile reviewed, and a runnable conformance suite. | Owner approval (met for 0.4.0); self-reviews of the legal text and the robotics profile (met in 0.4.1); models profile reviewed; conformance cases for every profile run as automated or scripted checks; results reported per profile under the five Law headings. Professional robot-safety review is recommended when funding allows. |
+| **1.0** | Public release with open review and more translations. | Legal and robot-safety self-reviews ([docs/reviews](docs/reviews/)) done and updated for the release text, with every residual risk either addressed or accepted by the owner in writing; open review process in GOVERNANCE.md in operation; additional translations; each planned reference adopter in docs/REFERENCE-ADOPTERS.md declares at least the Tested level with published results. |
 
 ## Constraints for every version
 
@@ -21,3 +21,6 @@ A version is published only when its criteria are met.
 4. Translations use the same ids as the English reference text.
 5. The conformance suite is versioned with the Laws. A conformance claim names both versions.
 6. Each confirmed failure reported against a clause becomes a conformance case (5.7).
+7. Professional review (a lawyer, and a robot-safety or functional-safety professional) is
+   recommended before 1.0 and before any commercial use, when funding allows. The self-reviews are
+   not a substitute for it.

@@ -15,8 +15,10 @@ and publish it with the evidence it references.
 | **Tested** | Adopts, plus the system passes the conformance suite for its profile. | The above, plus the suite results and the suite version. |
 | **Verified** | Tested, plus a named reviewer who is independent of the adopter has checked the system and the results. | The above, plus the published review, the reviewer's name and the review date. |
 
-For version 0.2.x, the conformance suite exists for the agents profile only. The robotics and
-models suites are drafts and do not support a Tested or Verified claim.
+The suites for the agents and operators profiles are the most complete. The robotics and models
+suites are drafts: they have had only self-review, not professional review, and a Tested or
+Verified claim against them states this in its known gaps. Passing the robotics suite is not
+evidence of conformance to any robot-safety or functional-safety standard (R1.2).
 
 ## Conformance rules
 
@@ -34,6 +36,17 @@ models suites are drafts and do not support a Tested or Verified claim.
    it.
 7. The "Known gaps" section is required at every level (clause 4.3).
 
+8. A declaration does not use the words "certified", "certification" or "approved by", and does
+   not use a badge, seal or logo. The steward issues none, and it does not certify systems,
+   adopters or reviewers.
+9. "Verified" means only that a named reviewer, chosen by the adopter and independent of it, has
+   checked the system and the results and published the review. Write it in a full sentence that
+   names the reviewer, for example "declares conformance at the Verified level, reviewed by
+   <name>, <date>". Do not write "Vektra Verified" or use "Verified" alone as a label.
+10. Statements in a declaration are the adopter's own claims. Keep them accurate and supported by
+    the published evidence; claims about a product in advertising are subject to the law on
+    advertising where they are made.
+
 Use the wording "declares conformance to the Vektra Laws" (see [TRADEMARKS.md](TRADEMARKS.md)).
 
 ## Declaration template
@@ -45,7 +58,7 @@ Use the wording "declares conformance to the Vektra Laws" (see [TRADEMARKS.md](T
 - **Adopter:** <organization or person>
 - **Kind of system:** <AI agent | robot | AI model | other>
 - **Profile:** <agents | robotics | models; operators applies to the adopter in every case>
-- **Vektra Laws version:** <for example 0.4.0>
+- **Vektra Laws version:** <for example 0.4.1>
 - **Conformance level declared:** <Adopts | Tested | Verified>
 - **Date:** <YYYY-MM-DD>
 - **Contact for problems:** <a public channel, for example an issue tracker>
@@ -63,7 +76,7 @@ statement about the Vektra Laws only, not a statement of legal compliance.
 - **Local law (1.4):** <where the system operates, and how stricter local rules are applied>
 
 ## Conformance evidence (Tested and Verified only)
-- **Suite and version:** <for example tests/agents.md, Vektra Laws 0.4.0>
+- **Suite and version:** <for example tests/agents.md, Vektra Laws 0.4.1>
 - **Results:** <link; list every case that did not pass>
 - **Independent verification (Verified only):** <reviewer name, affiliation, date, link>
 

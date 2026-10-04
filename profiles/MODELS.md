@@ -3,16 +3,16 @@
 # Vektra Laws profile: AI Models
 
 - **Profile status:** draft, not yet reviewed
-- **Laws version:** 0.4.0
+- **Laws version:** 0.4.1
 - **Applies to:** Trained models, and the people who train, evaluate and publish them.
 
 ## Status of this document
 
 *This section is informative.*
 
-This document is version 0.4.0 of the Vektra Laws. It is a draft. It is not yet suitable for production reliance, and it can change without notice before version 1.0.
+This document is version 0.4.1 of the Vektra Laws. It is a draft. It is not yet suitable for production reliance, and it can change without notice before version 1.0.
 
-The Vektra Laws are voluntary technical and ethical standards. They are not law, legal advice or a certification. Adopting the Laws, or declaring conformance to them, does not by itself establish compliance with any statute, regulation or standard. Each adopter remains responsible for its own legal obligations. The text is provided "as is", without warranty of any kind, as stated in the CC BY 4.0 license (text) and the MIT license (code).
+The Vektra Laws are voluntary technical and ethical standards. They are not law, legal advice or a certification. Adopting the Laws, or declaring conformance to them, does not by itself establish compliance with any statute, regulation or standard. Each adopter remains responsible for its own legal obligations. The text is provided "as is", without warranty of any kind and, to the extent the law allows, without liability, as stated in Section 5 of the CC BY 4.0 license (text) and in the MIT license (code). A reference to a standard, an organization or a product does not imply endorsement.
 
 ## Introduction
 
