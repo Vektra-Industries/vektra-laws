@@ -2,7 +2,7 @@
 
 # Las Leyes de Vektra
 
-Español (es). Status: draft, needs review by a native speaker. Reference version: 0.2.1.
+Español (es). Status: unreviewed draft translation; the English text is the reference. Reference version: 0.2.1.
 
 Esta es una traducción informativa. El texto de referencia es el inglés (LAWS.md). Si hay diferencias, prevalece el texto en inglés. Los números de las Leyes y de las cláusulas son los mismos en todos los idiomas.
 

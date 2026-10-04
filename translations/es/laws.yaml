@@ -2,7 +2,7 @@
 # Ids must match the reference exactly. tools/validate.py checks this.
 lang: es
 language_name: Español
-status: draft, needs review by a native speaker
+status: unreviewed draft translation; the English text is the reference
 reference_version: 0.2.1
 translators: [initial draft by the Vektra Laws maintainers]
 reviewers: []

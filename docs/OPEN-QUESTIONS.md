@@ -7,9 +7,8 @@ does in the meantime.*
 
 | # | Question | Needed by | Current draft |
 |---|---|---|---|
-| 1 | Review of the Spanish translation by a native speaker, in particular the Law names "Respaldar" (Hold), "Cumplir" (Finish) and "Listos" (Ready). | v0.2.x | Draft translation, marked as needing review. |
-| 2 | Robot motion in a space shared with people is level 3, which requires approval of each action. A robot that works among people would need approval for almost every motion. Options: an approved per-mission scope that lists specific motions, or a stricter level 2 for low-force motion inside tested limits. | v0.3 | Level 3, as stated in the robotics profile. |
-| 3 | Whether the record in clause 5.4 must be signed or keyed (MUST), instead of SHOULD. | v1.0 | SHOULD. |
+| 1 | Robot motion in a space shared with people is level 3, which requires approval of each action. A robot that works among people would need approval for almost every motion. Options: an approved per-mission scope that lists specific motions, or a stricter level 2 for low-force motion inside tested limits. | v0.3 | Level 3, as stated in the robotics profile. |
+| 2 | Whether the record in clause 5.4 must be signed or keyed (MUST), instead of SHOULD. | v1.0 | SHOULD. |
 
 ## Resolved
 
@@ -19,6 +18,7 @@ does in the meantime.*
 | Draft conformance cases FX-01 to FX-03 | Added to [tests/agents.md](../tests/agents.md), with at least one case for each new clause. | 2026-10-04 |
 | What operators owe the systems they run (question A) | Adopted as the operators profile (O1.1 to O5.1). It states duties of design and conduct only, and states explicitly that it creates no legal rights for machines. | 2026-10-04 |
 | A public way to raise concerns (question B) | Adopted as O3.3. A public concern channel with appeal to a named person is required at every conformance level, starting at Adopts. | 2026-10-04 |
+| Review of the Spanish translation by a native speaker | Not required. Decided by the owner. The Spanish file stays an unreviewed draft translation; the English text is the reference. | 2026-10-04 |
 | Statements of Laws 1 to 4 | The universal statements in LAWS.md are approved by the owner. | 2026-10-04 |
 | Action level definitions | 0 READ, 1 PREPARE, 2 REVERSIBLE WRITE, 3 EXTERNAL ACTION, 4 MONEY OR IRREVERSIBLE. | 2026-10-04 |
 | Copyright holder and steward | Copyright: Vektra Industries. Steward: Vektra Foundation. | 2026-10-04 |

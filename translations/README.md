@@ -1,6 +1,6 @@
 # Translations
 
-*This document is informative. It describes how translations are made and reviewed.*
+*This document is informative. It describes how translations are made.*
 
 The Vektra Laws are intended to be readable in every language. This folder contains the
 translations.
@@ -13,8 +13,10 @@ translations.
 2. **Ids never change.** Every translation uses the same Law ids (L1 to L5) and clause ids (such
    as 3.5 or A4.2) as the English text. A reader can always compare a clause across languages by
    its number. `tools/validate.py` checks this.
-3. **Every translation is reviewed.** A fluent speaker who did not write the translation reviews
-   it before its status changes from draft to reviewed. Reviewers are listed in the file.
+3. **Review is optional.** A translation does not need a review by a native speaker. A translation
+   that has not been reviewed is labeled "unreviewed draft translation" and states that the
+   English text is the reference. If a fluent speaker reviews it, the reviewer is listed in the
+   file.
 4. **Translate meaning, not words.** Keep the sentences short and plain. Keep the keywords MUST,
    MUST NOT, SHOULD and MAY with the meaning defined in RFC 2119; a translation may add the local
    word next to the keyword.
@@ -40,7 +42,7 @@ time. Each clause entry has the same `id` as the English clause, plus a translat
 
 | Code | Language | Covers | Status |
 |---|---|---|---|
-| [es](es/LAWS.md) | Español | The five Laws, one-line statements, motto | Draft, needs review by a native speaker |
+| [es](es/LAWS.md) | Español | The five Laws, one-line statements, motto | Unreviewed draft translation; English is the reference |
 
 To add a language, copy `es/laws.yaml` to a new folder, translate it, run
 `python tools/build_docs.py` and `python tools/validate.py`, and open a pull request.

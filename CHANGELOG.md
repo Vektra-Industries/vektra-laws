@@ -41,6 +41,9 @@ unchanged.
 - ADOPT.md, adopt/AGENT-PROMPT.md, GOVERNANCE.md (3.10 is reserved to the owner), README,
   ROADMAP, TRADEMARKS and CITATION.cff updated for 0.3.0.
 - docs/OPEN-QUESTIONS.md: the proposals and owner questions A and B are resolved.
+- Translations: review by a native speaker is no longer required (owner decision, 2026-10-04).
+  The Spanish file is labeled an unreviewed draft translation; the English text is the reference.
+  ROADMAP and translations/README updated.
 
 ## 0.2.1 (draft, 2026-10-04)
 
