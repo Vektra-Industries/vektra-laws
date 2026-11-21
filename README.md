@@ -55,8 +55,7 @@ legal advice and not professional safety assessments (see [docs/reviews](docs/re
 4. Test the system against the conformance cases in [tests/](tests/).
 5. Publish a declaration based on [ADOPT.md](ADOPT.md).
 
-Key terms are defined in [GLOSSARY.md](GLOSSARY.md). Translations are in
-[translations/](translations/); the English text is the reference. The relation to other
+Key terms are defined in [GLOSSARY.md](GLOSSARY.md). The English text is the reference. The relation to other
 frameworks is described, informatively, in [docs/ALIGNMENT.md](docs/ALIGNMENT.md). Failure patterns
 from well-known works of fiction and real incidents, and the clauses that address them, are
 reviewed informatively in [docs/LESSONS-FROM-FICTION.md](docs/LESSONS-FROM-FICTION.md).
@@ -98,7 +97,7 @@ version.
 ```bash
 pip install -r requirements.txt
 python tools/validate.py      # schema, ids, wording rules, translations, citation, generated docs, cases
-python tools/build_docs.py    # regenerate LAWS.md, profiles/ and translations/ after a YAML edit
+python tools/build_docs.py    # regenerate LAWS.md and profiles/ after a YAML edit
 ```
 
 A GitHub Actions workflow runs the validator on every push and pull request.

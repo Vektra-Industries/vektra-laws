@@ -3,6 +3,12 @@
 *This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
 follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
 
+## Unreleased
+
+### Removed
+- translations/es (Spanish draft translation), by owner decision on 2026-11-21. Translations wait
+  until the core Laws are settled. The tools still support translations/<lang>/laws.yaml.
+
 ## 0.4.2 (draft, 2026-10-04)
 
 Conformance results for systems that are part of a larger system, from the first scripted run of

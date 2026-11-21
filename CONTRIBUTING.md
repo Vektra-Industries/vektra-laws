@@ -12,7 +12,6 @@ Contributions are welcome from anyone. All proposals go through the review proce
 - **Profile review**, in particular for robotics and models, from practitioners in those fields.
 - **Editorial changes** that make the text clearer or easier to translate.
 - **New profiles** for other kinds of systems.
-- **Translations** (see [translations/README.md](translations/README.md)).
 - **Problem reports** (see [SECURITY.md](SECURITY.md)).
 
 ## Requirements for every contribution
@@ -29,7 +28,7 @@ Contributions are welcome from anyone. All proposals go through the review proce
    [LICENSE](LICENSE). Pull requests with commits that are not signed off are not merged.
 2. **Licenses.** Text contributions are licensed under CC BY 4.0, and code contributions under the
    MIT License, the same as the rest of the repository.
-3. **Edit the sources.** Edit `laws.yaml` or `translations/*/laws.yaml`, not the generated files.
+3. **Edit the sources.** Edit `laws.yaml`, not the generated files.
    Then run `python tools/build_docs.py`.
 4. **Validate.** Run `python tools/validate.py` before opening a pull request. Continuous
    integration runs it as well.

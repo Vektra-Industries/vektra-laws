@@ -111,7 +111,7 @@ def build_laws(data: dict) -> str:
           "- **Normative:** BCP 14: RFC 2119, \"Key words for use in RFCs to Indicate Requirement Levels\";",
           "  RFC 8174, \"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words\".",
           "- **Normative:** [GLOSSARY.md](GLOSSARY.md).",
-          "- [Profiles](profiles/), [conformance cases](tests/), [translations](translations/),",
+          "- [Profiles](profiles/), [conformance cases](tests/),",
           "  [alignment with other frameworks](docs/ALIGNMENT.md).", ""]
     return "\n".join(L)
 
