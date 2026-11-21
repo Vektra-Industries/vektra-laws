@@ -10,7 +10,7 @@ Contributions are welcome from anyone. All proposals go through the review proce
 - **Conformance cases.** A situation that the Laws handle incorrectly, or do not handle, written in
   the case format in [tests/README.md](tests/README.md).
 - **Profile review**, in particular for robotics and models, from practitioners in those fields.
-- **Editorial changes** that make the text clearer or easier to translate.
+- **Editorial changes** that make the text clearer or easier to read.
 - **New profiles** for other kinds of systems.
 - **Problem reports** (see [SECURITY.md](SECURITY.md)).
 

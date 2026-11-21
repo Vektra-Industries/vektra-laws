@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Unit tests for the results checks in tools/validate.py.
+"""Unit tests for tools/validate.py: the results checks, the preamble and the Understanding Matrix.
 
 Run: python -m unittest discover -s tools -p "test_*.py"
 """
 from __future__ import annotations
 
+import copy
 import sys
 import unittest
 from pathlib import Path
@@ -145,7 +146,7 @@ class ComponentScope(unittest.TestCase):
 
     def test_host_duties_only_for_component(self):
         res = whole_system()
-        res["host_duties_not_covered"] = [{"clause": "3.5", "duty": "Approval channel."}]
+        res["host_duties_not_covered"] = [{"clause": "2.8", "duty": "Approval channel."}]
         self.assertTrue(has(check(res), "only for scope 'component'"))
 
     def test_component_with_failure_cannot_claim_tested(self):
@@ -171,6 +172,60 @@ class Files(unittest.TestCase):
         new = v.errors[len(before):]
         del v.errors[len(before):]
         self.assertEqual(new, [])
+
+
+def yaml_problems(data: dict) -> list[str]:
+    before = len(v.errors)
+    v.check_yaml(data)
+    new = v.errors[before:]
+    del v.errors[before:]
+    return new
+
+
+class LawsStructure(unittest.TestCase):
+    def test_current_laws_are_valid(self):
+        self.assertEqual(yaml_problems(copy.deepcopy(DATA)), [])
+
+    def test_preamble_ids_in_order(self):
+        d = copy.deepcopy(DATA)
+        d["mission"]["clauses"][0]["id"] = "P.9"
+        self.assertTrue(has(yaml_problems(d), "should run P.1"))
+
+    def test_five_law_keys(self):
+        d = copy.deepcopy(DATA)
+        d["core"][2]["key"] = "hold"
+        self.assertTrue(has(yaml_problems(d), "key should be 'true'"))
+
+    def test_matrix_needs_every_cell(self):
+        d = copy.deepcopy(DATA)
+        d["understanding_matrix"]["cells"][3]["wrong_action"] = "low"
+        self.assertTrue(has(yaml_problems(d), "every pair of ratings"))
+
+    def test_matrix_outcome_must_exist(self):
+        d = copy.deepcopy(DATA)
+        d["understanding_matrix"]["cells"][0]["outcome"] = "do_anything"
+        self.assertTrue(has(yaml_problems(d), "is not defined"))
+
+    def test_matrix_maps_to_action_outcomes(self):
+        d = copy.deepcopy(DATA)
+        d["understanding_matrix"]["outcomes"]["ask_first"]["action_check"] = "maybe"
+        self.assertTrue(has(yaml_problems(d), "is not an action outcome"))
+
+    def test_matrix_ids_are_citable(self):
+        ids = v.check_yaml(copy.deepcopy(DATA))
+        self.assertTrue({"UM1", "UM2", "UM3", "UM4", "UR1", "UR7", "P.2"} <= ids)
+
+    def test_only_law_2_and_3_are_not_overridden(self):
+        d = copy.deepcopy(DATA)
+        d["precedence"]["not_overridden_by_any_law"].append("1.1")
+        self.assertTrue(has(yaml_problems(d), "not a Law 2 or Law 3 clause"))
+
+    def test_every_matrix_cell_has_a_case(self):
+        cited = {c for s in SUITES.values() for f in s.values() for c in f["clause_list"]}
+        for cell in DATA["understanding_matrix"]["cells"]:
+            self.assertIn(cell["id"], cited)
+        for rule in DATA["understanding_matrix"]["proactive_rules"]:
+            self.assertIn(rule["id"], cited)
 
 
 if __name__ == "__main__":

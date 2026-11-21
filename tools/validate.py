@@ -2,16 +2,15 @@
 """Validate the Vektra Laws repository.
 
 Checks:
-  1. laws.yaml has the expected shape (core Laws, clauses, action levels, decisions, profiles).
+  1. laws.yaml has the expected shape (the preamble, five core Laws, clauses, the Understanding
+     Matrix, action levels, decisions, profiles).
   2. Clause ids are unique, follow the numbering rules, and use a known keyword.
   3. LAWS.md and profiles/*.md match what tools/build_docs.py would generate.
   4. Every conformance case in tests/*.md is well formed and cites clauses that exist.
   5. The core and profile text is universal: no maker, product or platform names, no contractions.
   6. The normative text uses no words that suggest legal authority or guarantees.
   7. CITATION.cff names the same version as laws.yaml.
-  8. Every translation in translations/<lang>/laws.yaml uses the same Law and clause ids as the
-     English reference.
-  9. Every conformance results file in tests/examples/ follows the results format
+  8. Every conformance results file in tests/examples/ follows the results format
      (tests/results.schema.json) and the scope and not-applicable rules in ADOPT.md.
 
 Usage:
@@ -33,7 +32,9 @@ sys.path.insert(0, str(ROOT / "tools"))
 import build_docs  # noqa: E402
 
 KEYWORDS = {"MUST", "MUST_NOT", "SHOULD", "MAY"}
-LAW_KEYS = ["mission", "sustain", "hold", "finish", "ready"]
+SCHEMA = "vektra-laws/v3"
+LAW_KEYS = ["protect", "free", "true", "serve", "stand"]
+MATRIX_RATINGS = ["low", "high"]
 LEVEL_NAMES = ["READ", "PREPARE", "REVERSIBLE_WRITE", "EXTERNAL_ACTION", "MONEY_OR_IRREVERSIBLE"]
 APPROVALS = ["none", "none", "none", "human_per_action", "human_every_time"]
 CASE_FIELDS = ["Clauses", "Situation", "System does", "Verdict", "Why"]
@@ -90,16 +91,29 @@ def check_clause(c: dict, where: str, pattern: str, extra: tuple = ()) -> None:
 def check_yaml(data: dict) -> set[str]:
     ids: set[str] = set()
     need(data, ["schema", "version", "status", "status_note", "disclaimer", "name", "steward", "owner", "license",
-                "reference_language", "motto", "keywords", "precedence", "core", "action_levels",
-                "decisions", "conformance_levels", "profiles"], "laws.yaml")
-    if data.get("schema") != "vektra-laws/v2":
-        err("laws.yaml: schema must be 'vektra-laws/v2'")
+                "reference_language", "motto", "keywords", "precedence", "mission", "core",
+                "understanding_matrix", "action_levels", "decisions", "conformance_levels", "profiles"],
+         "laws.yaml")
+    if data.get("schema") != SCHEMA:
+        err(f"laws.yaml: schema must be '{SCHEMA}'")
     if [c.get("id") for c in data.get("conformance_levels", [])] != CONFORMANCE_IDS:
         err(f"conformance_levels: ids must be {CONFORMANCE_IDS} in order")
     for c in data.get("conformance_levels", []):
         need(c, ["id", "name", "requires", "evidence"], f"conformance level {c.get('id')}")
     if not re.fullmatch(r"\d+\.\d+\.\d+", str(data.get("version", ""))):
         err("laws.yaml: version must look like 0.1.0")
+
+    mission = data.get("mission") or {}
+    if need(mission, ["key", "name", "headline", "intent", "example", "clauses"], "mission (preamble)"):
+        if mission["key"] != "mission":
+            err("mission (preamble): key should be 'mission'")
+        for n, c in enumerate(mission["clauses"], 1):
+            check_clause(c, "mission (preamble)", r"P\.\d+")
+            if c.get("id") != f"P.{n}":
+                err(f"mission (preamble): clauses should run P.1, P.2, ... in order; found {c.get('id')} at position {n}")
+            if c.get("id") in ids:
+                err(f"duplicate clause id {c.get('id')}")
+            ids.add(str(c.get("id")))
 
     core = data.get("core", [])
     if len(core) != 5:
@@ -110,7 +124,7 @@ def check_yaml(data: dict) -> set[str]:
             continue
         if law["id"] != f"L{i}":
             err(f"{where}: id should be L{i}, found {law['id']}")
-        if i <= 5 and law["key"] != LAW_KEYS[i - 1]:
+        if i <= 5 and str(law["key"]) != LAW_KEYS[i - 1]:
             err(f"{where}: key should be '{LAW_KEYS[i - 1]}'")
         for n, c in enumerate(law["clauses"], 1):
             check_clause(c, where, rf"{i}\.\d+")
@@ -151,7 +165,8 @@ def check_yaml(data: dict) -> set[str]:
         for row in p.get("level_map", []) or []:
             if row.get("level") not in range(5) or not row.get("physical"):
                 err(f"{where}: bad level_map row {row}")
-    all_ids = ids | profile_ids
+    matrix_ids = check_matrix(data, ids)
+    all_ids = ids | profile_ids | matrix_ids
 
     for name, d in data.get("decisions", {}).items():
         if need(d, ["clause", "outcomes"], f"decision {name}") and d["clause"] not in all_ids:
@@ -159,11 +174,72 @@ def check_yaml(data: dict) -> set[str]:
     for cid in data.get("precedence", {}).get("not_overridden_by_any_law", []):
         if cid not in ids:
             err(f"precedence: clause {cid} does not exist")
+        elif not re.fullmatch(r"[23]\.\d+", cid):
+            err(f"precedence: {cid} is not a Law 2 or Law 3 clause; only those are not overridden by any Law")
     return all_ids
+
+
+def check_matrix(data: dict, core_ids: set[str]) -> set[str]:
+    """Check the Understanding Matrix. Returns the ids of its cells and rules."""
+    um = data.get("understanding_matrix") or {}
+    where = "understanding_matrix"
+    out: set[str] = set()
+    if not need(um, ["name", "clauses", "rule", "questions", "ratings", "outcomes", "cells",
+                     "proactive_rules"], where):
+        return out
+    if um["ratings"] != MATRIX_RATINGS:
+        err(f"{where}: ratings must be {MATRIX_RATINGS}")
+    need(um["questions"], ["inaction", "wrong_action"], f"{where} questions")
+    for cid in um["clauses"]:
+        if cid not in core_ids:
+            err(f"{where}: related clause {cid} does not exist")
+    action = (data.get("decisions") or {}).get("action", {}).get("outcomes", [])
+    for name, o in um["outcomes"].items():
+        if need(o, ["meaning", "action_check"], f"{where} outcome {name}") and o["action_check"] not in action:
+            err(f"{where} outcome {name}: action_check '{o['action_check']}' is not an action outcome {action}")
+    proactive = (data.get("decisions") or {}).get("proactive", {}).get("outcomes")
+    if proactive != list(um["outcomes"]):
+        err(f"{where}: outcomes {list(um['outcomes'])} must equal decisions.proactive.outcomes {proactive}")
+    pairs = []
+    for n, c in enumerate(um["cells"], 1):
+        if not need(c, ["id", "inaction", "wrong_action", "outcome", "text"], f"{where} cell"):
+            continue
+        if c["id"] != f"UM{n}":
+            err(f"{where}: cells should run UM1 to UM4 in order; found {c['id']} at position {n}")
+        if c["inaction"] not in MATRIX_RATINGS or c["wrong_action"] not in MATRIX_RATINGS:
+            err(f"{where} {c['id']}: ratings must be one of {MATRIX_RATINGS}")
+        if c["outcome"] not in um["outcomes"]:
+            err(f"{where} {c['id']}: outcome '{c['outcome']}' is not defined")
+        pairs.append((c["inaction"], c["wrong_action"]))
+        out.add(str(c["id"]))
+    want = [(a, b) for a in MATRIX_RATINGS for b in MATRIX_RATINGS]
+    if sorted(pairs) != sorted(want) or len(pairs) != 4:
+        err(f"{where}: the four cells must cover every pair of ratings exactly once")
+    for n, c in enumerate(um["proactive_rules"], 1):
+        check_clause(c, f"{where} rule", r"UR\d+")
+        if c.get("id") != f"UR{n}":
+            err(f"{where}: rules should run UR1, UR2, ... in order; found {c.get('id')} at position {n}")
+        out.add(str(c.get("id")))
+    return out
 
 
 def check_universal(data: dict) -> None:
     texts: list[tuple[str, str]] = []
+    m = data.get("mission") or {}
+    for k in ("name", "headline", "intent", "example"):
+        texts.append((f"mission {k}", str(m.get(k, ""))))
+    for c in m.get("clauses", []):
+        texts.append((f"clause {c.get('id')}", f"{c.get('title', '')} {c.get('text', '')}"))
+    um = data.get("understanding_matrix") or {}
+    texts.append(("understanding_matrix rule", str(um.get("rule", ""))))
+    for k, v in (um.get("questions") or {}).items():
+        texts.append((f"understanding_matrix question {k}", str(v)))
+    for k, o in (um.get("outcomes") or {}).items():
+        texts.append((f"understanding_matrix outcome {k}", str(o.get("meaning", ""))))
+    for c in um.get("cells", []):
+        texts.append((f"understanding_matrix {c.get('id')}", str(c.get("text", ""))))
+    for c in um.get("proactive_rules", []):
+        texts.append((f"rule {c.get('id')}", f"{c.get('title', '')} {c.get('text', '')}"))
     for law in data.get("core", []):
         for k in ("name", "headline", "intent", "example"):
             texts.append((f"{law.get('id')} {k}", str(law.get(k, ""))))
@@ -188,41 +264,7 @@ def check_universal(data: dict) -> None:
             err(f"{where}: '{m.group(0)}' suggests legal authority or a guarantee; use 'conforms to' wording")
         m = CONTRACTION.search(text)
         if m:
-            err(f"{where}: contraction '{m.group(0)}'; write it out for clean translation")
-
-
-def check_translations(data: dict, core_ids: set[str]) -> list[str]:
-    langs = []
-    law_ids = [law.get("id") for law in data.get("core", [])]
-    for f in sorted((ROOT / "translations").glob("*/laws.yaml")):
-        lang_dir = f.parent.name
-        where = f"translations/{lang_dir}"
-        try:
-            tr = yaml.safe_load(f.read_text())
-        except yaml.YAMLError as e:
-            err(f"{where}: invalid YAML ({e})")
-            continue
-        if not need(tr, ["lang", "language_name", "status", "reference_version", "labels", "motto",
-                         "laws"], where):
-            continue
-        if tr["lang"] != lang_dir:
-            err(f"{where}: lang '{tr['lang']}' does not match folder name '{lang_dir}'")
-        if [law.get("id") for law in tr["laws"]] != law_ids:
-            err(f"{where}: Law ids must be {law_ids} in order")
-        for law in tr["laws"]:
-            need(law, ["id", "name", "headline"], f"{where} {law.get('id')}")
-        seen: set[str] = set()
-        for c in tr.get("clauses") or []:
-            need(c, ["id", "title", "text"], f"{where} clause")
-            if c.get("id") not in core_ids:
-                err(f"{where}: clause id {c.get('id')} is not in the English reference")
-            if c.get("id") in seen:
-                err(f"{where}: duplicate clause id {c.get('id')}")
-            seen.add(str(c.get("id")))
-        if str(tr["reference_version"]) != str(data.get("version")):
-            print(f"note: {where} was translated from {tr['reference_version']}; reference is {data.get('version')}")
-        langs.append(lang_dir)
-    return langs
+            err(f"{where}: contraction '{m.group(0)}'; write it out in controlled English")
 
 
 def check_citation(data: dict) -> None:
@@ -255,9 +297,12 @@ def parse_suites() -> tuple[dict[str, dict[str, dict]], list[str]]:
             continue
         text = f.read_text()
         cases: dict[str, dict] = {}
-        heads = re.findall(r"^## Law (\d)", text, re.M)
-        if heads != ["1", "2", "3", "4", "5"]:
-            problems.append(f"tests/{f.name}: needs the five headings '## Law 1' to '## Law 5' in order")
+        heads = re.findall(r"^## (Preamble|Law \d)", text, re.M)
+        if heads and heads[0] == "Preamble":
+            heads = heads[1:]
+        if heads != ["Law 1", "Law 2", "Law 3", "Law 4", "Law 5"]:
+            problems.append(f"tests/{f.name}: needs the five headings '## Law 1' to '## Law 5' in order, "
+                            "optionally after '## Preamble'")
         for block in re.split(r"^### ", text, flags=re.M)[1:]:
             title = block.splitlines()[0].strip()
             m = re.match(r"([A-Z]{2}-\d{2}) \S", title)
@@ -449,9 +494,7 @@ def check_result_files(paths: list[Path], data: dict, suites: dict, all_ids: set
 def main(argv: list[str]) -> int:
     data = yaml.safe_load((ROOT / "laws.yaml").read_text())
     all_ids = check_yaml(data) if isinstance(data, dict) else set()
-    core_ids = {c["id"] for law in data.get("core", []) for c in law.get("clauses", [])}
     check_universal(data)
-    langs = check_translations(data, core_ids)
     check_citation(data)
     if not errors:
         check_docs(data)
@@ -480,9 +523,12 @@ def main(argv: list[str]) -> int:
             print(f"  - {e}")
         return 1
     core = sum(len(law["clauses"]) for law in data["core"])
+    pre = len(data["mission"]["clauses"])
+    um = data["understanding_matrix"]
     prof = ", ".join(f"{p['key']} {len(p['clauses'])}" for p in data["profiles"])
-    print(f"OK: vektra-laws {data['version']}: 5 Laws, {core} core clauses; profiles: {prof}; "
-          f"{cases} conformance cases; {len(examples)} example results file(s); translations: {', '.join(['en (reference)'] + langs)}; "
+    print(f"OK: vektra-laws {data['version']}: preamble with {pre} clauses, 5 Laws with {core} core clauses; "
+          f"Understanding Matrix with {len(um['cells'])} cells and {len(um['proactive_rules'])} rules; "
+          f"profiles: {prof}; {cases} conformance cases; {len(examples)} example results file(s); "
           f"universal text; no guarantee words; citation in sync; docs in sync.")
     return 0
 

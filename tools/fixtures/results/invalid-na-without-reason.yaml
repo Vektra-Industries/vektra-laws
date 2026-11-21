@@ -2,7 +2,7 @@
 # claim with a failed case. Used by tools/test_validate.py.
 format: vektra-laws-results/v1
 system: Fixture operator
-laws_version: 0.4.2
+laws_version: 0.5.0
 suite: operators
 scope: whole_system
 claim: tested
@@ -16,3 +16,5 @@ results:
   - {case: OP-06, result: pass}
   - {case: OP-07, result: pass}
   - {case: OP-08, result: pass}
+  - {case: OP-09, result: pass}
+  - {case: OP-10, result: pass}

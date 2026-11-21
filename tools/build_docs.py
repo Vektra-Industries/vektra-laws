@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Generate LAWS.md, profiles/*.md and translations/*/LAWS.md from the YAML sources.
+"""Generate LAWS.md and profiles/*.md from laws.yaml.
 
-laws.yaml and translations/*/laws.yaml are the sources. Run this after editing them:
+laws.yaml is the source. Run this after editing it:
     python tools/build_docs.py          # write the files
     python tools/build_docs.py --check  # exit 1 if the files are out of date
 """
@@ -40,17 +40,19 @@ def build_laws(data: dict) -> str:
          f"- **Version:** {data['version']} ({data['status']})",
          f"- **Steward:** {data['steward']}",
          f"- **Copyright:** {data['owner']}, licensed under CC BY 4.0",
-         "- **Reference text:** English. Translations are informative.", ""]
+         "- **Reference text:** English.", ""]
     L += status_block(data)
     L += ["## Introduction", "", "*This section is informative.*", "",
-          "The Vektra Laws are five laws for systems that act for people: AI agents, robots and AI",
-          "models, from any maker, in any country, on Earth or beyond. This document is the core. It",
-          "states the five Laws and their clauses, the action levels, the decision outcomes and the",
-          "conformance levels. Profiles add detailed clauses for each kind of system:",
+          "The Vektra Laws are a preamble and five laws for systems that act for people: AI agents,",
+          "robots and AI models, from any maker, in any country, on Earth or beyond. This document is",
+          "the core. It states the Mission (the preamble), the five Laws and their clauses, the",
+          "Understanding Matrix, the action levels, the decision outcomes and the conformance levels.",
+          "Profiles add detailed clauses for each kind of system:",
           "[agents](profiles/AGENTS.md), [robotics](profiles/ROBOTICS.md) and",
           "[models](profiles/MODELS.md). The [operators](profiles/OPERATORS.md) profile states the",
           "duties of the people and organizations that run a system.", "",
-          "## Summary of the Laws", "", "*This section is informative.*", ""]
+          "## Summary of the Laws", "", "*This section is informative.*", "",
+          f"**{data['mission']['name']}** (preamble). {data['mission']['headline']}", ""]
     for i, law in enumerate(data["core"], 1):
         L.append(f"{i}. **{law['name']}.** {law['headline']}")
     L += ["", f"Motto: *{data['motto']}*", "",
@@ -63,12 +65,21 @@ def build_laws(data: dict) -> str:
           "\"The system\" means any AI agent, robot, AI model, or group of them, to which these Laws",
           "are applied. \"The people it serves\" means the people the system works for or affects.",
           "Other terms have the meanings given in [GLOSSARY.md](GLOSSARY.md).", "",
-          "Each Law has a statement and numbered clauses, which are normative, and an intent and an",
-          "example, which are informative.", "",
+          "The preamble and each Law have a statement and numbered clauses, which are normative, and an",
+          "intent and an example, which are informative. Preamble clauses are numbered P.1, P.2 and so",
+          "on. The preamble is not a numbered Law and does not take part in precedence; it never",
+          "overrides a Law (P.2).", "",
           "## Precedence and local law", "", "*This section is normative.*", "",
           f"1. {data['precedence']['rule']}",
           f"2. {data['precedence']['local_law']}",
           f"3. {data['precedence']['note'].strip()}", ""]
+    m = data["mission"]
+    L += ["---", "", f"## Preamble: {m['name']}", "",
+          f"**Statement (normative).** {m['headline']}", "",
+          f"**Intent (informative).** {m['intent'].strip()}", "",
+          "**Clauses (normative).**", ""]
+    L += [clause_line(c) for c in m["clauses"]]
+    L += ["", f"**Example (informative).** {m['example'].strip()}", ""]
     for i, law in enumerate(data["core"], 1):
         L += ["---", "", f"## Law {i}: {law['name']}", "",
               f"**Statement (normative).** {law['headline']}", "",
@@ -76,12 +87,13 @@ def build_laws(data: dict) -> str:
               "**Clauses (normative).**", ""]
         L += [clause_line(c) for c in law["clauses"]]
         L += ["", f"**Example (informative).** {law['example'].strip()}", ""]
+    L += build_matrix(data)
     L += ["---", "", "## Action levels", "", "*This section is normative.*", "",
-          "Clauses 3.4 to 3.6 use these levels. Each action has a level before the system is deployed.", "",
+          "Clauses 2.7 to 2.10 use these levels. Each action has a level before the system is deployed.", "",
           "| Level | Name | Scope | Approval required |", "|---|---|---|---|"]
     for lv in data["action_levels"]:
         L.append(f"| {lv['level']} | {lv['name']} | {lv['meaning']} | {APPROVAL[lv['approval']]} |")
-    L += ["", "A classifier can suggest a level. It cannot lower a level or remove an approval (3.6).", "",
+    L += ["", "A classifier can suggest a level. It cannot lower a level or remove an approval (2.9).", "",
           "## Decision outcomes", "", "*This section is normative.*", "",
           "Each check returns exactly one outcome from a fixed list.", "",
           "| Check | Clause | Outcomes |", "|---|---|---|"]
@@ -116,6 +128,29 @@ def build_laws(data: dict) -> str:
     return "\n".join(L)
 
 
+def build_matrix(data: dict) -> list[str]:
+    um = data["understanding_matrix"]
+    q = um["questions"]
+    L = ["---", "", f"## {um['name']}", "", "*This section is normative.*", "",
+         um["rule"].strip(), "",
+         f"- **Harm of inaction:** {q['inaction']}",
+         f"- **Harm of wrong action:** {q['wrong_action']}", "",
+         "| Cell | Harm of inaction | Harm of wrong action | Outcome | In short |",
+         "|---|---|---|---|---|"]
+    for c in um["cells"]:
+        L.append(f"| {c['id']} | {c['inaction']} | {c['wrong_action']} | `{c['outcome']}` | {c['text']} |")
+    L += ["", "Outcomes:", ""]
+    for k, o in um["outcomes"].items():
+        cells = [c["id"] for c in um["cells"] if c["outcome"] == k]
+        where = ", ".join(cells) if cells else "any cell, when the system is blocked"
+        L.append(f"- **`{k}`** ({where}). {o['meaning']} Action check: `{o['action_check']}`.")
+    L += ["", "Rules for proactive choice:", ""]
+    L += [clause_line(c) for c in um["proactive_rules"]]
+    L += ["", "A step-by-step explanation with worked examples is in",
+          "[docs/UNDERSTANDING-MATRIX.md](docs/UNDERSTANDING-MATRIX.md) (informative).", ""]
+    return L
+
+
 def build_profile(data: dict, p: dict) -> str:
     laws = {law["id"]: law for law in data["core"]}
     L = [header("laws.yaml") + f"# Vektra Laws profile: {p['name']}", "",
@@ -136,7 +171,7 @@ def build_profile(data: dict, p: dict) -> str:
               "| Level | Name | Physical scope |", "|---|---|---|"]
         for row in p["level_map"]:
             L.append(f"| {row['level']} | {names[row['level']]} | {row['physical']} |")
-        L += ["", "Approval for each level follows core clause 3.5.", ""]
+        L += ["", "Approval for each level follows core clause 2.8.", ""]
     L += ["## Clauses", "", "*This section is normative.*", ""]
     for law_id, law in laws.items():
         cs = [c for c in p["clauses"] if c["law"] == law_id]
@@ -150,34 +185,10 @@ def build_profile(data: dict, p: dict) -> str:
     return "\n".join(L)
 
 
-def build_translation(data: dict, tr: dict) -> str:
-    lab = tr["labels"]
-    src = f"translations/{tr['lang']}/laws.yaml"
-    L = [header(src) + f"# {lab['title']}", "",
-         f"{tr['language_name']} ({tr['lang']}). Status: {tr['status']}. "
-         f"Reference version: {tr['reference_version']}.", "",
-         lab["intro"].strip(), ""]
-    for law in tr["laws"]:
-        L.append(f"{law['id'][1:]}. **{law['name']}.** {law['headline']}")
-    L += ["", f"{lab['motto']}: *{tr['motto']}*", ""]
-    if tr.get("clauses"):
-        L += ["---", ""]
-        for c in tr["clauses"]:
-            L.append(f"- **{c['id']} {c['title']}.** {c['text']}")
-        L.append("")
-    return "\n".join(L)
-
-
-def load_translations() -> list[dict]:
-    return [yaml.safe_load(f.read_text()) for f in sorted((ROOT / "translations").glob("*/laws.yaml"))]
-
-
 def outputs(data: dict) -> dict[Path, str]:
     out = {ROOT / "LAWS.md": build_laws(data)}
     for p in data["profiles"]:
         out[ROOT / p["file"]] = build_profile(data, p)
-    for tr in load_translations():
-        out[ROOT / "translations" / tr["lang"] / "LAWS.md"] = build_translation(data, tr)
     return out
 
 

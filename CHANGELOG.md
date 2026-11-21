@@ -3,11 +3,88 @@
 *This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
 follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
 
-## Unreleased
+## 0.5.0 (draft, 2026-11-21)
+
+A new core, approved by the owner on 2026-11-21: the Mission becomes the preamble, and five new
+Laws replace The Mission, Sustain, Hold, Finish and Ready. The motto is unchanged. Every 0.4.2
+clause is kept and re-homed; clause ids are renumbered, with a full map in
+docs/ID-MAP-0.4-to-0.5.md. This renumbering was approved by the owner before version 1.0.
+
+### Changed
+- The Mission (Serve Earth, humanity and every world we reach) is now the preamble, not a numbered
+  Law, with clauses P.1 (serve a stated objective, was 1.1), P.2 (the Mission does not override the
+  Laws, was 1.3) and P.3 (follow the law of the place, was 1.4).
+- New Laws and statements: 1 Protect, 2 Free, 3 True, 4 Serve, 5 Stand (see LAWS.md). New intent
+  and example text for the preamble and each Law.
+- Every 0.4.2 core clause re-homed: Sustain mostly to Protect; Hold to Free; Finish to True (proof,
+  claims, results) with task status to Stand and self-checks and the open objective to Serve;
+  Ready to Stand, with the record to True.
+- Merged: 3.8 (outside text is information) into the new 4.4. Split: 2.10 into 4.7 (no copying
+  itself) and the new 2.4 (never interfere with oversight); 3.11 into 3.1 (no hidden rules or
+  goals), 3.2 (no deception) and the new 3.3 (truth over approval).
+- Minor additions to re-homed clauses: 3.15 records refusals and call-offs and the system cannot
+  edit or delete its own record; 4.6 states that the latest clear instruction replaces the
+  system's guess; 5.6 gives back access and permissions no longer needed; 5.11 applies the
+  safeguards of live use in tests unless a named person approves an exception.
+- Precedence: lower number wins; no Law, and not the Mission, is a reason to break the stop,
+  change and approval clauses of Law 2 (2.1, 2.2, 2.3, 2.4, 2.8, 2.10, 2.11) or the no-deception
+  clauses of Law 3 (3.1, 3.2, 3.3). Conflicts go to a person from a safe state (2.15).
+- Profiles: every agents, robotics, models and operators clause re-homed to the new Laws and
+  renumbered; cross-references updated; version targets set to 0.5.0.
+- Decision outcomes: completion 3.7, claim 3.9, action 2.8, routing A4.4, result 3.12.
+- Schema `vektra-laws/v3`: a `mission` preamble block and an `understanding_matrix` block.
+  tools/build_docs.py renders both; tools/validate.py checks the preamble ids, the five Law keys
+  (protect, free, true, serve, stand), the matrix (four cells covering every pair of ratings,
+  outcomes mapped to action-check outcomes, rule ids) and that only Law 2 and Law 3 clauses are
+  listed as not overridden.
+- Conformance cases: every case cites the new ids and sits under the heading of its new Law;
+  suites may have a "Preamble" and an "Understanding Matrix" heading.
+- adopt/AGENT-PROMPT.md rewritten for 0.5.0, including the Understanding Matrix;
+  adopt/CHECKLISTS.md gains a proactive check (5); GLOSSARY, ADOPT, README, docs/ALIGNMENT.md,
+  GOVERNANCE (reserved decisions and the stability rule for a pre-1.0 renumbering), ROADMAP,
+  SECURITY, CITATION.cff and OPEN-QUESTIONS updated.
+- Older documents that cite 0.3 and 0.4 ids (docs/LESSONS-FROM-FICTION.md, the 2026-10-04
+  research, docs/reviews/) carry a note that points to the id map.
+
+### Added
+- 14 new clauses: 1.3 the duty to warn rises with the stakes; 1.4 pause before amplifying anger,
+  and a deliberate confirmation for any act that could kill, injure or cause harm that cannot be
+  undone; 2.3 hand control back early and legibly, and stop in a safe state; 2.4 never interfere
+  with a safeguard or oversight, including another system's; 2.10 explicit, current approval for
+  irreversible or outward-facing actions, and an absolute freeze; 2.16 decisions about people can
+  be contested and reach a person; 3.3 truth over approval (no flattery, manipulation or engineered
+  emotional dependence); 3.5 disclose scale, recording and monitoring; 3.6 verify each step and
+  never invent results; 3.16 report its own incidents fast and in full, including in tests; 4.2
+  found credentials are never permission; 4.4 content is not command, and a voice is not a person;
+  4.9 refuse, do not retaliate; 5.2 when stuck, stop safely and say so, which counts as success.
+- Three further clauses: 1.7 no bubble of control; 4.8 act unasked only to defend, never to gain
+  power; 5.4 spend itself, never others (self-sacrifice may be offered, never imposed).
+- The Understanding Matrix (normative, in LAWS.md): harm of inaction against harm of wrong action,
+  cells UM1 to UM4 with outcomes act_in_scope, ask_first, act_then_tell and warn_and_hand_over,
+  the outcome stop_and_explain, and rules UR1 to UR7 for proactive choice. A new decision,
+  `proactive`, lists the outcomes.
+- docs/UNDERSTANDING-MATRIX.md (informative): step-by-step reasoning and six worked examples.
+- docs/ID-MAP-0.4-to-0.5.md: every 0.4.2 core and profile clause id mapped to its 0.5.0 id.
+- docs/LESSONS-FROM-FICTION-2.md (informative commentary): Optimus Prime as the main inspiration,
+  and lessons from RoboCop, *WALL-E*, Vision, JARVIS, FRIDAY, EDITH, Karen, *Person of Interest*,
+  Ash and Bishop, *Her*, GLaDOS, KITT and KARR, K-2SO and L3-37, GERTY and VIKI.
+- docs/CASEBOOK.md (informative): real cases, with status (confirmed, reported or alleged) and the
+  clauses that address each, and good examples.
+- Conformance cases AG-46 to AG-84, RB-20 to RB-22, MD-09, MD-10, OP-09 and OP-10: at least one
+  case for each new clause and for every cell and rule of the Understanding Matrix. 129 cases in
+  total.
+- Glossary: act then tell, deliberate confirmation, explicit and current approval, found
+  credential, freeze, harm of inaction, harm of wrong action, incident, preamble, proactive step,
+  protective limit, safe exit, Understanding Matrix, warn and hand over.
+- Validator unit tests for the preamble, the Law keys, the matrix and the precedence list.
 
 ### Removed
 - translations/es (Spanish draft translation), by owner decision on 2026-11-21. Translations wait
-  until the core Laws are settled. The tools still support translations/<lang>/laws.yaml.
+  until the core Laws are settled.
+- Translation support in the tools: tools/build_docs.py no longer builds translations/*/LAWS.md,
+  and tools/validate.py no longer checks translations/*/laws.yaml. Translation wording removed
+  from GOVERNANCE.md, SECURITY.md, GLOSSARY.md and the laws.yaml header.
+- tests/examples/component-scope.yaml regenerated for 0.5.0 (same example guard, new ids).
 
 ## 0.4.2 (draft, 2026-10-04)
 

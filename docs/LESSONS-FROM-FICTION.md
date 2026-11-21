@@ -3,6 +3,10 @@
 *This document is informative. It does not add to, remove from or change any normative clause of
 the Vektra Laws. It is not legal advice.*
 
+> **Clause ids.** This document was written for version 0.3.0 and cites the clause ids of that
+> version. Version 0.5.0 renumbered the clauses; see [ID-MAP-0.4-to-0.5.md](ID-MAP-0.4-to-0.5.md) for the current
+> ids.
+
 ## Purpose
 
 Stories about machines that turn against people are widely known, and they describe failure

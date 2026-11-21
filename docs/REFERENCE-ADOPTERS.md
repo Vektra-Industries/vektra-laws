@@ -11,7 +11,7 @@ certification by the owner or the steward.
 |---|---|---|---|---|---|
 | Vektra Agent | Vektra | AI agent system | agents | None yet | Planned for v1.0 |
 | Phryktor | Vektra | Sentinel agent | agents | None yet | Planned for v1.0 |
-| vektra-reflex | Vektra | Guard and lesson tool for agents | agents (2.4, 4.6, 5.7, A2.1, A5.3) | None yet | Planned for v1.0 |
+| vektra-reflex | Vektra | Guard and lesson tool for agents | agents (1.5, 3.12, 5.10, A1.1, A5.4) | None yet | Planned for v1.0 |
 
 A conformance level is shown only after the declaration and its evidence are published. The
 planned adopters listed above are products of the owner. Version 1.0 requires each planned

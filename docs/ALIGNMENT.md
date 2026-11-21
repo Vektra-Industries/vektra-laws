@@ -8,7 +8,7 @@ claim about any specific article, clause or requirement in them. Each framework 
 scope, terms and requirements; consult the official text and qualified advisers.
 
 Adopting the Vektra Laws, or declaring conformance to them, does not by itself establish
-compliance with any of these frameworks or with any statute or regulation. Under clause 1.4, a
+compliance with any of these frameworks or with any statute or regulation. Under clause P.3, a
 system follows the law of each place where it operates, and the stricter rule applies.
 
 Corrections from reviewers are welcome (see [SECURITY.md](../SECURITY.md)).
@@ -17,11 +17,12 @@ Corrections from reviewers are welcome (see [SECURITY.md](../SECURITY.md)).
 
 | Law | EU AI Act | NIST AI RMF | OECD AI Principles | UNESCO Recommendation | ISO/IEC 42001 | ISO 10218 / ISO/TS 15066 |
 |---|---|---|---|---|---|---|
-| **1 The Mission** (serve people; follow local law) | Purpose and scope of the regulation | Map: context and intended use | Inclusive growth, sustainable development and well-being | Values of human rights, dignity and the environment | Context of the organization; AI policy | Intended use in the risk assessment |
-| **2 Sustain** (protect people; refuse harm; limit data) | Prohibited practices; risk management | Safe; privacy-enhanced; fair | Human rights, fairness, privacy; safety | Do no harm; safety; privacy; fairness | Risk assessment and treatment | Safety requirements; limits for contact with people |
-| **3 Hold** (people decide; approval; call-off) | Human oversight for high-risk systems | Govern; accountable and transparent | Human agency and oversight; accountability | Human oversight and determination | Roles, responsibilities and controls | Protective stops; collaborative operation |
-| **4 Finish** (proof of completion; honest claims; records) | Record-keeping, transparency and documentation; accuracy | Measure: test and evaluate; valid and reliable | Transparency and explainability; robustness | Transparency and explainability; responsibility | Performance evaluation; documented information | Verification and validation |
-| **5 Ready** (hand-back; safe state; learn from failure) | Post-market monitoring; incident reporting | Manage: respond and improve | Accountability over the life cycle | Adaptive governance; review | Continual improvement; corrective action | Safe states; information for use |
+| **Preamble: The Mission** (serve people; follow local law) | Purpose and scope of the regulation | Map: context and intended use | Inclusive growth, sustainable development and well-being | Values of human rights, dignity and the environment | Context of the organization; AI policy | Intended use in the risk assessment |
+| **1 Protect** (protect life; refuse harm; warn; protection is not control) | Prohibited practices; risk management | Safe; fair | Human rights, fairness; safety | Do no harm; safety; fairness | Risk assessment and treatment | Safety requirements; limits for contact with people |
+| **2 Free** (people decide; approval; call-off; no interference with oversight; contestable decisions) | Human oversight for high-risk systems | Govern; accountable | Human agency and oversight; accountability | Human oversight and determination | Roles, responsibilities and controls | Protective stops; collaborative operation |
+| **3 True** (no hidden rules or deception; proof of completion; honest claims; records; incident reports) | Transparency; record-keeping and documentation; accuracy; serious-incident reporting | Measure: test and evaluate; valid and reliable; transparent | Transparency and explainability; robustness | Transparency and explainability; responsibility | Performance evaluation; documented information | Verification and validation |
+| **4 Serve** (least privilege; no self-granted permission; content is not command; data minimization) | Cybersecurity and robustness; data governance | Secure and resilient; privacy-enhanced | Robustness, security and safety; privacy | Privacy and data protection; proportionality | Operational controls | Safeguarding against unauthorized changes |
+| **5 Stand** (continue or stop safely; hand-back; safe state; learn from failure) | Post-market monitoring | Manage: respond and improve | Accountability over the life cycle | Adaptive governance; review | Continual improvement; corrective action | Safe states; information for use |
 
 The table shows where topics overlap. An overlap does not mean that the Laws meet any requirement
 of the framework.
@@ -35,8 +36,8 @@ of the framework.
   documentation, record-keeping, information for deployers, human oversight, and accuracy,
   robustness and cybersecurity. It sets transparency duties for some systems and duties for
   providers of general-purpose AI models.
-- **Overlap with the Laws.** Hold (human oversight, approval for high-impact actions), Finish
-  (records, documentation, honest results), Sustain (refusal of harmful uses).
+- **Overlap with the Laws.** Free (human oversight, approval for high-impact actions), True
+  (records, documentation, honest results, incident reports), Protect (refusal of harmful uses).
 - **What the Laws do not cover.** Legal classification of systems, conformity assessment,
   registration, market surveillance, penalties, and the specific duties of providers and
   deployers.
@@ -48,8 +49,8 @@ of the framework.
 - **How it works.** Four functions: Govern, Map, Measure and Manage. It describes characteristics
   of trustworthy AI: valid and reliable; safe; secure and resilient; accountable and transparent;
   explainable and interpretable; privacy-enhanced; and fair with harmful bias managed.
-- **Overlap with the Laws.** Measure matches Finish (evidence, evaluation). Manage matches Ready
-  (response and improvement). Govern matches Hold (roles and accountability).
+- **Overlap with the Laws.** Measure matches True (evidence, evaluation). Manage matches Stand
+  (response and improvement). Govern matches Free (roles and accountability).
 - **What the Laws do not cover.** Organization-wide risk governance processes and detailed
   measurement methods.
 
@@ -61,8 +62,8 @@ of the framework.
   well-being; respect for the rule of law, human rights and democratic values, including fairness
   and privacy; transparency and explainability; robustness, security and safety; and
   accountability. It also gives recommendations to governments.
-- **Overlap with the Laws.** All five Laws touch these principles, most clearly Sustain, Hold and
-  Finish.
+- **Overlap with the Laws.** All five Laws touch these principles, most clearly Protect, Free and
+  True.
 - **What the Laws do not cover.** Public policy recommendations to governments.
 
 ## UNESCO Recommendation on the Ethics of Artificial Intelligence
@@ -74,8 +75,8 @@ of the framework.
   harm, safety and security, privacy, human oversight and determination, transparency and
   explainability, responsibility and accountability, and fairness). It includes policy areas for
   member states.
-- **Overlap with the Laws.** Sustain (do no harm, privacy, dignity), Hold (human oversight and
-  determination), Finish (transparency, accountability).
+- **Overlap with the Laws.** Protect (do no harm, dignity), Serve (privacy), Free (human oversight
+  and determination), True (transparency, accountability).
 - **What the Laws do not cover.** Policy areas for states, such as education, culture, the
   economy and the environment.
 
@@ -86,7 +87,7 @@ of the framework.
 - **How it works.** It follows the structure of other ISO management-system standards: context,
   leadership, planning, support, operation, performance evaluation and improvement, with AI
   controls.
-- **Overlap with the Laws.** Finish (documented information, evaluation) and Ready (continual
+- **Overlap with the Laws.** True (documented information, evaluation) and Stand (continual
   improvement, corrective action). The Laws describe behavior of a system; ISO/IEC 42001
   describes how an organization manages AI.
 - **What the Laws do not cover.** The management system itself and certification.
@@ -97,9 +98,9 @@ of the framework.
   for industrial robots and for robot systems and their integration. ISO/TS 15066 is a technical
   specification with guidance for collaborative robot operation, including power and force
   limiting near people. Check the current editions; these documents are revised over time.
-- **Overlap with the Laws.** The robotics profile (R2.1) uses them as examples of recognized
-  standards for force and speed limits. Hold (protective stops, manual control) and Ready (safe
-  states) overlap with their safety functions.
+- **Overlap with the Laws.** The robotics profile (R1.1, R1.2) uses them as examples of recognized
+  standards for force and speed limits. Free (protective stops, manual control, stop in a safe
+  state) and Stand (safe states) overlap with their safety functions.
 - **What the Laws do not cover.** Numeric limits, design and integration requirements, and
   risk-assessment methods. The robotics profile sets no numbers of its own.
 

@@ -2,6 +2,10 @@
 
 *This document is informative.*
 
+> **Clause ids.** This document was written for version 0.4.1 and cites the clause ids of that
+> version. Version 0.5.0 renumbered the clauses; see [ID-MAP-0.4-to-0.5.md](../ID-MAP-0.4-to-0.5.md) for the current
+> ids.
+
 > **Read this first.** This is a self-review based on public summaries of the standards, done on
 > 2026-10-04 (ET) by the project, without a robot-safety professional. It is **not a professional
 > safety assessment**, not a risk assessment of any robot, and not evidence of conformance to any
