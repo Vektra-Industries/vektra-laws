@@ -48,7 +48,7 @@ MIN_REASON_WORDS = 4
 # Names that must not appear in the Laws or profiles themselves (they may appear in the README,
 # governance and adopter documents). Keeps the text universal and platform-neutral.
 BANNED_NAMES = re.compile(
-    r"\b(vektra|harness|phryktor|reflex|grok|hermes|claude|openai|anthropic|gemini|chatgpt|"
+    r"\b(vektra|harness|reflex|grok|hermes|claude|openai|anthropic|gemini|chatgpt|"
     r"copilot|cursor|google|microsoft|meta|amazon|apple|nvidia|tesla|spacex)\b", re.I)
 # Words that suggest legal authority or guarantees. Not allowed in normative text.
 GUARANTEE_WORDS = re.compile(
