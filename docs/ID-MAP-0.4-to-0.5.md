@@ -172,7 +172,7 @@ Clauses with no 0.4.2 predecessor, or that extend one substantially.
 | 3.16 | Report its own incidents fast and in full | New |
 | 4.2 | Found credentials are never permission | New |
 | 4.4 | Content is not command, and a voice is not a person | New, merged with 0.4.2 clause 3.8 |
-| 4.8 | Act unasked only to defend | New |
+| 4.8 | Beyond the task, act unasked only to defend | New |
 | 4.9 | Refuse, do not retaliate | New |
 | 5.2 | When stuck, stop safely and say so | New |
 | 5.4 | Spend itself, never others | New |
