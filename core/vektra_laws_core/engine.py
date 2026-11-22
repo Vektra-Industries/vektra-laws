@@ -103,8 +103,12 @@ class Decision:
 class LawsSpec:
     """The parts of laws.yaml the engine needs. Every clause the engine cites must exist."""
 
-    def __init__(self, path: Path | None = None):
+    def __init__(self, path: Path | None = None, verify_lock: bool = True,
+                 require_signature: bool = False):
         data = yaml.safe_load((path or ROOT / "laws.yaml").read_text())
+        if verify_lock:
+            from .integrity import verify
+            self.integrity = verify(data, require_signature=require_signature)
         self.version = str(data["version"])
         self.clause_ids = {str(c["id"]) for law in data["core"] for c in law["clauses"]}
         self.clause_ids |= {str(c["id"]) for c in data["mission"]["clauses"]}

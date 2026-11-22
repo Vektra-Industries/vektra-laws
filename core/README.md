@@ -1,6 +1,6 @@
 # Vektra Laws Core
 
-*Reference engine, version 0.1.0 (draft). Code under the [MIT License](../LICENSE-CODE).*
+*Reference engine, version 0.2.0 (draft). Code under the [MIT License](../LICENSE-CODE).*
 
 Vektra Laws Core checks every action an AI system wants to take against the Vektra Laws, before the
 action runs. It works with any model, agent or robot, from any maker. It reads its rules from
@@ -44,9 +44,30 @@ decision = guard.check(Request(owner, send, (Approval("owner", "a1"),)))  # allo
 The host system wraps each tool call, model action or motion command in `guard.check()` and runs it
 only on `allow`. A robot still needs a physical emergency stop; software alone is not enough.
 
+## Security
+
+Three layers (the Laws are locked; creator policy can only tighten; consumer settings can only
+tighten inside it), a hash pin and steward signature on the Laws, the guard in its own process,
+content quarantine, a hardline list and a hash-chained log. See
+[docs/SECURITY-MODEL.md](../docs/SECURITY-MODEL.md).
+
+## Agent plug
+
+```python
+from vektra_laws_core import CreatorPolicy, Effect, Guard, merge
+from vektra_laws_core.plugs.agent import ToolGate
+
+policy = merge(CreatorPolicy(tool_levels={"search": 0, "send_email": 3}, assigned={"ana"}))
+gate = ToolGate(Guard(), policy)
+gate.register("send_email", send_email, effects=lambda args: {Effect.EXTERNAL})
+result = gate.call("send_email", {"to": "..."}, gate.speaker("ana"))   # ask_human until approved
+```
+
+Out of process: `python -m vektra_laws_core.server --policy creator-policy.yaml` reads one JSON
+request per line on stdin and answers on stdout.
+
 ## Plugs (planned)
 
-- Agents: a wrapper for tool calls in any agent framework.
 - Models: a check on model outputs before they act.
 - Robots: a ROS 2 node between the planner and the motors.
 - A test runner that runs the conformance cases in [tests/](../tests) against a system.

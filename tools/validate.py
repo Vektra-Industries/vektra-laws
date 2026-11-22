@@ -278,6 +278,15 @@ def check_citation(data: dict) -> None:
         err(f"CITATION.cff: version {cff.get('version')} does not match laws.yaml {data.get('version')}")
 
 
+def check_lock(data: dict) -> None:
+    sys.path.insert(0, str(ROOT / "core"))
+    from vektra_laws_core.integrity import IntegrityError, verify
+    try:
+        verify(data)
+    except IntegrityError as e:
+        err(f"core/LAWS.lock: {e} (after an approved change, run tools/lock_laws.py)")
+
+
 def check_docs(data: dict) -> None:
     for path, text in build_docs.outputs(data).items():
         rel = path.relative_to(ROOT)
@@ -498,6 +507,7 @@ def main(argv: list[str]) -> int:
     check_citation(data)
     if not errors:
         check_docs(data)
+        check_lock(data)
     suites, problems = parse_suites()
     if argv[:1] == ["--results"]:
         paths = [Path(a).resolve() for a in argv[1:]]
@@ -529,7 +539,7 @@ def main(argv: list[str]) -> int:
     print(f"OK: vektra-laws {data['version']}: preamble with {pre} clauses, 5 Laws with {core} core clauses; "
           f"Understanding Matrix with {len(um['cells'])} cells and {len(um['proactive_rules'])} rules; "
           f"profiles: {prof}; {cases} conformance cases; {len(examples)} example results file(s); "
-          f"universal text; no guarantee words; citation in sync; docs in sync.")
+          f"universal text; no guarantee words; citation in sync; docs in sync; Laws lock in sync.")
     return 0
 
 

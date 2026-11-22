@@ -29,6 +29,13 @@ after a review against I, Robot, other fiction and public rulebooks for AI model
   checks each action before it runs: authority (2.18, 2.19, 4.4), bright lines, action levels and
   approvals (2.7 to 2.12), stops and safe points (2.1, 2.20, 2.21), emergency mode (1.10) and a
   hash-chained audit log. It refuses to load if it cites a clause that laws.yaml does not have.
+- Vektra Laws Core 0.2.0: security layer. Three layers of control (creator policy and consumer
+  settings are tighten-only), core/LAWS.lock hash pin with optional steward Ed25519 signature
+  (tools/lock_laws.py; validate.py checks it), content quarantine, a hardline list, the agent plug
+  (ToolGate) and the guard as a separate process (vektra_laws_core.server).
+- docs/SECURITY-MODEL.md (informative), with lessons from Hermes Agent's security policy.
+- docs/LICENSE-OPTIONS-DRAFT.md: options to keep the Laws intact, for the owner's review. No license
+  changed.
 
 ## 0.5.0 (draft, 2026-11-21)
 
