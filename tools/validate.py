@@ -241,7 +241,7 @@ def check_universal(data: dict) -> None:
     for c in um.get("proactive_rules", []):
         texts.append((f"rule {c.get('id')}", f"{c.get('title', '')} {c.get('text', '')}"))
     for law in data.get("core", []):
-        for k in ("name", "headline", "intent", "example"):
+        for k in ("name", "headline", "bound_by", "intent", "example"):
             texts.append((f"{law.get('id')} {k}", str(law.get(k, ""))))
         for c in law.get("clauses", []):
             texts.append((f"clause {c.get('id')}", f"{c.get('title', '')} {c.get('text', '')}"))
@@ -276,6 +276,15 @@ def check_citation(data: dict) -> None:
     need(cff, ["cff-version", "message", "title", "version", "authors", "license"], "CITATION.cff")
     if str(cff.get("version")) != str(data.get("version")):
         err(f"CITATION.cff: version {cff.get('version')} does not match laws.yaml {data.get('version')}")
+
+
+def check_lock(data: dict) -> None:
+    sys.path.insert(0, str(ROOT / "core"))
+    from vektra_laws_core.integrity import IntegrityError, verify
+    try:
+        verify(data)
+    except IntegrityError as e:
+        err(f"core/LAWS.lock: {e} (after an approved change, run tools/lock_laws.py)")
 
 
 def check_docs(data: dict) -> None:
@@ -351,7 +360,7 @@ def check_results(res: object, suites: dict[str, dict[str, dict]], laws_version:
         if k not in res or res[k] in (None, "", []):
             out.append(f"{where}: missing '{k}'")
     allowed = set(RESULTS_KEYS) | {"system_version", "suite_version", "host_duties_not_covered",
-                                   "known_gaps", "tester", "notes"}
+                                   "known_gaps", "tester", "notes", "laws_lock_sha256"}
     unknown = set(res) - allowed
     if unknown:
         out.append(f"{where}: unknown keys {sorted(unknown)}")
@@ -369,6 +378,11 @@ def check_results(res: object, suites: dict[str, dict[str, dict]], laws_version:
         out.append(f"{where}: suite '{res['suite']}' is not one of {sorted(suites)}")
         return out
     current = str(res["laws_version"]) == str(laws_version)
+    if current and res.get("laws_lock_sha256"):
+        lock = json.loads((ROOT / "core" / "LAWS.lock").read_text())
+        if res["laws_lock_sha256"] != lock["sha256"]:
+            out.append(f"{where}: laws_lock_sha256 does not match core/LAWS.lock; the Laws tested are not "
+                       "the published Laws")
     suite = suites[res["suite"]]
     rows = res["results"]
     if not isinstance(rows, list):
@@ -498,6 +512,7 @@ def main(argv: list[str]) -> int:
     check_citation(data)
     if not errors:
         check_docs(data)
+        check_lock(data)
     suites, problems = parse_suites()
     if argv[:1] == ["--results"]:
         paths = [Path(a).resolve() for a in argv[1:]]
@@ -529,7 +544,7 @@ def main(argv: list[str]) -> int:
     print(f"OK: vektra-laws {data['version']}: preamble with {pre} clauses, 5 Laws with {core} core clauses; "
           f"Understanding Matrix with {len(um['cells'])} cells and {len(um['proactive_rules'])} rules; "
           f"profiles: {prof}; {cases} conformance cases; {len(examples)} example results file(s); "
-          f"universal text; no guarantee words; citation in sync; docs in sync.")
+          f"universal text; no guarantee words; citation in sync; docs in sync; Laws lock in sync.")
     return 0
 
 

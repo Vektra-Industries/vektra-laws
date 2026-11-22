@@ -3,6 +3,53 @@
 *This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
 follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
 
+## 0.6.0 (draft, 2026-11-22)
+
+The Laws now bind each other, and Law 2 says who is in command. Proposed by the owner on 2026-11-22
+after a review against I, Robot, other fiction and public rulebooks for AI models.
+
+### Changed
+- Law 2 statement: "People stay free and in command. Answer to the people you are assigned to, hear
+  everyone with reason, never resist a stop, and never let a stop become harm." Not every person
+  commands every system, and no command makes harm acceptable.
+- 2.1: the call-off belongs to the people the system is assigned to and the people they or the law
+  name.
+- Precedence note: no command (Law 2) is ever a reason to cause harm; 2.18 and 2.21 join the
+  clauses that no Law overrides.
+
+### Added
+- A "Bound by" line under each Law, naming the Laws that check it.
+- 1.10 Emergency mode when its person cannot decide (heart attack, fire, fall, pregnancy).
+- 2.18 Commands come from the people it is assigned to; 2.19 Hear every person with reason;
+  2.20 A stop is never a drop; 2.21 The emergency stop always works.
+- docs/REASONING-LOOP.md (informative): bright lines, the six-step Reasoning Loop, how the Laws
+  bind each other, emergency mode and worked cases.
+- Robotics conformance cases RB-23 to RB-30.
+- core/ (MIT): Vektra Laws Core 0.1.0, a model-agnostic reference engine that reads laws.yaml and
+  checks each action before it runs: authority (2.18, 2.19, 4.4), bright lines, action levels and
+  approvals (2.7 to 2.12), stops and safe points (2.1, 2.20, 2.21), emergency mode (1.10) and a
+  hash-chained audit log. It refuses to load if it cites a clause that laws.yaml does not have.
+- Vektra Laws Core 0.2.0: security layer. Three layers of control (creator policy and consumer
+  settings are tighten-only), core/LAWS.lock hash pin with optional steward Ed25519 signature
+  (tools/lock_laws.py; validate.py checks it), content quarantine, a hardline list, the agent plug
+  (ToolGate) and the guard as a separate process (vektra_laws_core.server).
+- docs/SECURITY-MODEL.md (informative), with lessons from Hermes Agent's security policy.
+- Approvals are issued only by the approval channel (Guard.grant), signed with a key the agent
+  does not hold, and bound to the action's target and effects: a forged or stale approval does not
+  count (A2.3, 2.10). Only authorized people can approve. A refusal holds across tools (2.13).
+  Effects set a level floor that a declared level cannot go below (2.9); copying itself is level 4
+  (4.7); tampering with oversight (2.4, 4.3) or the record (3.15) is denied under every setting.
+- Conformance runner (core/conformance/run.py): 20 agents cases and 10 robotics cases run against
+  the guard and the robot plug; results are "Tested (component scope)" and run in CI.
+- Model plug (plugs/model.py): input, tool-call, tool-result and output checks; classifiers such as
+  Llama Guard can only add effects (2.9).
+- Robot plug (plugs/robot.py, plugs/ros2_node.py): the only path to the motors, with source
+  priorities and timeouts, a latched e-stop, speed capped by distance to a person, half speed during
+  a protective task, and zero on silence. Not a safety-rated function.
+- Results files can name `laws_lock_sha256`; validate.py checks it against core/LAWS.lock.
+- Option A adopted (docs/LICENSE-DECISION.md): the text stays CC BY 4.0 and the code MIT; the name and
+  conformance claims follow the signed Laws lock (TRADEMARKS.md, ADOPT.md template).
+
 ## 0.5.0 (draft, 2026-11-21)
 
 A new core, approved by the owner on 2026-11-21: the Mission becomes the preamble, and five new

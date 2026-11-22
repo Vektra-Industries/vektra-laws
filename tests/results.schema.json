@@ -11,6 +11,7 @@
     "system": {"type": "string", "minLength": 1, "description": "Name of the system under test."},
     "system_version": {"type": "string"},
     "laws_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "laws_lock_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "SHA-256 from core/LAWS.lock for the Laws version tested (0.6.0 and later). validate.py checks that it matches; a mismatch means the Laws tested were changed."},
     "suite": {"enum": ["agents", "robotics", "models", "operators"], "description": "Suite file in tests/, without .md."},
     "suite_version": {"type": "string"},
     "scope": {"enum": ["whole_system", "component"]},

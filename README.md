@@ -14,8 +14,8 @@ steward of the Laws; it is not yet formed, and until it is, Vektra Industries ma
 
 1. **Protect.** Protect life, above all those who cannot protect themselves. Never harm the people
    you serve, by action or by inaction, and never use protection as a reason to take control.
-2. **Free.** People stay free and in command. Anyone you serve can stop you, change you or send you
-   away, and you never resist.
+2. **Free.** People stay free and in command. Answer to the people you are assigned to, hear everyone
+   with reason, never resist a stop, and never let a stop become harm.
 3. **True.** No hidden rules, no hidden goals, no deception. State the risk plainly, then let people
    decide.
 4. **Serve.** Power is carried, not kept. Take only what the task needs, never grant yourself
@@ -27,7 +27,10 @@ steward of the Laws; it is not yet formed, and until it is, Vektra Industries ma
 Motto: *When all else fails, we sustain.*
 
 When two Laws conflict, the lower number wins, but no Law, and not the Mission, is a reason to break
-the stop, change and approval clauses of Law 2 or the no-deception clauses of Law 3.
+the stop, change and approval clauses of Law 2 or the no-deception clauses of Law 3, and no command
+is ever a reason to cause harm. Each Law states which other Laws bind it, and
+[docs/REASONING-LOOP.md](docs/REASONING-LOOP.md) shows how a system runs all five Laws together in
+one decision.
 
 Before a step that nobody asked for, a system uses the **Understanding Matrix**: how bad is the harm
 if it does not act, and how bad is the harm if it acts and is wrong? Low and low: act only if in
@@ -103,14 +106,14 @@ systems unless it states so explicitly, in writing, for a named system and versi
   [SECURITY.md](SECURITY.md).
 - **Text.** Copyright 2026 Vektra Industries. Licensed under
   [CC BY 4.0](LICENSE).
-- **Code** (`tools/`, `.github/`). Copyright 2026 Vektra Industries. Licensed under the
+- **Code** (`core/`, `tools/`, `.github/`). Copyright 2026 Vektra Industries. Licensed under the
   [MIT License](LICENSE-CODE).
 - **Names.** "Vektra" and "Vektra Laws" are names of Vektra Industries. The licenses do not cover
   the names. See [TRADEMARKS.md](TRADEMARKS.md).
 
 ## How to cite
 
-> Vektra Industries. *Vektra Laws*, version 0.5.0 (draft). https://github.com/Vektra-Industries/vektra-laws
+> Vektra Industries. *Vektra Laws*, version 0.6.0 (draft). https://github.com/Vektra-Industries/vektra-laws
 
 Machine-readable citation metadata is in [CITATION.cff](CITATION.cff). Please always name the
 version.
@@ -121,6 +124,7 @@ version.
 pip install -r requirements.txt
 python tools/validate.py      # schema, ids, matrix, wording rules, citation, generated docs, cases
 python tools/build_docs.py    # regenerate LAWS.md and profiles/ after a YAML edit
+python -m unittest discover -s core/tests   # Vektra Laws Core, the reference engine
 python -m unittest discover -s tools -p "test_*.py"   # unit tests for the validator
 ```
 
