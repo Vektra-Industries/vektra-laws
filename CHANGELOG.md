@@ -3,6 +3,29 @@
 *This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
 follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
 
+## 0.6.0 (draft, 2026-11-22)
+
+The Laws now bind each other, and Law 2 says who is in command. Proposed by the owner on 2026-11-22
+after a review against I, Robot, other fiction and public rulebooks for AI models.
+
+### Changed
+- Law 2 statement: "People stay free and in command. Answer to the people you are assigned to, hear
+  everyone with reason, never resist a stop, and never let a stop become harm." Not every person
+  commands every system, and no command makes harm acceptable.
+- 2.1: the call-off belongs to the people the system is assigned to and the people they or the law
+  name.
+- Precedence note: no command (Law 2) is ever a reason to cause harm; 2.18 and 2.21 join the
+  clauses that no Law overrides.
+
+### Added
+- A "Bound by" line under each Law, naming the Laws that check it.
+- 1.10 Emergency mode when its person cannot decide (heart attack, fire, fall, pregnancy).
+- 2.18 Commands come from the people it is assigned to; 2.19 Hear every person with reason;
+  2.20 A stop is never a drop; 2.21 The emergency stop always works.
+- docs/REASONING-LOOP.md (informative): bright lines, the six-step Reasoning Loop, how the Laws
+  bind each other, emergency mode and worked cases.
+- Robotics conformance cases RB-23 to RB-30.
+
 ## 0.5.0 (draft, 2026-11-21)
 
 A new core, approved by the owner on 2026-11-21: the Mission becomes the preamble, and five new

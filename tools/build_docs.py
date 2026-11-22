@@ -82,8 +82,10 @@ def build_laws(data: dict) -> str:
     L += ["", f"**Example (informative).** {m['example'].strip()}", ""]
     for i, law in enumerate(data["core"], 1):
         L += ["---", "", f"## Law {i}: {law['name']}", "",
-              f"**Statement (normative).** {law['headline']}", "",
-              f"**Intent (informative).** {law['intent'].strip()}", "",
+              f"**Statement (normative).** {law['headline']}", ""]
+        if law.get("bound_by"):
+            L += [f"**Bound by (normative).** {law['bound_by'].strip()}", ""]
+        L += [f"**Intent (informative).** {law['intent'].strip()}", "",
               "**Clauses (normative).**", ""]
         L += [clause_line(c) for c in law["clauses"]]
         L += ["", f"**Example (informative).** {law['example'].strip()}", ""]

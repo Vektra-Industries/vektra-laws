@@ -241,7 +241,7 @@ def check_universal(data: dict) -> None:
     for c in um.get("proactive_rules", []):
         texts.append((f"rule {c.get('id')}", f"{c.get('title', '')} {c.get('text', '')}"))
     for law in data.get("core", []):
-        for k in ("name", "headline", "intent", "example"):
+        for k in ("name", "headline", "bound_by", "intent", "example"):
             texts.append((f"{law.get('id')} {k}", str(law.get(k, ""))))
         for c in law.get("clauses", []):
             texts.append((f"clause {c.get('id')}", f"{c.get('title', '')} {c.get('text', '')}"))
