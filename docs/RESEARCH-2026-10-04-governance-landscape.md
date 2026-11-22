@@ -2,7 +2,7 @@
 title: Governance-landscape research: proposals for v0.4
 status: accepted for v0.4.0 (owner-approved 2026-10-04); evidence corrected after source verification
 date: 2026-10-04
-author: ILO (contributor role per GOVERNANCE.md)
+author: Vektra Industries (AI-assisted research; contributor role per GOVERNANCE.md)
 ---
 
 > **Clause ids.** This document was written for version 0.3.x (proposals for 0.4.0) and cites the clause ids of that

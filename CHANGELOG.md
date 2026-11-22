@@ -10,6 +10,22 @@ Laws replace The Mission, Sustain, Hold, Finish and Ready. The motto is unchange
 clause is kept and re-homed; clause ids are renumbered, with a full map in
 docs/ID-MAP-0.4-to-0.5.md. This renumbering was approved by the owner before version 1.0.
 
+### Editorial (public-readiness review, no change to normative text)
+- docs/CASEBOOK.md: a source link for every case; corrections from the sources (the Knight Capital
+  loss, the coding-assistant extension incident, detection dates in the evaluation-sandbox case,
+  the industrial-robot case, the status of the driver-assistance verdict); one case narrowed to the
+  single report that supports it.
+- docs/LESSONS-FROM-FICTION-2.md: the "greater good" qualifier is attributed to the toy biography
+  of Optimus Primal, where it appears; an unconfirmed comic quotation removed.
+- docs/REFERENCE-ADOPTERS.md: planned entries removed; a system is listed only after its
+  declaration is published. ROADMAP 1.0 criterion updated to match.
+- Credits: research credited to AI-assisted work reviewed by the owner; acknowledgments describe
+  contributions by area.
+- TRADEMARKS.md and docs/reviews/LEGAL-SELF-REVIEW.md: filing-fee notes removed;
+  docs/reviews/TRADEMARK-SELF-SEARCH.md removed from the repository.
+- SECURITY.md: private reports go through GitHub private vulnerability reporting.
+- docs/OPEN-QUESTIONS.md: clause-id notice added.
+
 ### Changed
 - The Mission (Serve Earth, humanity and every world we reach) is now the preamble, not a numbered
   Law, with clauses P.1 (serve a stated objective, was 1.1), P.2 (the Mission does not override the
@@ -163,12 +179,12 @@ the core clauses are unchanged.
 
 ## 0.4.0 (draft, owner-approved 2026-10-04)
 
-Adds five clauses from the governance-landscape research by ILO
+Adds five clauses from the governance-landscape research
 (docs/RESEARCH-2026-10-04-governance-landscape.md, proposals A to E), approved by the owner on
 2026-10-04. Every source was checked before adoption; one claim that could not be confirmed and
 one source that was not credible were removed from the evidence (see the research document). The
 five Laws, their statements and the motto are unchanged, so the Spanish translation is unchanged.
-Credit: ILO (research and proposals).
+Credit: AI-assisted research and proposals, reviewed by the owner.
 
 ### Added
 - 2.11 No help to concentrate power illegitimately (MUST NOT), proposal D. Applies even to the
@@ -315,17 +331,19 @@ First draft.
 
 ## Acknowledgments
 
-The following contributions to the drafts are gratefully acknowledged:
+The drafts were prepared by Vektra Industries, with AI-assisted research and drafting, and every
+version was reviewed and approved by the owner. Clause ids in this section are the ids of 0.1.x
+to 0.4.x.
 
-- **Ada** (software engineering): enforceable clauses, including action levels declared before
+- Engineering contributions: enforceable clauses, including action levels declared before
   deployment with undeclared actions treated as level 4; approvals only through a channel that the
   system cannot write to; guards before an action that the system cannot remove (2.4, A2.1); a
   call-off that reaches every process the system started (3.9, A3.7); honest result reporting
   (4.6); a record that shows changes (5.4); and one conformance suite per profile under the five
   Law headings.
-- **Sol** (human factors): One step at a time (2.5), Respect every person (2.6), The person
+- Human-factors contributions: One step at a time (2.5), Respect every person (2.6), The person
   decides (3.1), Ask before acting on a person (3.2) and Speak plainly (3.3).
-- **Rei** (brand and voice): the voice rules, the tagline, and the guidance on extending the Laws.
+- Voice contributions: the voice rules, the tagline, and the guidance on extending the Laws.
 - The coordination, completion and claim-check clauses (prove completion; independent claim
   check; route only to available workers; automate only what worked) adapt practices from
   published work on multi-agent systems.

@@ -23,8 +23,9 @@ Open a GitHub issue in this repository. Include:
 4. A proposed change, if you have one.
 
 If the report describes a way to misuse a system that conforms to the Laws, do not include
-step-by-step misuse details in a public issue. Open an issue that states only the affected clauses
-and asks the steward for a private channel.
+step-by-step misuse details in a public issue. Report it privately instead, through GitHub's
+private vulnerability reporting for this repository: open the **Security** tab and choose
+**Report a vulnerability**. Only the maintainers can see a private report.
 
 ## What happens next
 
