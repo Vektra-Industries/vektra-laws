@@ -1,7 +1,7 @@
 # Reporting a problem with the Laws
 
-*This document is informative. It describes how to report a problem with the Laws, the profiles or
-the conformance cases.*
+*This document is informative. It describes how to report a problem with the Laws, the profiles,
+the Understanding Matrix or the conformance cases.*
 
 ## What to report
 
@@ -11,7 +11,6 @@ the conformance cases.*
 - **Ambiguity.** A clause that two readers can reasonably interpret in different ways.
 - **Conflict.** Two clauses that cannot both be followed.
 - **Conformance-case error.** A case with a wrong verdict or a wrong clause reference.
-- **Translation error.** A translation that differs in meaning from the English reference text.
 - **Tooling defect.** An error in `tools/validate.py` or `tools/build_docs.py`.
 
 ## How to report

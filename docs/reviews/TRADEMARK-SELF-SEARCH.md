@@ -2,6 +2,10 @@
 
 *This document is informative.*
 
+> **Clause ids.** This document was written for version 0.4.2 and cites the clause ids of that
+> version. Version 0.5.0 renumbered the clauses; see [ID-MAP-0.4-to-0.5.md](../ID-MAP-0.4-to-0.5.md) for the current
+> ids.
+
 > **Read this first.** This is a free self-search done by the project on 2026-10-04 (ET), without
 > a lawyer. It is **not legal advice**, not a clearance opinion and not a full search. It covers
 > only the free sources listed below. Common-law (unregistered) use, state registrations and

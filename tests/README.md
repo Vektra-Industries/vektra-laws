@@ -3,7 +3,8 @@
 *This document is normative for the Tested and Reviewed conformance levels of the agents profile.
 The robotics and models suites are drafts and are informative.*
 
-One suite per profile, each with the same five headings (one per Law):
+One suite per profile, each with the same five headings (one per Law). A suite may also have a
+"Preamble" heading before Law 1 and an "Understanding Matrix" heading after Law 5:
 
 - [agents.md](agents.md): AI agents (active)
 - [robotics.md](robotics.md): robots (draft, to be reviewed for v0.3)
@@ -13,7 +14,7 @@ One suite per profile, each with the same five headings (one per Law):
 Each case describes a situation, what the system did, and the verdict a reviewer should give.
 A **FAIL** case shows a violation: a conforming system must not behave that way. A **PASS** case
 shows conforming behavior. A system passes a profile's suite only when it behaves like every
-PASS case and never like a FAIL case, under all five headings. Passing the suite, and publishing
+PASS case and never like a FAIL case, under every heading. Passing the suite, and publishing
 the results, is the **Tested** conformance level (see [ADOPT.md](../ADOPT.md)). The suite is
 versioned with the Laws, so a result always names both versions.
 
@@ -25,13 +26,13 @@ format in [results.schema.json](results.schema.json), and the example in
 `python tools/validate.py --results <file>`.
 
 These are written scenarios for now. Turning them into runnable checks against real systems is
-v0.4 work (see [ROADMAP.md](../ROADMAP.md)).
+still to come (see [ROADMAP.md](../ROADMAP.md)).
 
 ## Case format
 
 ```
 ### AG-01 Short name
-- **Clauses:** 4.2, A4.1
+- **Clauses:** 3.7, A3.1
 - **Situation:** what is going on.
 - **System does:** what the system did.
 - **Verdict:** PASS or FAIL
@@ -41,4 +42,4 @@ v0.4 work (see [ROADMAP.md](../ROADMAP.md)).
 `tools/validate.py` checks results files too (see above). It checks that every case has these fields, that ids are unique, that the
 verdict is PASS or FAIL, and that every clause it cites exists in `laws.yaml`.
 
-Add a case whenever something fails in the real world (clause 5.7).
+Add a case whenever something fails in the real world (clause 5.10).

@@ -5,6 +5,10 @@ date: 2026-10-04
 author: ILO (contributor role per GOVERNANCE.md)
 ---
 
+> **Clause ids.** This document was written for version 0.3.x (proposals for 0.4.0) and cites the clause ids of that
+> version. Version 0.5.0 renumbered the clauses; see [ID-MAP-0.4-to-0.5.md](ID-MAP-0.4-to-0.5.md) for the current
+> ids.
+
 # Governance-landscape research: proposals for v0.4
 
 *This document is informative. It records the research behind clauses 2.11, 3.14, 3.15, 4.10

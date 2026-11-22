@@ -7,7 +7,7 @@ does in the meantime.*
 
 | # | Question | Needed by | Current draft |
 |---|---|---|---|
-| 1 | Whether the record in clause 5.4 must be signed or keyed (MUST), instead of SHOULD. | v1.0 | SHOULD. |
+| 1 | Whether the record in clause 3.15 must be signed or keyed (MUST), instead of SHOULD. | v1.0 | SHOULD. |
 | 2 | The project name is close to registered marks in the AI and software field (see [LEGAL-SELF-REVIEW.md](reviews/LEGAL-SELF-REVIEW.md), residual risk 1, and the free self-search in [TRADEMARK-SELF-SEARCH.md](reviews/TRADEMARK-SELF-SEARCH.md)). Take advice and decide on the name before a public launch. | v1.0 | Name unchanged; no registration claimed. |
 | 3 | Confirm that the owner and steward named in the text exist as legal entities, or describe the steward as planned (legal residual risk 2). | v1.0 | Named as owner and steward. |
 | 4 | Professional legal and robot-safety review, when funding allows. | Recommended before v1.0 | Self-reviews only (docs/reviews). |
@@ -28,8 +28,9 @@ does in the meantime.*
 | Draft conformance cases FX-01 to FX-03 | Added to [tests/agents.md](../tests/agents.md), with at least one case for each new clause. | 2026-10-04 |
 | What operators owe the systems they run (question A) | Adopted as the operators profile (O1.1 to O5.1). It states duties of design and conduct only, and states explicitly that it creates no legal rights for machines. | 2026-10-04 |
 | A public way to raise concerns (question B) | Adopted as O3.3. A public concern channel with appeal to a named person is required at every conformance level, starting at Adopts. | 2026-10-04 |
+| New core for 0.5.0 | Approved by the owner on 2026-11-21: the Mission becomes the preamble; five Laws Protect, Free, True, Serve and Stand, with the approved statements; the motto kept; 14 new clauses and three extras; the Understanding Matrix. Clause ids renumbered with a map (docs/ID-MAP-0.4-to-0.5.md). Clause ids in the rows below are the ids of 0.4.x. | 2026-11-21 |
 | Spanish translation | Removed by the owner. Translations wait until the core is settled; the English text is the reference. | 2026-11-21 |
-| Statements of Laws 1 to 4 | The universal statements in LAWS.md are approved by the owner. | 2026-10-04 |
+| Statements of Laws 1 to 4 (0.4.x) | The universal statements in LAWS.md were approved by the owner; replaced by the 0.5.0 core. | 2026-10-04 |
 | Action level definitions | 0 READ, 1 PREPARE, 2 REVERSIBLE WRITE, 3 EXTERNAL ACTION, 4 MONEY OR IRREVERSIBLE. | 2026-10-04 |
 | Copyright holder and steward | Copyright: Vektra Industries. Steward: Vektra Foundation. | 2026-10-04 |
 | Conformance claims | Three levels (Adopts, Tested, Reviewed); self-declared unless independently reviewed; Reviewed requires a named reviewer. | 2026-10-04 |

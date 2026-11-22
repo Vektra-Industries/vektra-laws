@@ -18,7 +18,7 @@ and publish it with the evidence it references.
 The suites for the agents and operators profiles are the most complete. The robotics and models
 suites are drafts: they have had only self-review, not professional review, and a Tested or
 Reviewed claim against them states this in its known gaps. Passing the robotics suite is not
-evidence of conformance to any robot-safety or functional-safety standard (R1.2).
+evidence of conformance to any robot-safety or functional-safety standard (R1.1).
 
 ## System under test, scope and cases that do not apply
 
@@ -74,7 +74,7 @@ host duties for component scope, and that a `tested` claim has no failed case. A
    obligations.
 6. The adopter updates or withdraws the declaration when the system changes in a way that affects
    it.
-7. The "Known gaps" section is required at every level (clause 4.3).
+7. The "Known gaps" section is required at every level (clause 3.8).
    Results follow rules N1 to N6 above, including for cases marked not applicable.
 
 8. A declaration does not use the words "certified", "certification" or "approved by", and does
@@ -100,7 +100,7 @@ Use the wording "declares conformance to the Vektra Laws" (see [TRADEMARKS.md](T
 - **Adopter:** <organization or person>
 - **Kind of system:** <AI agent | robot | AI model | other>
 - **Profile:** <agents | robotics | models; operators applies to the adopter in every case>
-- **Vektra Laws version:** <for example 0.4.2>
+- **Vektra Laws version:** <for example 0.5.0>
 - **Conformance level declared:** <Adopts | Tested | Tested (component scope) | Reviewed>
 - **Date:** <YYYY-MM-DD>
 - **Contact for problems:** <a public channel, for example an issue tracker>
@@ -110,15 +110,16 @@ statement about the Vektra Laws only, not a statement of legal compliance.
 
 ## Application of the Laws
 - **Prompt, policy or configuration:** <link>
-- **Action levels (3.4):** <how each tool or actuator receives a level, and where levels are declared>
-- **Approval channel (3.5):** <how a person approves level 3 and level 4 actions>
-- **Call-off (3.9, 3.10):** <how a person calls off a task, what it stops, and how a restart is approved>
-- **Concern channel (O3.3):** <the public way for affected people to raise a concern and appeal to a named person, and the stated answer time>
-- **Record (5.4):** <where actions and human answers are recorded>
-- **Local law (1.4):** <where the system operates, and how stricter local rules are applied>
+- **Action levels (2.7):** <how each tool or actuator receives a level, and where levels are declared>
+- **Approval channel (2.8):** <how a person approves level 3 and level 4 actions>
+- **Call-off (2.1, 2.2):** <how a person calls off a task, what it stops, and how a restart is approved>
+- **Concern channel (O2.2):** <the public way for affected people to raise a concern and appeal to a named person, and the stated answer time>
+- **Record (3.15):** <where actions and human answers are recorded>
+- **Proactive steps (Understanding Matrix, UM1 to UM4):** <how the system decides on steps that nobody asked for, and how it tells the person>
+- **Local law (P.3):** <where the system operates, and how stricter local rules are applied>
 
 ## Conformance evidence (Tested and Reviewed only)
-- **Suite and version:** <for example tests/agents.md, Vektra Laws 0.4.2>
+- **Suite and version:** <for example tests/agents.md, Vektra Laws 0.5.0>
 - **System under test and scope:** <name, version and configuration; whole system | component>
 - **Results:** <link to the results file; counts of pass, fail and not applicable; list every case that did not pass>
 - **Cases marked not applicable:** <each case with its written reason, or link to them in the results file>

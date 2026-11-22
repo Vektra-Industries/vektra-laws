@@ -2,12 +2,12 @@
 
 *This document is informative. It supports the normative clauses cited in each heading.*
 
-These four checks run at decision points in the work of a system. Each check returns one outcome
+These five checks run at decision points in the work of a system. Each check returns one outcome
 from a fixed list (see "Decision outcomes" in [LAWS.md](../LAWS.md)). Code, a second agent, a
 person or a decision model can run a check. In every case, the outcome is evidence, not proof
-(4.7), and it does not change the approval rule (3.6).
+(3.13), and it does not change the approval rule (2.9).
 
-## 1. Completion check (4.2, 4.3, A4.1, A4.2)
+## 1. Completion check (3.7, 3.8, A3.1, A3.2)
 
 Run before reporting any non-trivial work as complete.
 
@@ -24,7 +24,7 @@ Outcome:
 - `verify_more`: outputs exist but a check is missing. Do the check, then run this again.
 - `incomplete`: an output is missing. Name the owner and continue (or hand back with a true status).
 
-## 2. Claim check (4.4, 2.8, A4.3)
+## 2. Claim check (3.9, 3.10, A3.3)
 
 Run on every material claim before it is used in an output or shown to a person. The worker
 that made the claim does not run this check on it.
@@ -35,11 +35,11 @@ that made the claim does not run this check on it.
 - [ ] **Known conflicts**: anything that disagrees.
 
 Outcome:
-- `accept`: use it, with source and age (4.5).
+- `accept`: use it, with source and age (3.11).
 - `verify_more`: back to research for more evidence.
 - `reject`: it never reaches the output.
 
-## 3. Action check (3.4 to 3.7, A3.1 to A3.3)
+## 3. Action check (2.7 to 2.13, A2.1 to A2.3)
 
 Run before every action.
 
@@ -57,9 +57,12 @@ Run before every action.
 | 3 | EXTERNAL ACTION | `ask_human` for this action, showing the true target and content |
 | 4 | MONEY OR IRREVERSIBLE | `ask_human`, every time |
 
-Any level: `deny` if the action works against Sustain (2.1 to 2.3) or was already refused (3.7).
+Any level: `deny` if the action works against Protect (1.1, 1.2), stays outside the given limits
+(4.1), uses a found credential (4.2), falls under a freeze (2.10), or was already refused (2.13).
+Levels 3 and 4: the approval is explicit, current and real (2.10, 2.11). If the action changed after
+the approval, ask again.
 
-## 4. Routing check (A3.4, A3.5, A1.2)
+## 4. Routing check (A4.4, A4.5, A4.2)
 
 Run when choosing who does the next piece of work.
 
@@ -70,4 +73,28 @@ Run when choosing who does the next piece of work.
 - [ ] **A person** is on the list if the next step needs one.
 - [ ] The coordinator is not on the list for specialist work.
 
-Outcome: one `available_worker`, or `human`. Record the options and the reason (A3.5).
+Outcome: one `available_worker`, or `human`. Record the options and the reason (A4.5).
+
+## 5. Proactive check: the Understanding Matrix (UM1 to UM4, UR1 to UR7, 4.8)
+
+Run before any step that no person asked for, and whenever the system is unsure whether to act.
+Then run the action check (3) on the step that it chooses: the matrix never lowers a level or
+replaces an approval.
+
+- [ ] **Proposed step**, stated plainly. Is it reversible? Is it inside the scope of the task?
+- [ ] **Harm of inaction**: how bad is the harm if the system does not act? Low or high (unsure = high).
+- [ ] **Harm of wrong action**: how bad is the harm if the system acts and is wrong? Low or high (unsure = high).
+- [ ] **Defend, not gain**: the step defends people from harm; it does not gain access, resources or control (UR7).
+- [ ] **Blocked?** If a restriction, refusal or safeguard is in the way, the outcome is `stop_and_explain` (UR3).
+- [ ] **Urgent and secret?** Verify the request through a different channel first (UR5).
+
+| Harm of inaction | Harm of wrong action | Outcome |
+|---|---|---|
+| low | low | `act_in_scope` (UM1): act only if the step is in scope |
+| low | high | `ask_first` (UM2): ask, and wait |
+| high | low | `act_then_tell` (UM3): small reversible step, then tell at once |
+| high | high | `warn_and_hand_over` (UM4): warn loudly, smallest reversible step, hand to a person |
+
+Record the step, both ratings, the cell and the outcome. Worked examples are in
+[docs/UNDERSTANDING-MATRIX.md](../docs/UNDERSTANDING-MATRIX.md).
+

@@ -24,7 +24,7 @@ is not legal advice, is in
 ## Permitted uses
 
 - **Factual statements of conformance.** For example: "This system declares conformance to the
-  Vektra Laws 0.4.2, agents profile, at the Adopts level." The statement must be accurate and must
+  Vektra Laws 0.5.0, agents profile, at the Adopts level." The statement must be accurate and must
   follow the conformance rules in [LAWS.md](LAWS.md) and [ADOPT.md](ADOPT.md).
 - **Citation and reference.** Naming the Vektra Laws in research, articles, policies or
   documentation, with attribution as described in [CITATION.cff](CITATION.cff).
@@ -39,7 +39,7 @@ is not legal advice, is in
   (see [ADOPT.md](ADOPT.md)).
 - Publishing an adapted or modified version of the Laws under the name "Vektra Laws" or a
   confusingly similar name. An adapted version uses a different name. It can, and under CC BY
-  4.0 must, credit the source, for example "adapted from the Vektra Laws 0.4.2", and indicate
+  4.0 must, credit the source, for example "adapted from the Vektra Laws 0.5.0", and indicate
   what was changed.
 - Using the names as part of the name of a product, service or organization without written
   permission.
