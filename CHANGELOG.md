@@ -25,6 +25,10 @@ after a review against I, Robot, other fiction and public rulebooks for AI model
 - docs/REASONING-LOOP.md (informative): bright lines, the six-step Reasoning Loop, how the Laws
   bind each other, emergency mode and worked cases.
 - Robotics conformance cases RB-23 to RB-30.
+- core/ (MIT): Vektra Laws Core 0.1.0, a model-agnostic reference engine that reads laws.yaml and
+  checks each action before it runs: authority (2.18, 2.19, 4.4), bright lines, action levels and
+  approvals (2.7 to 2.12), stops and safe points (2.1, 2.20, 2.21), emergency mode (1.10) and a
+  hash-chained audit log. It refuses to load if it cites a clause that laws.yaml does not have.
 
 ## 0.5.0 (draft, 2026-11-21)
 

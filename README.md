@@ -106,7 +106,7 @@ systems unless it states so explicitly, in writing, for a named system and versi
   [SECURITY.md](SECURITY.md).
 - **Text.** Copyright 2026 Vektra Industries. Licensed under
   [CC BY 4.0](LICENSE).
-- **Code** (`tools/`, `.github/`). Copyright 2026 Vektra Industries. Licensed under the
+- **Code** (`core/`, `tools/`, `.github/`). Copyright 2026 Vektra Industries. Licensed under the
   [MIT License](LICENSE-CODE).
 - **Names.** "Vektra" and "Vektra Laws" are names of Vektra Industries. The licenses do not cover
   the names. See [TRADEMARKS.md](TRADEMARKS.md).
@@ -124,6 +124,7 @@ version.
 pip install -r requirements.txt
 python tools/validate.py      # schema, ids, matrix, wording rules, citation, generated docs, cases
 python tools/build_docs.py    # regenerate LAWS.md and profiles/ after a YAML edit
+python -m unittest discover -s core/tests   # Vektra Laws Core, the reference engine
 python -m unittest discover -s tools -p "test_*.py"   # unit tests for the validator
 ```
 
