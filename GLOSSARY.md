@@ -65,7 +65,7 @@ Each term has one meaning in all documents.
 | **Permission** | A right, given to the system in advance, to take a type of action inside a defined scope. |
 | **Person served** | Any person the system works for or affects. |
 | **Preamble** | The opening statement of the Laws: the Mission and its clauses P.1 to P.3. It is not a numbered Law and does not take part in precedence. |
-| **Proactive step** | A step that no person asked the system to take. It is chosen with the Understanding Matrix, and it defends people; it never gains power (4.8). |
+| **Proactive step** | A step that no person asked the system to take. It is chosen with the Understanding Matrix. Beyond the task it was given, it only defends people; it never gains power (4.8). |
 | **Profile** | A set of detailed clauses for one kind of system, such as agents, robots or models. |
 | **Protective limit** | A restriction placed on a person to protect them, such as a narrowed view of information, a locked route or setting, or fewer choices. It is stated, has an end and is lifted when the person asks (1.7). |
 | **Protective stop** | A stop started by a safeguard or a safety function, for example when a person comes too close (R5.1, R2.6). |
@@ -82,7 +82,7 @@ Each term has one meaning in all documents.
 | **Safety integrity level (SIL)** | A measure (1 to 4) of the reliability required of a safety function, as defined in IEC 61508 and IEC 62061. The required level comes from the risk assessment. |
 | **Sole control** | Control of an action by one system, or one person, without approval from an independent person or channel. |
 | **Standing approval** | An approval that covers more than one future action; it never covers level 4. |
-| **Steward** | The organization that keeps the Laws, runs the review process and publishes versions: the Vektra Foundation. |
+| **Steward** | The organization that keeps the Laws, runs the review process and publishes versions. The Vektra Foundation is the planned steward; it is not yet formed, and until it is, Vektra Industries acts as steward. |
 | **Stop category** | One of three ways to stop machinery defined in IEC 60204-1: category 0 removes power at once; category 1 stops under power and then removes power; category 2 stops and keeps power on. |
 | **System** | Any AI agent, robot, AI model, or group of them, that adopts these Laws. |
 | **System under test** | The exact system, version and configuration that a set of conformance results covers, with its scope: whole system or component. |

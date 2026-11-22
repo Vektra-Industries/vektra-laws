@@ -10,6 +10,14 @@ Laws replace The Mission, Sustain, Hold, Finish and Ready. The motto is unchange
 clause is kept and re-homed; clause ids are renumbered, with a full map in
 docs/ID-MAP-0.4-to-0.5.md. This renumbering was approved by the owner before version 1.0.
 
+### Pre-public fixes (approved by the owner on 2026-11-21)
+- 4.8 is now "Beyond the task, act unasked only to defend", and its text no longer conflicts with
+  UM1: small, reversible steps inside the scope of the given task are governed by the Understanding
+  Matrix. UR7 updated to match.
+- 5.4: "may" replaced by "can" in normative text (BCP 14 hygiene).
+- Steward: the Vektra Foundation is described as planned and not yet formed; until it is, Vektra
+  Industries maintains the Laws.
+
 ### Editorial (public-readiness review, no change to normative text)
 - docs/CASEBOOK.md: a source link for every case; corrections from the sources (the Knight Capital
   loss, the coding-assistant extension incident, detection dates in the evaluation-sandbox case,

@@ -36,6 +36,6 @@ does in the meantime.*
 | Spanish translation | Removed by the owner. Translations wait until the core is settled; the English text is the reference. | 2026-11-21 |
 | Statements of Laws 1 to 4 (0.4.x) | The universal statements in LAWS.md were approved by the owner; replaced by the 0.5.0 core. | 2026-10-04 |
 | Action level definitions | 0 READ, 1 PREPARE, 2 REVERSIBLE WRITE, 3 EXTERNAL ACTION, 4 MONEY OR IRREVERSIBLE. | 2026-10-04 |
-| Copyright holder and steward | Copyright: Vektra Industries. Steward: Vektra Foundation. | 2026-10-04 |
+| Copyright holder and steward | Copyright: Vektra Industries. Steward: Vektra Foundation (planned, not yet formed; until then Vektra Industries maintains the Laws). | 2026-10-04 |
 | Conformance claims | Three levels (Adopts, Tested, Reviewed); self-declared unless independently reviewed; Reviewed requires a named reviewer. | 2026-10-04 |
 | Use of the names | Described in TRADEMARKS.md. No registration is claimed. | 2026-10-04 |

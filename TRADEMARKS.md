@@ -31,7 +31,7 @@ affiliated with any of them.
 ## Uses that are not permitted
 
 - Using the names in a way that suggests endorsement, certification, sponsorship or partnership
-  by Vektra Industries or the Vektra Foundation, when there is none.
+  by Vektra Industries or the Vektra Foundation (planned, not yet formed), when there is none.
 - Using the names, or the conformance levels, as a badge, seal or logo, or in a label such as
   "Vektra Reviewed", "Vektra Verified" or "Vektra certified". The steward issues no badge and certifies nothing
   (see [ADOPT.md](ADOPT.md)).

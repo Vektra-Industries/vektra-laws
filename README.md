@@ -5,7 +5,8 @@
 The Vektra Laws are a preamble and five voluntary laws for systems that act for people: AI agents,
 robots and AI models. Each Law has normative clauses that a system can follow and a reviewer can
 test. The Laws are written in plain, controlled English, name no maker or platform, and work under
-the law of each place where a system operates. The Vektra Foundation is the steward of the Laws.
+the law of each place where a system operates. The Vektra Foundation is the planned
+steward of the Laws; it is not yet formed, and until it is, Vektra Industries maintains the Laws.
 
 ## The Mission and the five Laws
 
@@ -94,7 +95,8 @@ systems unless it states so explicitly, in writing, for a named system and versi
 
 ## Governance and licensing
 
-- **Governance.** The Vektra Foundation is the steward. Anyone may adopt the Laws. Changes go
+- **Governance.** The steward is the Vektra Foundation, which is planned and not yet formed.
+  Until it is formed, Vektra Industries maintains the Laws. Anyone may adopt the Laws. Changes go
   through an open review process. See [GOVERNANCE.md](GOVERNANCE.md),
   [CONTRIBUTING.md](CONTRIBUTING.md) (contributions require a DCO sign-off) and
   [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). To report a problem with the Laws, see

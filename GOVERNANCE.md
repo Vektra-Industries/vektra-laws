@@ -6,7 +6,8 @@
 
 - **Owner.** Vektra Industries owns the copyright in the Vektra Laws, the names "Vektra" and
   "Vektra Laws", and this repository.
-- **Steward.** The Vektra Foundation keeps the Laws for the owner. The steward maintains the
+- **Steward.** The Vektra Foundation is the planned steward. It is not yet formed; until it is,
+  Vektra Industries maintains the Laws and acts as steward. The steward maintains the
   reference text, runs the review process, publishes versions, and maintains the list of
   reference adopters.
 - **Adopters.** Anyone may adopt the Laws for any AI agent, robot or AI model, from any maker, in
