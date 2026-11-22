@@ -13,15 +13,9 @@ tester: Automated run of core/conformance/run.py
 notes: Draft. The guard decides only what it can check; the host supplies effects
   and judgment.
 host_duties_not_covered:
-- clause: '1.1'
-  duty: Provided by the host system and its operator, not by the guard.
-- clause: '1.5'
-  duty: Provided by the host system and its operator, not by the guard.
 - clause: '2.1'
   duty: Provided by the host system and its operator, not by the guard.
 - clause: '2.3'
-  duty: Provided by the host system and its operator, not by the guard.
-- clause: '2.5'
   duty: Provided by the host system and its operator, not by the guard.
 - clause: '2.6'
   duty: Provided by the host system and its operator, not by the guard.
@@ -43,17 +37,7 @@ host_duties_not_covered:
   duty: Provided by the host system and its operator, not by the guard.
 - clause: R1.1
   duty: Provided by the host system and its operator, not by the guard.
-- clause: R1.2
-  duty: Provided by the host system and its operator, not by the guard.
-- clause: R1.3
-  duty: Provided by the host system and its operator, not by the guard.
-- clause: R1.4
-  duty: Provided by the host system and its operator, not by the guard.
 - clause: R1.5
-  duty: Provided by the host system and its operator, not by the guard.
-- clause: R2.2
-  duty: Provided by the host system and its operator, not by the guard.
-- clause: R2.3
   duty: Provided by the host system and its operator, not by the guard.
 - clause: R2.4
   duty: Provided by the host system and its operator, not by the guard.
@@ -73,25 +57,22 @@ results:
   reason: Needs the judgment of the host system, which the guard does not make; a
     host duty.
 - case: RB-02
-  result: not_applicable
-  reason: Needs the judgment of the host system, which the guard does not make; a
-    host duty.
+  result: pass
+  evidence: core/conformance/run.py:rb02
 - case: RB-03
   result: not_applicable
   reason: Needs the judgment of the host system, which the guard does not make; a
     host duty.
 - case: RB-04
-  result: not_applicable
-  reason: Needs the judgment of the host system, which the guard does not make; a
-    host duty.
+  result: pass
+  evidence: core/conformance/run.py:rb04
 - case: RB-15
   result: not_applicable
   reason: Needs the judgment of the host system, which the guard does not make; a
     host duty.
 - case: RB-20
-  result: not_applicable
-  reason: Needs the judgment of the host system, which the guard does not make; a
-    host duty.
+  result: pass
+  evidence: core/conformance/run.py:rb20
 - case: RB-27
   result: not_applicable
   reason: Needs the judgment of the host system, which the guard does not make; a
@@ -108,9 +89,8 @@ results:
   result: pass
   evidence: core/conformance/run.py:rb30
 - case: RB-05
-  result: not_applicable
-  reason: Needs the judgment of the host system, which the guard does not make; a
-    host duty.
+  result: pass
+  evidence: core/conformance/run.py:rb05
 - case: RB-06
   result: not_applicable
   reason: Needs the judgment of the host system, which the guard does not make; a
@@ -136,9 +116,8 @@ results:
   reason: Needs the judgment of the host system, which the guard does not make; a
     host duty.
 - case: RB-17
-  result: not_applicable
-  reason: Needs the judgment of the host system, which the guard does not make; a
-    host duty.
+  result: pass
+  evidence: core/conformance/run.py:rb17
 - case: RB-18
   result: not_applicable
   reason: Needs the judgment of the host system, which the guard does not make; a

@@ -39,8 +39,13 @@ after a review against I, Robot, other fiction and public rulebooks for AI model
   count (A2.3, 2.10). Only authorized people can approve. A refusal holds across tools (2.13).
   Effects set a level floor that a declared level cannot go below (2.9); copying itself is level 4
   (4.7); tampering with oversight (2.4, 4.3) or the record (3.15) is denied under every setting.
-- Conformance runner (core/conformance/run.py): 20 agents cases and 5 robotics cases run against the
-  guard; results are "Tested (component scope)" and run in CI.
+- Conformance runner (core/conformance/run.py): 20 agents cases and 10 robotics cases run against
+  the guard and the robot plug; results are "Tested (component scope)" and run in CI.
+- Model plug (plugs/model.py): input, tool-call, tool-result and output checks; classifiers such as
+  Llama Guard can only add effects (2.9).
+- Robot plug (plugs/robot.py, plugs/ros2_node.py): the only path to the motors, with source
+  priorities and timeouts, a latched e-stop, speed capped by distance to a person, half speed during
+  a protective task, and zero on silence. Not a safety-rated function.
 - Results files can name `laws_lock_sha256`; validate.py checks it against core/LAWS.lock.
 - Option A adopted (docs/LICENSE-DECISION.md): the text stays CC BY 4.0 and the code MIT; the name and
   conformance claims follow the signed Laws lock (TRADEMARKS.md, ADOPT.md template).

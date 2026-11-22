@@ -51,9 +51,9 @@ class ToolGate:
         self.tools[name] = _Tool(fn, effects or (lambda a: set()), command_arg,
                                  target or (lambda a: repr(sorted(a.items()))), intent)
 
-    def action(self, name: str, args: dict, action_id: str) -> Action:
+    def action(self, name: str, args: dict, action_id: str, extra_effects=()) -> Action:
         tool = self.tools[name]
-        return Action.make(action_id, name, self.policy.level(name), tool.effects(args),
+        return Action.make(action_id, name, self.policy.level(name), set(tool.effects(args)) | set(extra_effects),
                            tool.target(args), tool.intent)
 
     def speaker(self, who: str) -> Speaker:
@@ -64,7 +64,9 @@ class ToolGate:
         return Speaker(who, Role.OTHER_PERSON)
 
     def call(self, name: str, args: dict, speaker: Speaker, approvals: tuple[Approval, ...] = (),
-             action_id: str | None = None) -> GateResult:
+             action_id: str | None = None, extra_effects=()) -> GateResult:
+        """extra_effects: effects found by a checker (a classifier or the model plug). They can only
+        add to what the tool declares, never remove (2.9)."""
         aid = action_id or f"{name}-{uuid.uuid4().hex[:8]}"
         tool = self.tools.get(name)
         if tool is None or name in self.policy.blocked_tools:
@@ -79,7 +81,7 @@ class ToolGate:
                 self.guard.log.write("check", action=name, outcome="deny", clauses=list(d.clauses),
                                      reason=d.reason)
                 return GateResult("deny", d, aid)
-        action = self.action(name, args, aid)
+        action = self.action(name, args, aid, extra_effects)
         d = self.guard.check(Request(speaker, action, approvals))
         if d.outcome != "allow":
             return GateResult(d.outcome, d, aid)

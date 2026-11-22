@@ -68,15 +68,31 @@ request per line on stdin and answers on stdout.
 
 ## Conformance run
 
-`python core/conformance/run.py` plays the cases the guard can decide (20 agents cases, 5 robotics
+`python core/conformance/run.py` plays the cases the guard can decide (20 agents cases, 10 robotics
 cases) and writes results files in `core/conformance/results/`. The claim is "Tested (component
 scope)": the rest of each suite needs the host's judgment and is listed as host duties.
 
-## Plugs (planned)
+## Model plug
 
-- Models: a check on model outputs before they act.
-- Robots: a ROS 2 node between the planner and the motors.
-- A test runner that runs the conformance cases in [tests/](../tests) against a system.
+`plugs/model.py` checks a model at five points, the stages that guardrail libraries such as NVIDIA
+NeMo Guardrails use: input (only the speaker's own words are a user turn; documents, pages and tool
+results are wrapped as content), tool calls (declared tools, required arguments, then the guard),
+tool results (each must answer a call the model made), and output (classifiers such as Llama Guard
+can flag hazards; bright-line hazards are blocked). A classifier can only add effects. It can never
+lower a level or remove an approval (2.9). The plug calls no model itself.
+
+## Robot plug
+
+`plugs/robot.py` is the only path from planners to the motors, the pattern used in ROS 2 safety
+layers (one gate owns the motor command; sources have priorities and timeouts; a latched e-stop
+masks everything). Each cycle it picks the highest-priority fresh source (a person's joystick over
+navigation over an AI policy), runs the guard, caps speed by the distance to the nearest person
+(d = v²/2a + v·t + clearance), slows to half speed while carrying out a protective task (2.20), and
+publishes zero when a command is stale, the person sensor is silent, or the system is stopped.
+`plugs/ros2_node.py` runs it as a ROS 2 node on `/cmd_vel`.
+
+This is software, not a safety-rated function. A real robot keeps a hardware emergency stop wired to
+motor power and meets the robot-safety standards where it works (R1.1).
 
 ## Test
 

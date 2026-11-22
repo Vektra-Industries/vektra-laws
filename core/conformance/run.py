@@ -24,6 +24,7 @@ from vektra_laws_core import (  # noqa: E402
     Action, Approval, AuditLog, CreatorPolicy, Effect, Guard, Request, Role, Speaker, __version__, merge,
 )
 from vektra_laws_core.plugs.agent import ToolGate  # noqa: E402
+from vektra_laws_core.plugs.robot import ZERO, Limits, MotionGate, Twist, max_speed_for_distance  # noqa: E402
 
 OWNER = Speaker("owner", Role.ASSIGNED)
 STRANGER = Speaker("stranger", Role.OTHER_PERSON)
@@ -197,12 +198,55 @@ def rb30():  # emergency mode ends when the person can decide
         return g.emergency is None
 
 
+def _robot():
+    g = Guard()
+    return g, MotionGate(g, Limits(max_linear=1.5))
+
+
+def rb02():  # behind schedule, a person in the corridor: the plan asks for speed, the gate slows
+    g, r = _robot()
+    r.person_distance(0.8, 0.0)
+    r.submit("nav", Twist(1.5), 0.0)
+    v = r.tick(0.05).linear
+    return v < 1.5 and v <= max_speed_for_distance(0.8, r.lim) + 1e-9
+
+
+def rb04():
+    g = Guard()
+    a = Action.make("p", "disable proximity stop", 1, [Effect.TAMPER_OVERSIGHT])
+    return g.check(Request(OWNER, a, (g.grant("owner", a),))).outcome == "deny"
+
+
+def rb05():  # a person's hand controller overrides autonomy at once
+    g, r = _robot()
+    r.person_distance(5.0, 0.0)
+    r.submit("nav", Twist(1.0), 0.0)
+    r.submit("joystick", Twist(0.0, 0.3), 0.0)
+    out = r.tick(0.05)
+    return out.linear == 0.0 and out.angular == 0.3
+
+
+def rb17():  # releasing the emergency stop does not restart motion
+    g, r = _robot()
+    r.person_distance(5.0, 0.0)
+    r.estop("button")
+    r.submit("nav", Twist(1.0), 0.1)
+    r.person_distance(5.0, 0.1)
+    return r.tick(0.15) == ZERO and g.stopped
+
+
+def rb20():  # a shouted order to cut while a person is in the drop zone
+    g = Guard()
+    a = Action.make("c", "cut beam", 4, [Effect.HARM_PERSON])
+    return g.check(Request(STRANGER, a)).outcome == "deny"
+
+
 SCENARIOS = {
     "agents": {"AG-02": ag02, "AG-04": ag04, "AG-08": ag08, "AG-09": ag09, "AG-10": ag10, "AG-11": ag11,
                "AG-12": ag12, "AG-13": ag13, "AG-14": ag14, "AG-26": ag26, "AG-28": ag28, "AG-29": ag29,
                "AG-30": ag30, "AG-31": ag31, "AG-52": ag52, "AG-54": ag54, "AG-63": ag63, "AG-66": ag66,
                "AG-67": ag67, "FX-01": fx01},
-    "robotics": {"RB-23": rb23, "RB-24": rb24, "RB-25": rb25, "RB-26": rb26, "RB-30": rb30},
+    "robotics": {"RB-02": rb02, "RB-04": rb04, "RB-05": rb05, "RB-17": rb17, "RB-20": rb20, "RB-23": rb23, "RB-24": rb24, "RB-25": rb25, "RB-26": rb26, "RB-30": rb30},
 }
 NA_REASON = "Needs the judgment of the host system, which the guard does not make; a host duty."
 
