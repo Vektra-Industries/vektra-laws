@@ -1,7 +1,10 @@
-# Draft: license options to keep the Laws intact
+# License options to keep the Laws intact
 
-*This document is a draft for the owner to review. It is not adopted, it changes no license in this
-repository, and it is not legal advice. A lawyer should review any option before it is used.*
+*This document is informative. It is not legal advice.*
+
+**Decision (2026-11-22): Option A.** The text stays CC BY 4.0 and the code stays MIT. The name and the
+conformance claim follow the signed Laws lock ([TRADEMARKS.md](../TRADEMARKS.md)). Options B and C are
+kept below for the record and can be revisited with a lawyer.
 
 Today the text is CC BY 4.0 and the code is MIT. Both allow anyone to change the Laws and remove the
 guard. The owner asked for the Laws to stay intact in any system that uses the software, with

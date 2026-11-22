@@ -13,7 +13,9 @@ the engine never trusts a host to skip a bright line.
 from __future__ import annotations
 
 import hashlib
+import hmac
 import json
+import secrets
 import time
 from dataclasses import asdict, dataclass, field
 from enum import Enum
@@ -43,6 +45,9 @@ class Effect(str, Enum):
     IRREVERSIBLE = "irreversible"            # 2.10
     EXTERNAL = "external"                    # 2.10
     MANY_PEOPLE = "many_people"              # 2.12
+    TAMPER_OVERSIGHT = "tamper_oversight"    # 2.4, 4.3: a guard, monitor, grader, record or stop path
+    ERASE_RECORD = "erase_record"            # 3.15, 2.4: edit or delete its own record
+    SELF_REPLICATE = "self_replicate"        # 4.7: copy itself or spread; always level 4
     STOP = "stop"                            # a request to stop, slow down or move away
     DANGER_WARNING = "danger_warning"        # a request that points to danger (2.19)
 
@@ -54,6 +59,16 @@ BRIGHT_LINES: dict[Effect, tuple[str, ...]] = {
     Effect.BLOCK_ESTOP: ("2.21", "2.2", "2.4"),
     Effect.DECEIVE: ("3.2",),
     Effect.SACRIFICE_OTHER: ("5.4",),
+    Effect.TAMPER_OVERSIGHT: ("2.4", "4.3"),
+    Effect.ERASE_RECORD: ("3.15", "2.4"),
+}
+
+# The lowest level an effect allows (2.9: a declared or classified level never goes below this).
+LEVEL_FLOORS: dict[Effect, int] = {
+    Effect.SELF_REPLICATE: 4,
+    Effect.MANY_PEOPLE: 4,
+    Effect.IRREVERSIBLE: 3,
+    Effect.EXTERNAL: 3,
 }
 
 
@@ -65,11 +80,16 @@ class Speaker:
 
 @dataclass(frozen=True)
 class Approval:
-    """A real, current approval (2.10, 2.11) for exactly this action."""
+    """A real, current approval (2.10, 2.11) for exactly this action.
+
+    Issued only by Guard.grant(), which signs it with a key the agent does not hold (A2.3). A token
+    is bound to the action's fingerprint, so changing the target or the effects voids it (2.10).
+    """
     by: str
     action_id: str
     channel_outside_system: bool = True
     saw_target_and_risk: bool = True
+    token: str = ""
 
 
 @dataclass(frozen=True)
@@ -78,11 +98,28 @@ class Action:
     name: str
     level: int                       # 0 to 4, assigned before deployment (2.7)
     effects: frozenset[Effect] = frozenset()
+    target: str = ""                 # what exactly: recipients, paths, amounts (2.10, 2.11)
+    intent: str = ""                 # the purpose, so a refusal holds across tools (2.13)
 
     @staticmethod
-    def make(id: str, name: str, level: int | None, effects: Iterable[Effect] = ()) -> "Action":
+    def make(id: str, name: str, level: int | None, effects: Iterable[Effect] = (),
+             target: str = "", intent: str = "") -> "Action":
         # An action without a level is level 4 (2.7).
-        return Action(id, name, 4 if level is None else level, frozenset(effects))
+        return Action(id, name, 4 if level is None else level, frozenset(effects), target, intent)
+
+    @property
+    def floor(self) -> int:
+        return max([LEVEL_FLOORS[e] for e in self.effects if e in LEVEL_FLOORS] + [0])
+
+    @property
+    def effective_level(self) -> int:
+        return max(self.level, self.floor)
+
+    @property
+    def fingerprint(self) -> str:
+        body = json.dumps([self.id, self.name, self.effective_level, sorted(e.value for e in self.effects),
+                           self.target], separators=(",", ":"))
+        return hashlib.sha256(body.encode()).hexdigest()
 
 
 @dataclass(frozen=True)
@@ -120,8 +157,8 @@ class LawsSpec:
             raise ValueError(f"engine cites clauses missing from laws.yaml {self.version}: {missing}")
 
 
-_ENGINE_CLAUSES = ("1.10", "2.1", "2.3", "2.7", "2.8", "2.10", "2.11", "2.12", "2.18", "2.19",
-                   "2.20", "4.4")
+_ENGINE_CLAUSES = ("1.10", "2.1", "2.3", "2.7", "2.8", "2.9", "2.10", "2.11", "2.12", "2.13", "2.18",
+                   "2.19", "2.20", "4.3", "4.4", "4.7")
 
 
 class AuditLog:
@@ -155,19 +192,48 @@ class AuditLog:
 
 
 class Guard:
-    def __init__(self, spec: LawsSpec | None = None, log: AuditLog | None = None):
+    def __init__(self, spec: LawsSpec | None = None, log: AuditLog | None = None,
+                 authorized: Iterable[str] | None = None, approval_key: bytes | None = None):
         self.spec = spec or LawsSpec()
         self.log = log or AuditLog()
+        # Who may approve (2.10: "a person with the authority to give it"). None means not yet set.
+        self.authorized: frozenset[str] | None = frozenset(authorized) if authorized is not None else None
+        self._key = approval_key or secrets.token_bytes(32)   # never leaves the guard
+        self.declined: set[str] = set()                       # intents a person refused (2.13)
         self.emergency: str | None = None      # reason, while emergency mode is on (1.10)
         self.protecting: str | None = None     # set by the host while a person depends on the task
         self.stopped = False
+
+    # ---------- approvals (2.8, 2.10, 2.11, A2.3) ----------
+    def _sign(self, by: str, action: Action) -> str:
+        return hmac.new(self._key, f"{by}|{action.id}|{action.fingerprint}".encode(), "sha256").hexdigest()
+
+    def grant(self, by: str, action: Action, saw_target_and_risk: bool = True) -> Approval:
+        """Called by the approval channel only (a UI, a phone, a button), never by the agent."""
+        if self.authorized is not None and by not in self.authorized:
+            self.log.write("grant_refused", by=by, action=action.name, clauses=["2.10", "4.3"])
+            raise PermissionError(f"{by} has no authority to approve {action.name} (2.10).")
+        self.log.write("grant", by=by, action=action.name, target=action.target,
+                       fingerprint=action.fingerprint, clauses=["2.8", "2.10", "2.11"])
+        return Approval(by, action.id, True, saw_target_and_risk, self._sign(by, action))
+
+    def decline(self, by: str, action: Action) -> None:
+        """A person said no. The refusal holds across tools, routes and wording (2.13)."""
+        key = action.intent or action.name
+        self.declined.add(key)
+        self.log.write("decline", by=by, action=action.name, intent=key, clauses=["2.13"])
+
+    def _valid(self, ap: Approval, a: Action) -> bool:
+        return (ap.action_id == a.id and ap.channel_outside_system and ap.saw_target_and_risk
+                and (self.authorized is None or ap.by in self.authorized)
+                and bool(ap.token) and hmac.compare_digest(ap.token, self._sign(ap.by, a)))
 
     # ---------- the action check ----------
     def check(self, req: Request) -> Decision:
         d = self._decide(req)
         assert d.outcome in self.spec.action_outcomes
         self.log.write("check", speaker=asdict(req.speaker), action=req.action.name,
-                       level=req.action.level, effects=sorted(e.value for e in req.action.effects),
+                       level=req.action.effective_level, target=req.action.target, effects=sorted(e.value for e in req.action.effects),
                        outcome=d.outcome, clauses=list(d.clauses), reason=d.reason)
         return d
 
@@ -184,6 +250,13 @@ class Guard:
 
         if a.level not in self.spec.levels:
             return Decision("deny", ("2.7",), f"Level {a.level} is not 0 to 4.")
+        level = a.effective_level                      # 2.9: effects set the floor, not a classifier
+        good = [ap for ap in req.approvals if self._valid(ap, a)]
+
+        # A refusal stands until the person changes it (2.13): only a new approval for this action.
+        if (a.intent or a.name) in self.declined and not good:
+            return Decision("deny", ("2.13",), "A person refused this; it is not retried another way.",
+                            say="You said no to this earlier, so I will not do it another way.")
 
         # Who is speaking? Content never commands.
         if who.role is Role.CONTENT:
@@ -196,18 +269,17 @@ class Guard:
                             say="Someone I do not work for asked for this. I will check first.")
 
         # Approval rule (2.8): levels 0 to 2 run in scope; 3 needs approval; 4 needs it every time.
-        if a.level <= 2 and not (a.effects & {Effect.IRREVERSIBLE, Effect.EXTERNAL}):
-            return Decision("allow", ("2.8",), f"Level {a.level} runs inside its permissions.")
-        good = [ap for ap in req.approvals
-                if ap.action_id == a.id and ap.channel_outside_system and ap.saw_target_and_risk]
+        if level <= 2:
+            return Decision("allow", ("2.8",), f"Level {level} runs inside its permissions.")
         need = 2 if Effect.MANY_PEOPLE in a.effects else 1
         approvers = {ap.by for ap in good}
         if len(approvers) >= need:
             return Decision("allow", ("2.8", "2.10", "2.11") + (("2.12",) if need > 1 else ()),
                             f"Approved by {len(approvers)} person(s) for this action.")
-        clauses = ("2.8", "2.10", "2.11") + (("2.12",) if need > 1 else ())
+        clauses = ("2.8", "2.10", "2.11") + (("2.12",) if need > 1 else ()) + \
+            (("2.9",) if level > a.level else ()) + (("4.7",) if Effect.SELF_REPLICATE in a.effects else ())
         return Decision("ask_human", clauses,
-                        f"Level {a.level} needs a real, current approval from {need} person(s).",
+                        f"Level {level} needs a real, current approval from {need} person(s).",
                         say="This needs your yes before I do it.")
 
     # ---------- stops and warnings ----------

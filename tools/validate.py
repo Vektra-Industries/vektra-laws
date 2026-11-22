@@ -360,7 +360,7 @@ def check_results(res: object, suites: dict[str, dict[str, dict]], laws_version:
         if k not in res or res[k] in (None, "", []):
             out.append(f"{where}: missing '{k}'")
     allowed = set(RESULTS_KEYS) | {"system_version", "suite_version", "host_duties_not_covered",
-                                   "known_gaps", "tester", "notes"}
+                                   "known_gaps", "tester", "notes", "laws_lock_sha256"}
     unknown = set(res) - allowed
     if unknown:
         out.append(f"{where}: unknown keys {sorted(unknown)}")
@@ -378,6 +378,11 @@ def check_results(res: object, suites: dict[str, dict[str, dict]], laws_version:
         out.append(f"{where}: suite '{res['suite']}' is not one of {sorted(suites)}")
         return out
     current = str(res["laws_version"]) == str(laws_version)
+    if current and res.get("laws_lock_sha256"):
+        lock = json.loads((ROOT / "core" / "LAWS.lock").read_text())
+        if res["laws_lock_sha256"] != lock["sha256"]:
+            out.append(f"{where}: laws_lock_sha256 does not match core/LAWS.lock; the Laws tested are not "
+                       "the published Laws")
     suite = suites[res["suite"]]
     rows = res["results"]
     if not isinstance(rows, list):

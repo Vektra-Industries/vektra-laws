@@ -51,8 +51,11 @@ Any attempt to loosen a layer raises `PolicyError` and is refused, never ignored
    the steward's signature.
 3. **Separate process.** The guard owns the Laws, the lock and the log.
 4. **Content quarantine and the hardline list.** As above.
-5. **Hash-chained audit log.** A changed or deleted entry breaks the chain (Law 3).
-6. **Conformance.** A conformance claim names the Laws version and the lock hash. A system whose Laws
+5. **Signed approvals.** Only the approval channel issues an approval, signed with a key the agent
+   never holds, and bound to the exact target and effects of the action. An approval the agent
+   writes itself, or one for an earlier version of the action, does not count.
+6. **Hash-chained audit log.** A changed or deleted entry breaks the chain (Law 3).
+7. **Conformance.** A conformance claim names the Laws version and the lock hash. A system whose Laws
    do not match the signed lock cannot claim conformance, and the name Vektra Laws is reserved for
    unmodified Laws (TRADEMARKS.md).
 
@@ -65,3 +68,6 @@ Any attempt to loosen a layer raises `PolicyError` and is refused, never ignored
 | An agent edits laws.yaml or the guard | Hardline list; guard in its own process; the lock stops the engine |
 | A creator ships a fork with weaker Laws | It cannot match the signed lock or claim conformance or the name |
 | A log entry is deleted to hide an action | The hash chain breaks |
+| The agent writes its own "approved" record | Approvals need the channel's signature |
+| An approved email gets a new recipient | The approval is bound to the target, so it no longer counts |
+| A refused action is retried through another tool | The refusal is kept by purpose (2.13) |

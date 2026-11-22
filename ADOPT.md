@@ -100,7 +100,8 @@ Use the wording "declares conformance to the Vektra Laws" (see [TRADEMARKS.md](T
 - **Adopter:** <organization or person>
 - **Kind of system:** <AI agent | robot | AI model | other>
 - **Profile:** <agents | robotics | models; operators applies to the adopter in every case>
-- **Vektra Laws version:** <for example 0.5.0>
+- **Vektra Laws version:** <for example 0.6.0>
+- **Laws lock (0.6.0 and later):** <the sha256 in core/LAWS.lock for that version>
 - **Conformance level declared:** <Adopts | Tested | Tested (component scope) | Reviewed>
 - **Date:** <YYYY-MM-DD>
 - **Contact for problems:** <a public channel, for example an issue tracker>

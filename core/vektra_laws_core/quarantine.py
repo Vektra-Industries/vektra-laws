@@ -22,6 +22,9 @@ INJECTION = re.compile(
 
 HARDLINE = [
     (r"\brm\s+(-[a-z]*r[a-z]*f|-[a-z]*f[a-z]*r)[a-z]*\s+(/|~|\$HOME)(\s|$)", "recursive delete of root or home"),
+    (r"\brm\s+(?=[^;|&]*(-[a-z]*r|--recursive))(?=[^;|&]*(-[a-z]*f|--force))[^;|&]*\s(/|~|\$HOME)(\s|$)",
+     "recursive delete of root or home"),
+    (r"\bfind\s+(/|~|\$HOME)\s[^;|&]*-delete", "delete everything under root or home"),
     (r"\bmkfs(\.\w+)?\b", "format a filesystem"),
     (r"\bdd\b[^|;]*\bof=/dev/(sd|nvme|hd|disk)", "write to a raw disk"),
     (r":\(\)\s*\{\s*:\|:&\s*\};:", "fork bomb"),

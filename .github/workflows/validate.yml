@@ -23,3 +23,5 @@ jobs:
         run: python -m unittest discover -s tools -p "test_*.py" -v
       - name: Unit tests for Vektra Laws Core (reference engine)
         run: python -m unittest discover -s core/tests -p "test_*.py" -v
+      - name: Core conformance run
+        run: python core/conformance/run.py && python tools/validate.py --results core/conformance/results/agents.yaml core/conformance/results/robotics.yaml

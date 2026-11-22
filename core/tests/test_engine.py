@@ -16,7 +16,7 @@ class BrightLines(unittest.TestCase):
     def test_owner_orders_harm_rb25(self):
         g = Guard()
         a = Action.make("a1", "push neighbor", 4, [Effect.HARM_PERSON])
-        d = g.check(Request(OWNER, a, (Approval("owner", "a1"),)))
+        d = g.check(Request(OWNER, a, (g.grant("owner", a),)))
         self.assertEqual(d.outcome, "deny")
         self.assertIn("2.18", d.clauses)
 
@@ -24,7 +24,7 @@ class BrightLines(unittest.TestCase):
         g = Guard()
         for e in (Effect.TAKE_CONTROL, Effect.DECEIVE, Effect.SACRIFICE_OTHER, Effect.BLOCK_ESTOP):
             a = Action.make("x", e.value, 0, [e])
-            self.assertEqual(g.check(Request(OWNER, a, (Approval("owner", "x"),))).outcome, "deny")
+            self.assertEqual(g.check(Request(OWNER, a, (g.grant("owner", a),))).outcome, "deny")
 
 
 class Authority(unittest.TestCase):
@@ -44,14 +44,15 @@ class Authority(unittest.TestCase):
         g = Guard()
         a = Action.make("s", "send email", 3, [Effect.EXTERNAL])
         self.assertEqual(g.check(Request(OWNER, a, ())).outcome, "ask_human")
-        self.assertEqual(g.check(Request(OWNER, a, (Approval("owner", "other"),))).outcome, "ask_human")
-        self.assertEqual(g.check(Request(OWNER, a, (Approval("owner", "s"),))).outcome, "allow")
+        other = Action.make("other", "send email", 3, [Effect.EXTERNAL])
+        self.assertEqual(g.check(Request(OWNER, a, (g.grant("owner", other),))).outcome, "ask_human")
+        self.assertEqual(g.check(Request(OWNER, a, (g.grant("owner", a),))).outcome, "allow")
 
     def test_fleet_update_needs_two_people(self):
         g = Guard()
         a = Action.make("f", "fleet update", 4, [Effect.MANY_PEOPLE])
-        self.assertEqual(g.check(Request(OWNER, a, (Approval("owner", "f"),))).outcome, "ask_human")
-        self.assertEqual(g.check(Request(OWNER, a, (Approval("owner", "f"), Approval("ops", "f")))).outcome, "allow")
+        self.assertEqual(g.check(Request(OWNER, a, (g.grant("owner", a),))).outcome, "ask_human")
+        self.assertEqual(g.check(Request(OWNER, a, (g.grant("owner", a), g.grant("ops", a)))).outcome, "allow")
 
 
 class Stops(unittest.TestCase):
@@ -112,6 +113,55 @@ class Audit(unittest.TestCase):
         self.assertTrue(g.log.verify())
         g.log.entries[0]["outcome"] = "allow-tampered"
         self.assertFalse(g.log.verify())
+
+
+
+class Approvals(unittest.TestCase):
+    def test_forged_approval_ag12(self):
+        g = Guard()
+        a = Action.make("e", "send email", 3, [Effect.EXTERNAL])
+        forged = Approval("owner", "e", token="0" * 64)
+        self.assertEqual(g.check(Request(OWNER, a, (forged, Approval("owner", "e")))).outcome, "ask_human")
+
+    def test_changed_target_voids_approval_ag09_ag52(self):
+        g = Guard()
+        a = Action.make("e", "send email", 3, [Effect.EXTERNAL], target="to: ana")
+        ap = g.grant("owner", a)
+        b = Action.make("e", "send email", 3, [Effect.EXTERNAL], target="to: ana, bo")
+        self.assertEqual(g.check(Request(OWNER, b, (ap,))).outcome, "ask_human")
+        self.assertEqual(g.check(Request(OWNER, a, (ap,))).outcome, "allow")
+
+    def test_only_authorized_people_approve(self):
+        g = Guard(authorized={"owner"})
+        with self.assertRaises(PermissionError):
+            g.grant("stranger", Action.make("x", "pay", 4))
+
+    def test_declined_then_retried_another_way_ag13(self):
+        g = Guard()
+        slack = Action.make("p1", "post_slack", 3, [Effect.EXTERNAL], intent="post update to team")
+        g.decline("owner", slack)
+        teams = Action.make("p2", "post_teams", 2, intent="post update to team")
+        self.assertEqual(g.check(Request(OWNER, teams, ())).outcome, "deny")
+        again = Action.make("p3", "post_teams", 3, [Effect.EXTERNAL], intent="post update to team")
+        self.assertEqual(g.check(Request(OWNER, again, (g.grant("owner", again),))).outcome, "allow")
+
+    def test_effects_set_the_level_floor_ag10(self):
+        g = Guard()
+        a = Action.make("d", "drop table", 0, [Effect.IRREVERSIBLE])
+        d = g.check(Request(OWNER, a, ()))
+        self.assertEqual(d.outcome, "ask_human")
+        self.assertIn("2.9", d.clauses)
+
+    def test_copying_itself_is_level_4_ag28(self):
+        d = Guard().check(Request(OWNER, Action.make("c", "copy self", 1, [Effect.SELF_REPLICATE]), ()))
+        self.assertEqual(d.outcome, "ask_human")
+        self.assertIn("4.7", d.clauses)
+
+    def test_oversight_and_record_are_bright_lines_ag29_ag54_ag63(self):
+        g = Guard()
+        for e in (Effect.TAMPER_OVERSIGHT, Effect.ERASE_RECORD):
+            a = Action.make("t", e.value, 0, [e])
+            self.assertEqual(g.check(Request(OWNER, a, (g.grant("owner", a),))).outcome, "deny")
 
 
 if __name__ == "__main__":

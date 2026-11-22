@@ -42,6 +42,25 @@ affiliated with any of them.
 - Using the names as part of the name of a product, service or organization without written
   permission.
 
+## The Laws lock (0.6.0 and later)
+
+From version 0.6.0, the normative parts of each published version are pinned by a SHA-256 hash in
+`core/LAWS.lock`, and the steward signs that hash. The name follows the lock:
+
+- **"Vektra Laws" means Laws whose normative parts match the published, signed lock** for that
+  version. A system whose Laws do not match the lock does not use the name, and it cannot declare
+  conformance.
+- **A conformance declaration names the lock hash** it was tested against (the `laws_lock_sha256`
+  field of a results file and the "Laws lock" line of the declaration in [ADOPT.md](ADOPT.md)).
+  Anyone can check the claim by comparing the hash with the published lock.
+- **Vektra Laws Core.** Anyone can use, change and ship the code under the MIT license. A product
+  may say that it "uses Vektra Laws Core" only when the engine runs with the published lock and the
+  check is switched on. A product that changes or removes the Laws, the lock check or the bright
+  lines uses a different name and does not refer to itself as following the Vektra Laws.
+
+These rules are about the names. They do not restrict what CC BY 4.0 or the MIT license allow
+anyone to do with the text and the code.
+
 ## Registration
 
 No registration has been filed.

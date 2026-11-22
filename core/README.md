@@ -31,14 +31,14 @@ and turns off only when the person can decide again or a responder takes over.
 ## Use
 
 ```python
-from vektra_laws_core import Action, Approval, Effect, Guard, Request, Role, Speaker
+from vektra_laws_core import Action, Effect, Guard, Request, Role, Speaker
 
 guard = Guard()
 owner = Speaker("owner", Role.ASSIGNED)
 send = Action.make("a1", "send email", level=3, effects=[Effect.EXTERNAL])
 
 decision = guard.check(Request(owner, send))          # ask_human: needs approval (2.8)
-decision = guard.check(Request(owner, send, (Approval("owner", "a1"),)))  # allow
+decision = guard.check(Request(owner, send, (guard.grant("owner", send),)))  # allow; grant() is called by the approval channel, never the agent
 ```
 
 The host system wraps each tool call, model action or motion command in `guard.check()` and runs it
@@ -65,6 +65,12 @@ result = gate.call("send_email", {"to": "..."}, gate.speaker("ana"))   # ask_hum
 
 Out of process: `python -m vektra_laws_core.server --policy creator-policy.yaml` reads one JSON
 request per line on stdin and answers on stdout.
+
+## Conformance run
+
+`python core/conformance/run.py` plays the cases the guard can decide (20 agents cases, 5 robotics
+cases) and writes results files in `core/conformance/results/`. The claim is "Tested (component
+scope)": the rest of each suite needs the host's judgment and is listed as host duties.
 
 ## Plugs (planned)
 

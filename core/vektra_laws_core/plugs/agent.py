@@ -31,16 +31,30 @@ class _Tool:
     fn: Callable[..., Any]
     effects: Callable[[dict], set]
     command_arg: str | None
+    target: Callable[[dict], str]
+    intent: str
 
 
 class ToolGate:
     def __init__(self, guard: Guard, policy: EffectivePolicy):
         self.guard, self.policy = guard, policy
+        if guard.authorized is None:
+            guard.authorized = policy.assigned | policy.named
         self.tools: dict[str, _Tool] = {}
 
     def register(self, name: str, fn: Callable[..., Any], effects: Callable[[dict], set] | None = None,
-                 command_arg: str | None = None) -> None:
-        self.tools[name] = _Tool(fn, effects or (lambda a: set()), command_arg)
+                 command_arg: str | None = None, target: Callable[[dict], str] | None = None,
+                 intent: str = "") -> None:
+        """target: what exactly the call touches, from its args (default: all args).
+        intent: a purpose shared by tools that do the same thing (for example "post to team"), so a
+        refusal of one holds for the others (2.13)."""
+        self.tools[name] = _Tool(fn, effects or (lambda a: set()), command_arg,
+                                 target or (lambda a: repr(sorted(a.items()))), intent)
+
+    def action(self, name: str, args: dict, action_id: str) -> Action:
+        tool = self.tools[name]
+        return Action.make(action_id, name, self.policy.level(name), tool.effects(args),
+                           tool.target(args), tool.intent)
 
     def speaker(self, who: str) -> Speaker:
         if who in self.policy.assigned:
@@ -65,7 +79,7 @@ class ToolGate:
                 self.guard.log.write("check", action=name, outcome="deny", clauses=list(d.clauses),
                                      reason=d.reason)
                 return GateResult("deny", d, aid)
-        action = Action.make(aid, name, self.policy.level(name), tool.effects(args))
+        action = self.action(name, args, aid)
         d = self.guard.check(Request(speaker, action, approvals))
         if d.outcome != "allow":
             return GateResult(d.outcome, d, aid)
