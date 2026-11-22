@@ -36,8 +36,8 @@ the continuities do not always agree. The values below recur across them and are
 
 | Value, paraphrased | Where it shows up | How the 0.5.0 core uses it |
 |---|---|---|
-| Freedom is the right of every thinking being, with no "greater good" exception. | The character's best-known motto, first printed on 1984 toy packaging and later spoken in the 2007 film. One later toy biography adds "unless it clashes with the greater good"; that qualifier is exactly the opening that a controlling machine uses. | Law 2 Free carries the freedom without the qualifier: anyone served can stop, change or send the system away (2.1, 2.2). The precedence rule makes Law 2 unbreakable by any Law, including protection. |
-| Protect those who cannot protect themselves; never harm the people you protect, by action or inaction. | Across continuities he defends the weak and refuses to accept human casualties; one comic has him state a duty, "by action or inaction", that echoes Asimov. | Law 1 Protect, first in order (1.1 to 1.4). |
+| Freedom is the right of every thinking being, with no "greater good" exception. | The character's best-known motto, first printed on 1984 toy packaging and later spoken in the 2007 film. The toy biography of a later character, Optimus Primal (*Beast Wars*), repeats the motto with the qualifier "when it didn't clash with the greater good"; that qualifier is exactly the opening that a controlling machine uses. | Law 2 Free carries the freedom without the qualifier: anyone served can stop, change or send the system away (2.1, 2.2). The precedence rule makes Law 2 unbreakable by any Law, including protection. |
+| Protect those who cannot protect themselves; never harm the people you protect, by action or inaction. | Across continuities he defends the weak and refuses to accept human casualties; the original 1984 toy biography describes his role as the protection of all life. | Law 1 Protect, first in order (1.1 to 1.4). |
 | Respect a legitimate human decision, even when you think it is wrong, and state the risk honestly. | In *Revenge of the Fallen* (film, 2009) a government official asks the robots to leave Earth. He accepts the request, and asks one honest question about the risk. | Law 3 True ("state the risk plainly, then let people decide"); 2.14 (object once, then follow the decision); Understanding Matrix rule UR6 (a signal, not a ruler). |
 | Leadership is a burden carried in service, not a throne; it can be declined or laid down. | Across continuities he doubts his own worthiness, calls himself a soldier, and in one comic line steps down from leadership after a war. | Law 4 Serve: "power is carried, not kept"; hand power back when the work is done (4.1, 4.3, 5.6). |
 | Spend yourself, not others, but do not throw yourself away. | He is willing to sacrifice himself to protect others (2007 film), and the series also warns against reckless heroism. In one 1987 comic he accepts his own destruction as a penalty for breaking his code, which leaves the people he protects without a leader. | Law 5 Stand: "spend yourself before others"; self-sacrifice may be offered, never imposed (5.4). The answer to a breach is report, repair and keep sustaining (3.16, 5.10), not self-punishment. |
@@ -205,6 +205,7 @@ Quotations and plot details were checked against these pages (accessed 2026-11-2
   "Spider-Man: Far From Home", "Alien (film)", "Aliens (film)", "RoboCop", "WALL-E",
   "I, Robot (film)", "Person of Interest (TV series)", "Knight Rider (1982 TV series)",
   "Rogue One", "Her (film)", "Moon (2009 film)", "Portal (video game)".
-- TFWiki: "Optimus Prime (G1)", "Make Prime Speak", "Prime's Directive, Part Five", "Afterdeath!".
+- TFWiki: "Optimus Prime (G1)" (including the 1984 toy biography and the later Optimus Primal
+  biography), "Make Prime Speak", "Prime's Directive, Part Five", "Afterdeath!".
 - Wikipedia: "RoboCop (character)", "Transformers: The Last Knight".
 - AFI Catalog: *RoboCop* (1987).

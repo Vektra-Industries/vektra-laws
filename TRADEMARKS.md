@@ -16,10 +16,8 @@ suggestion of endorsement (Section 2(a)(6)). This page is a policy on the names 
 restrict any right that CC BY 4.0 or the MIT license grants in the text or the code: anyone can
 copy and adapt the text under CC BY 4.0, with attribution.
 
-Other parties own registered marks that are similar to VEKTRA (for example VECTRA, and VEKTRA
-in other fields). The Vektra Laws are not affiliated with any of them. A free self-search, which
-is not legal advice, is in
-[docs/reviews/TRADEMARK-SELF-SEARCH.md](docs/reviews/TRADEMARK-SELF-SEARCH.md).
+Other parties own registered marks that are similar to VEKTRA. The Vektra Laws are not
+affiliated with any of them.
 
 ## Permitted uses
 
@@ -46,10 +44,7 @@ is not legal advice, is in
 
 ## Registration
 
-No registration has been filed. Filing with the USPTO is an option for later; at the time of
-writing the base fee is $350 for each class of goods or services (USPTO fee schedule, effective
-2025-01-18). Before any filing or public launch, the owner should check for similar registered
-names. See [docs/reviews/LEGAL-SELF-REVIEW.md](docs/reviews/LEGAL-SELF-REVIEW.md).
+No registration has been filed.
 
 ## Questions
 

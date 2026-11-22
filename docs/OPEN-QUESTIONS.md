@@ -3,12 +3,16 @@
 *This document is informative. It lists questions that need a decision, and what the current draft
 does in the meantime.*
 
+> **Clause ids.** Rows dated before 2026-11-21 cite the clause ids of version 0.4.x or earlier.
+> Version 0.5.0 renumbered the clauses; see [ID-MAP-0.4-to-0.5.md](ID-MAP-0.4-to-0.5.md) for the
+> current ids.
+
 ## Open
 
 | # | Question | Needed by | Current draft |
 |---|---|---|---|
 | 1 | Whether the record in clause 3.15 must be signed or keyed (MUST), instead of SHOULD. | v1.0 | SHOULD. |
-| 2 | The project name is close to registered marks in the AI and software field (see [LEGAL-SELF-REVIEW.md](reviews/LEGAL-SELF-REVIEW.md), residual risk 1, and the free self-search in [TRADEMARK-SELF-SEARCH.md](reviews/TRADEMARK-SELF-SEARCH.md)). Take advice and decide on the name before a public launch. | v1.0 | Name unchanged; no registration claimed. |
+| 2 | The project name is close to registered marks in the AI and software field (see [LEGAL-SELF-REVIEW.md](reviews/LEGAL-SELF-REVIEW.md), residual risk 1). Take advice and decide on the name before a public launch. | v1.0 | Name unchanged; no registration claimed. |
 | 3 | Confirm that the owner and steward named in the text exist as legal entities, or describe the steward as planned (legal residual risk 2). | v1.0 | Named as owner and steward. |
 | 4 | Professional legal and robot-safety review, when funding allows. | Recommended before v1.0 | Self-reviews only (docs/reviews). |
 
