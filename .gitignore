@@ -1,3 +1,9 @@
 __pycache__/
 *.pyc
 .venv/
+.env
+.DS_Store
+# Never commit a private key or signing scratch files
+*.pem
+*.key
+lock.bin

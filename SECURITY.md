@@ -12,6 +12,11 @@ the Understanding Matrix or the conformance cases.*
 - **Conflict.** Two clauses that cannot both be followed.
 - **Conformance-case error.** A case with a wrong verdict or a wrong clause reference.
 - **Tooling defect.** An error in `tools/validate.py` or `tools/build_docs.py`.
+- **Core bypass.** A way to make Vektra Laws Core allow an action it should deny or send to a
+  person: a forged or reused approval, a tool call that skips the gate, injected content treated as
+  a command, a loosened policy, a stop that does not hold, or a changed Laws file that still runs.
+  Always report these privately (see below).
+- **Signing key concern.** Any sign that the steward key or a signed lock is not genuine.
 
 ## How to report
 
