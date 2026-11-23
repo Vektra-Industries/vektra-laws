@@ -1,9 +1,12 @@
 # Changelog
 
 *This document is informative.* All notable changes to the Vektra Laws are recorded here. Versions
-follow [ROADMAP.md](ROADMAP.md). No version has been released yet.
+follow [ROADMAP.md](ROADMAP.md).
 
-## 0.6.0 (draft, 2026-11-22)
+## 0.6.0 (2026-11-23)
+
+First signed release. LAWS.lock sequence 1 is signed by the steward main key
+(fingerprint c41973a80abab5a0f8e78513f4c3ba04d684c6fd8183a10f9c2fb816f1183150).
 
 The Laws now bind each other, and Law 2 says who is in command. Proposed by the owner on 2026-11-22
 after a review against I, Robot, other fiction and public rulebooks for AI models.
