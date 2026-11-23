@@ -12,11 +12,14 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 LOCK = ROOT / "core" / "LAWS.lock"
 PUBKEY = ROOT / "core" / "keys" / "steward-ed25519.pub"
+RECOVERY_NAME = "recovery-ed25519.pub"   # second offline key, kept apart, for rotation (core/keys/README.md)
+TRUST_ENV = "VEKTRA_LAWS_TRUSTED_KEYS"   # comma-separated pinned fingerprints, set by the installer
 
 # The parts no one may change at runtime. Wording outside these (intent, examples) is informative.
 LOCKED_KEYS = ("version", "precedence", "mission", "core", "understanding_matrix", "action_levels", "decisions")
@@ -51,24 +54,56 @@ def sign_lock(private_key_pem: bytes, path: Path = LOCK) -> dict:
     return lock
 
 
+def key_fingerprint(pub_pem: bytes) -> str:
+    """SHA-256 of the raw 32-byte Ed25519 public key, in hex. The same value as:
+    openssl pkey -pubin -in KEY.pub -outform DER | tail -c 32 | sha256sum"""
+    from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat, load_pem_public_key
+    raw = load_pem_public_key(pub_pem).public_bytes(Encoding.Raw, PublicFormat.Raw)
+    return hashlib.sha256(raw).hexdigest()
+
+
+def pinned_from_env() -> set[str]:
+    return {f.strip().lower() for f in os.environ.get(TRUST_ENV, "").split(",") if f.strip()}
+
+
 def verify(data: dict, lock_path: Path = LOCK, pubkey_path: Path = PUBKEY,
-           require_signature: bool = False) -> dict:
+           require_signature: bool = False, trusted: set[str] | None = None) -> dict:
+    """Check the Laws against the lock and, when present, the steward signature.
+
+    trusted: pinned key fingerprints that came from somewhere other than this download (the
+    installer, the website, a config the operator controls). When any are pinned, a signature by a
+    pinned key is required, so a download that swaps the Laws, the lock and the key together fails.
+    Defaults to the fingerprints in VEKTRA_LAWS_TRUSTED_KEYS.
+    """
+    trusted = {t.lower() for t in trusted} if trusted is not None else pinned_from_env()
     if not lock_path.exists():
         raise IntegrityError("LAWS.lock is missing; the engine will not run on unpinned Laws.")
     lock = json.loads(lock_path.read_text())
     got = locked_digest(json.loads(json.dumps(data, default=str)))
     if got != lock["sha256"] or str(data["version"]) != lock["version"]:
         raise IntegrityError("The locked parts of the Laws do not match LAWS.lock. The engine will not run.")
-    status = {"version": lock["version"], "sha256": got, "signed": False}
-    if lock.get("signature") and pubkey_path.exists():
-        from cryptography.hazmat.primitives.serialization import load_pem_public_key
+    status = {"version": lock["version"], "sha256": got, "signed": False, "key": None, "pinned": bool(trusted)}
+    keys = [p for p in (pubkey_path, pubkey_path.with_name(RECOVERY_NAME)) if p.exists()]
+    if lock.get("signature") and keys:
         from cryptography.exceptions import InvalidSignature
-        try:
-            load_pem_public_key(pubkey_path.read_bytes()).verify(
-                base64.b64decode(lock["signature"]), bytes.fromhex(lock["sha256"]))
-        except InvalidSignature as e:
-            raise IntegrityError("LAWS.lock signature is not valid for the steward key.") from e
-        status["signed"] = True
-    elif require_signature:
+        from cryptography.hazmat.primitives.serialization import load_pem_public_key
+        unpinned = 0
+        for kp in keys:
+            fpr = key_fingerprint(kp.read_bytes())
+            if trusted and fpr not in trusted:
+                unpinned += 1
+                continue
+            try:
+                load_pem_public_key(kp.read_bytes()).verify(
+                    base64.b64decode(lock["signature"]), bytes.fromhex(lock["sha256"]))
+            except InvalidSignature:
+                continue
+            status.update(signed=True, key=fpr)
+            return status
+        if unpinned == len(keys):
+            raise IntegrityError("The public key in this download is not a pinned steward key. "
+                                 "Do not use this copy; check the fingerprint in VERIFYING.md.")
+        raise IntegrityError("LAWS.lock signature is not valid for the steward key.")
+    if require_signature or trusted:
         raise IntegrityError("A signed LAWS.lock is required, and none was found.")
     return status

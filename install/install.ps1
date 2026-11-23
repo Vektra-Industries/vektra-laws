@@ -11,6 +11,11 @@
 # Env: VEKTRA_LAWS_HOME, VEKTRA_LAWS_REF, VEKTRA_LAWS_REPO, VEKTRA_LAWS_NO_SETUP=1
 $ErrorActionPreference = "Stop"
 
+# Steward key fingerprints (SHA-256 of each raw Ed25519 public key), comma-separated: main key, then
+# recovery key. Same values as VERIFYING.md and vektraindustries.com. Empty until the first signed release.
+$PinnedKeys = ""
+$Trusted = if ($env:VEKTRA_LAWS_TRUSTED_KEYS) { $env:VEKTRA_LAWS_TRUSTED_KEYS } else { $PinnedKeys }
+
 $Repo   = if ($env:VEKTRA_LAWS_REPO) { $env:VEKTRA_LAWS_REPO } else { "https://github.com/Vektra-Industries/vektra-laws.git" }
 $Api    = "https://api.github.com/repos/Vektra-Industries/vektra-laws/releases/latest"
 $VLHome = if ($env:VEKTRA_LAWS_HOME) { $env:VEKTRA_LAWS_HOME } else { Join-Path $env:LOCALAPPDATA "vektra-laws" }
@@ -68,7 +73,10 @@ if (-not (Test-Path $VPy)) {
 # 4. Verify the Laws
 Say "Checking the Laws against LAWS.lock"
 $env:PYTHONPATH = Join-Path $Src "core"
-& $VPy -m vektra_laws_core verify
+$env:VEKTRA_LAWS_TRUSTED_KEYS = $Trusted
+$vArgs = @("-m", "vektra_laws_core", "verify")
+foreach ($f in ($Trusted -split ",")) { if ($f.Trim()) { $vArgs += @("--expect-key", $f.Trim()) } }
+& $VPy @vArgs
 if ($LASTEXITCODE -ne 0) { Fail "The Laws did not verify. Nothing was added to your PATH. Please report this to security@vektraindustries.com." }
 
 # 5. The command
@@ -80,6 +88,7 @@ $Launcher = Join-Path $Bin "vektra-laws.cmd"
 rem vektra-laws launcher, written by the Vektra Laws installer (VEKTRA_LAWS_HOME).
 set "VEKTRA_LAWS_HOME=$VLHome"
 set "VEKTRA_LAWS_BIN=$Bin"
+set "VEKTRA_LAWS_TRUSTED_KEYS=$Trusted"
 set "PYTHONPATH=$Src\core;%PYTHONPATH%"
 "$VPy" -m vektra_laws_core %*
 "@ | Set-Content -Encoding ASCII $Launcher

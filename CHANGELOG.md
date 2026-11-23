@@ -24,6 +24,11 @@ after a review against I, Robot, other fiction and public rulebooks for AI model
   adding the `vektra-laws` command, and start `vektra-laws setup`. The command also has `verify`,
   `doctor`, `check`, `guard`, `test`, `update` (rolls back if the new version does not verify) and
   `uninstall`. See INSTALL.md.
+- Pinned steward keys: the installers carry the SHA-256 fingerprints of the main and recovery keys
+  (`PINNED_KEYS`) and pass them to the engine (`VEKTRA_LAWS_TRUSTED_KEYS`). With keys pinned, the
+  Laws must be signed by a pinned key, so a download that swaps the Laws, lock and key together
+  fails, offline too. A recovery key (`core/keys/recovery-ed25519.pub`) lets the steward replace a
+  stolen main key. `vektra-laws fingerprint`; `tools/add_signature.py` checks fingerprints.
 - A "Bound by" line under each Law, naming the Laws that check it.
 - 1.10 Emergency mode when its person cannot decide (heart attack, fire, fall, pregnancy).
 - 2.18 Commands come from the people it is assigned to; 2.19 Hear every person with reason;

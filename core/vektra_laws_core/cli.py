@@ -2,6 +2,7 @@
 
     vektra-laws setup      add the Laws guard to a project (wizard)
     vektra-laws verify     check the Laws against LAWS.lock and the steward signature
+    vektra-laws fingerprint  print the steward key fingerprints to compare with vektraindustries.com
     vektra-laws doctor     check the whole install and say how to fix what is wrong
     vektra-laws check      ask the guard about one action, from the command line
     vektra-laws guard      run the guard as its own process (JSON lines on stdin and stdout)
@@ -40,14 +41,31 @@ def cmd_verify(a) -> int:
     import yaml
     from .integrity import IntegrityError, verify
     data = yaml.safe_load((ROOT / "laws.yaml").read_text())
+    trusted = set(getattr(a, "expect_key", None) or []) or None
     try:
-        st = verify(data, require_signature=a.require_signature)
+        st = verify(data, require_signature=a.require_signature, trusted=trusted)
     except IntegrityError as e:
         print(f"FAIL: {e}")
         return 1
     print(f"OK: Vektra Laws {st['version']} match LAWS.lock\n    sha256 {st['sha256']}")
-    print("    Signed by the steward key." if st["signed"] else
-          "    Not signed yet. The text is pinned by hash, but no steward signature is present.")
+    if st["signed"]:
+        print(f"    Signed by the steward key {st['key']}"
+              + (" (pinned)." if st["pinned"] else ".\n    Compare that fingerprint with VERIFYING.md and vektraindustries.com."))
+    else:
+        print("    Not signed yet. The text is pinned by hash, but no steward signature is present.")
+    return 0
+
+
+def cmd_fingerprint(a) -> int:
+    from .integrity import PUBKEY, RECOVERY_NAME, key_fingerprint
+    paths = [Path(p) for p in a.files] or [PUBKEY, PUBKEY.with_name(RECOVERY_NAME)]
+    found = 0
+    for p in paths:
+        if p.exists():
+            print(f"{key_fingerprint(p.read_bytes())}  {p.name}")
+            found += 1
+    if not found:
+        print("No steward key in this copy yet (the Laws are not signed).")
     return 0
 
 
@@ -68,6 +86,9 @@ def cmd_doctor(a) -> int:
         checks.append((f"Laws {st['version']} match LAWS.lock", True, ""))
         checks.append(("Steward signature", st["signed"],
                        "Not signed yet. Fine for testing; production should use signed Laws."))
+        if st["signed"]:
+            checks.append(("Steward key pinned", st["pinned"],
+                           "Set VEKTRA_LAWS_TRUSTED_KEYS to the fingerprint in VERIFYING.md."))
     except Exception as e:
         checks.append(("Laws match LAWS.lock", False, f"{e} Reinstall or run: vektra-laws update"))
     if (ROOT / ".git").exists() and shutil.which("git"):
@@ -87,7 +108,7 @@ def cmd_doctor(a) -> int:
     bad = 0
     for label, ok, fix in checks:
         print(f"[{'ok' if ok else '!!'}] {label}" + ("" if ok or not fix else f"\n     {fix}"))
-        bad += 0 if ok or label == "Steward signature" else 1
+        bad += 0 if ok or label in ("Steward signature", "Steward key pinned") else 1
     print("\nAll good." if not bad else f"\n{bad} problem(s) found.")
     return 1 if bad else 0
 
@@ -132,7 +153,7 @@ def cmd_update(a) -> int:
     print(f"Updating to {ref} ...")
     _git("checkout", "--quiet", "--force", "--detach", ref)
     pip = [sys.executable, "-m", "pip", "install", "--quiet", "-r", str(ROOT / "requirements.txt")]
-    if subprocess.call(pip) or cmd_verify(argparse.Namespace(require_signature=False)):
+    if subprocess.call(pip) or cmd_verify(argparse.Namespace(require_signature=False, expect_key=None)):
         print(f"Update failed checks. Rolling back to {before[:12]}.")
         _git("checkout", "--quiet", "--force", "--detach", before)
         return 1
@@ -177,6 +198,10 @@ def main(argv: list[str] | None = None) -> int:
 
     v = sub.add_parser("verify", help="check the Laws against LAWS.lock")
     v.add_argument("--require-signature", action="store_true")
+    v.add_argument("--expect-key", action="append", help="a pinned key fingerprint (repeatable); implies a signature")
+
+    f = sub.add_parser("fingerprint", help="print the steward key fingerprints")
+    f.add_argument("files", nargs="*")
 
     d = sub.add_parser("doctor", help="check the install and the project")
     d.add_argument("--project")
@@ -213,8 +238,8 @@ def main(argv: list[str] | None = None) -> int:
         return run(a)
     if a.cmd == "version":
         print(f"vektra-laws core {__version__}")
-        return cmd_verify(argparse.Namespace(require_signature=False))
-    handlers = {"verify": cmd_verify, "doctor": cmd_doctor, "check": cmd_check, "guard": cmd_guard,
+        return cmd_verify(argparse.Namespace(require_signature=False, expect_key=None))
+    handlers = {"verify": cmd_verify, "fingerprint": cmd_fingerprint, "doctor": cmd_doctor, "check": cmd_check, "guard": cmd_guard,
                 "test": cmd_test, "update": cmd_update, "uninstall": cmd_uninstall}
     if a.cmd not in handlers:
         p.print_help()

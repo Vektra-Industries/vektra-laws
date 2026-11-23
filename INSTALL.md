@@ -24,7 +24,8 @@ less install.sh
 bash install.sh
 ```
 
-The scripts live in this repository under [install/](install/). The web addresses above point to
+The installer prints the steward key fingerprint it trusts. Compare it with the one on
+vektraindustries.com and in [VERIFYING.md](VERIFYING.md). The scripts live in this repository under [install/](install/). The web addresses above point to
 those same files, so what you read here is what runs.
 
 ## What the installer does
@@ -35,9 +36,11 @@ those same files, so what you read here is what runs.
    It uses the newest release tag, or `main` when no release exists yet.
 3. Makes a private Python environment in `~/.vektra-laws/venv` and installs the two dependencies
    from [requirements.txt](requirements.txt) into it.
-4. Checks that the locked parts of the Laws match [core/LAWS.lock](core/LAWS.lock), and that the
-   steward signature is valid when one is present. **If the check fails, it stops**, and the command
-   is not added to your PATH.
+4. Checks that the locked parts of the Laws match [core/LAWS.lock](core/LAWS.lock), and that they
+   are signed by a steward key whose fingerprint is pinned inside the installer (see
+   [VERIFYING.md](VERIFYING.md)). **If the check fails, it stops**, and the command is not added to
+   your PATH. The `vektra-laws` command keeps the same pin, so the engine re-checks it every time it
+   starts, offline too.
 5. Adds the `vektra-laws` command to `~/.local/bin` (Windows: `%LOCALAPPDATA%\vektra-laws\bin`).
 6. Starts `vektra-laws setup` when you are at a terminal.
 

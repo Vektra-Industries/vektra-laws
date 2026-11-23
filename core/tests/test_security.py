@@ -61,6 +61,41 @@ class Lock(unittest.TestCase):
             with self.assertRaises(IntegrityError):
                 verify(LAWS, lock, bad)
 
+    def test_pinned_fingerprints(self):
+        try:
+            from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+            from cryptography.hazmat.primitives import serialization as s
+        except ImportError:
+            self.skipTest("cryptography not installed")
+        from vektra_laws_core.integrity import key_fingerprint, sign_lock
+        main, recovery, attacker = (Ed25519PrivateKey.generate() for _ in range(3))
+        pem = lambda k: k.public_key().public_bytes(s.Encoding.PEM, s.PublicFormat.SubjectPublicKeyInfo)
+        priv = lambda k: k.private_bytes(s.Encoding.PEM, s.PrivateFormat.PKCS8, s.NoEncryption())
+        with tempfile.TemporaryDirectory() as d:
+            lock, pub = Path(d, "LAWS.lock"), Path(d, "steward-ed25519.pub")
+            pinned = {key_fingerprint(pem(main)), key_fingerprint(pem(recovery))}
+            # unsigned lock: pinning demands a signature
+            write_lock(LAWS, lock)
+            pub.write_bytes(pem(main))
+            with self.assertRaises(IntegrityError):
+                verify(LAWS, lock, pub, trusted=pinned)
+            # signed by the main key: passes when pinned
+            sign_lock(priv(main), lock)
+            st = verify(LAWS, lock, pub, trusted=pinned)
+            self.assertTrue(st["signed"] and st["pinned"])
+            # a download that swaps in an attacker's key and signature fails, even though it is
+            # self-consistent
+            sign_lock(priv(attacker), lock)
+            pub.write_bytes(pem(attacker))
+            self.assertTrue(verify(LAWS, lock, pub, trusted=set())["signed"])   # unpinned: consistent
+            with self.assertRaises(IntegrityError):
+                verify(LAWS, lock, pub, trusted=pinned)
+            # signed by the recovery key, with recovery-ed25519.pub beside the main key: passes
+            pub.write_bytes(pem(main))
+            Path(d, "recovery-ed25519.pub").write_bytes(pem(recovery))
+            sign_lock(priv(recovery), lock)
+            self.assertEqual(verify(LAWS, lock, pub, trusted=pinned)["key"], key_fingerprint(pem(recovery)))
+
     def test_unsigned_lock_fails_when_signature_required(self):
         with self.assertRaises(IntegrityError):
             verify(LAWS, pubkey_path=Path("/nonexistent.pub"), require_signature=True)

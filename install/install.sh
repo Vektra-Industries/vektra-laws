@@ -17,7 +17,18 @@
 #
 # Options:  --ref <tag|branch>   --dir <path>   --no-setup   --require-signature   --help
 # Env:      VEKTRA_LAWS_HOME, VEKTRA_LAWS_REF, VEKTRA_LAWS_BIN, VEKTRA_LAWS_REPO
+#
+# The whole script is one function that runs on the last line, so a download cut off halfway
+# runs nothing.
 set -euo pipefail
+
+# Steward key fingerprints: SHA-256 of each raw Ed25519 public key, comma-separated (the main key,
+# then the recovery key). The same values are published in VERIFYING.md, on vektraindustries.com
+# and on the steward's profiles. When this is set, the installer requires the Laws to be signed by
+# one of these keys, and every run of the engine pins them too. Empty until the first signed release.
+PINNED_KEYS=""
+
+main() {
 
 REPO="${VEKTRA_LAWS_REPO:-https://github.com/Vektra-Industries/vektra-laws.git}"
 API="https://api.github.com/repos/Vektra-Industries/vektra-laws/releases/latest"
@@ -26,6 +37,7 @@ BIN_DIR="${VEKTRA_LAWS_BIN:-$HOME/.local/bin}"
 REF="${VEKTRA_LAWS_REF:-}"
 RUN_SETUP=1
 REQUIRE_SIG=0
+TRUSTED="${VEKTRA_LAWS_TRUSTED_KEYS:-$PINNED_KEYS}"
 
 if [ -t 1 ]; then B=$'\033[1m'; G=$'\033[33m'; R=$'\033[31m'; N=$'\033[0m'; else B=""; G=""; R=""; N=""; fi
 say()  { printf '%s\n' "${G}==>${N} ${B}$*${N}"; }
@@ -37,7 +49,7 @@ while [ $# -gt 0 ]; do
     --dir) VL_HOME="${2:?--dir needs a value}"; shift 2 ;;
     --no-setup) RUN_SETUP=0; shift ;;
     --require-signature) REQUIRE_SIG=1; shift ;;
-    -h|--help) sed -n '2,21p' "$0" 2>/dev/null || true; exit 0 ;;
+    -h|--help) sed -n '2,31p' "$0" 2>/dev/null || true; exit 0 ;;
     *) fail "unknown option: $1 (try --help)" ;;
   esac
 done
@@ -86,10 +98,15 @@ fi
 
 # 4. Verify the Laws -------------------------------------------------------------------------------
 say "Checking the Laws against LAWS.lock"
-VFLAG=""; [ "$REQUIRE_SIG" = 1 ] && VFLAG="--require-signature"
-# shellcheck disable=SC2086
-PYTHONPATH="$SRC/core" "$VENV/bin/python" -m vektra_laws_core verify $VFLAG \
+VARGS=()
+[ "$REQUIRE_SIG" = 1 ] && VARGS+=(--require-signature)
+IFS=',' read -r -a FPRS <<< "$TRUSTED"
+for f in "${FPRS[@]}"; do [ -n "${f// /}" ] && VARGS+=(--expect-key "${f// /}"); done
+PYTHONPATH="$SRC/core" VEKTRA_LAWS_TRUSTED_KEYS="$TRUSTED" "$VENV/bin/python" -m vektra_laws_core verify ${VARGS[@]+"${VARGS[@]}"} \
   || fail "The Laws did not verify. Nothing was installed on your PATH. Please report this to security@vektraindustries.com."
+if [ -z "$TRUSTED" ]; then
+  printf '%s\n' "    Pre-release: no steward key is pinned in this installer yet."
+fi
 
 # 5. The command -----------------------------------------------------------------------------------
 mkdir -p "$BIN_DIR"
@@ -99,6 +116,7 @@ cat > "$LAUNCHER" <<EOF
 # vektra-laws launcher, written by the Vektra Laws installer. Remove with: vektra-laws uninstall
 export VEKTRA_LAWS_HOME="$VL_HOME"
 export VEKTRA_LAWS_BIN="$BIN_DIR"
+export VEKTRA_LAWS_TRUSTED_KEYS="$TRUSTED"
 export PYTHONPATH="$SRC/core\${PYTHONPATH:+:\$PYTHONPATH}"
 exec "$VENV/bin/python" -m vektra_laws_core "\$@"
 EOF
@@ -133,3 +151,6 @@ printf '  vektra-laws doctor    check everything\n'
 printf '  vektra-laws verify    check the Laws are the real, unchanged text\n'
 printf '  vektra-laws update    move to the newest release\n'
 [ "$ON_PATH" = 1 ] || printf '\nOpen a new terminal (or run: source ~/.bashrc) so the command is found.\n'
+}
+
+main "$@"
