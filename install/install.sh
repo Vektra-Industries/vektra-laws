@@ -100,8 +100,9 @@ fi
 say "Checking the Laws against LAWS.lock"
 VARGS=()
 [ "$REQUIRE_SIG" = 1 ] && VARGS+=(--require-signature)
-IFS=',' read -r -a FPRS <<< "$TRUSTED"
-for f in "${FPRS[@]}"; do [ -n "${f// /}" ] && VARGS+=(--expect-key "${f// /}"); done
+OLD_IFS="$IFS"; IFS=','
+for f in $TRUSTED; do f="${f// /}"; [ -n "$f" ] && VARGS+=(--expect-key "$f"); done
+IFS="$OLD_IFS"
 PYTHONPATH="$SRC/core" VEKTRA_LAWS_TRUSTED_KEYS="$TRUSTED" "$VENV/bin/python" -m vektra_laws_core verify ${VARGS[@]+"${VARGS[@]}"} \
   || fail "The Laws did not verify. Nothing was installed on your PATH. Please report this to security@vektraindustries.com."
 if [ -z "$TRUSTED" ]; then

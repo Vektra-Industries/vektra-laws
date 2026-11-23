@@ -16,13 +16,14 @@ $ErrorActionPreference = "Stop"
 $PinnedKeys = ""
 $Trusted = if ($env:VEKTRA_LAWS_TRUSTED_KEYS) { $env:VEKTRA_LAWS_TRUSTED_KEYS } else { $PinnedKeys }
 
+function Install-VektraLaws {
 $Repo   = if ($env:VEKTRA_LAWS_REPO) { $env:VEKTRA_LAWS_REPO } else { "https://github.com/Vektra-Industries/vektra-laws.git" }
 $Api    = "https://api.github.com/repos/Vektra-Industries/vektra-laws/releases/latest"
 $VLHome = if ($env:VEKTRA_LAWS_HOME) { $env:VEKTRA_LAWS_HOME } else { Join-Path $env:LOCALAPPDATA "vektra-laws" }
 $Ref    = $env:VEKTRA_LAWS_REF
 
 function Say($m)  { Write-Host "==> $m" -ForegroundColor Yellow }
-function Fail($m) { Write-Host "error: $m" -ForegroundColor Red; exit 1 }
+function Fail($m) { Write-Host "error: $m" -ForegroundColor Red; throw $m }
 
 Write-Host "`nVektra Laws" -ForegroundColor White
 Write-Host "A safety core for AI, agents and robots. Humans stay in command.`n"
@@ -107,3 +108,7 @@ if (-not $env:VEKTRA_LAWS_NO_SETUP -and [Environment]::UserInteractive) {
     Write-Host "`nRun 'vektra-laws setup' in your project folder to set it up."
 }
 Write-Host "`nDone. Open a new terminal, then try: vektra-laws doctor"
+}
+
+# Runs only once the whole script has arrived, so a cut-off download runs nothing.
+Install-VektraLaws
