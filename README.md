@@ -65,6 +65,24 @@ of CC BY 4.0 and in the MIT license. A reference to a standard, an organization 
 not imply endorsement. Reviews of the text so far are self-reviews based on public sources, not
 legal advice and not professional safety assessments (see [docs/reviews](docs/reviews/)).
 
+## Install
+
+One command installs Vektra Laws Core and the `vektra-laws` command, then starts a short setup
+wizard (no sudo; everything stays in `~/.vektra-laws`):
+
+```bash
+# Linux, macOS, WSL2
+curl -fsSL https://vektraindustries.com/laws/install.sh | bash
+```
+
+```powershell
+# Windows (PowerShell)
+iex (irm https://vektraindustries.com/laws/install.ps1)
+```
+
+The installer refuses to finish if the Laws do not match `core/LAWS.lock`. Prefer to read a script
+before you run it? See [INSTALL.md](INSTALL.md) for that, for every command and for uninstalling.
+
 ## How to adopt
 
 1. Read [LAWS.md](LAWS.md) and the profile for your kind of system.

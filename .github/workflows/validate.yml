@@ -25,3 +25,32 @@ jobs:
         run: python -m unittest discover -s core/tests -p "test_*.py" -v
       - name: Core conformance run
         run: python core/conformance/run.py && python tools/validate.py --results core/conformance/results/agents.yaml core/conformance/results/robotics.yaml
+
+  installer:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Shellcheck the installer
+        if: runner.os == 'Linux'
+        run: shellcheck install/install.sh
+      - name: Install from this commit, run the wizard, doctor and uninstall
+        env:
+          VEKTRA_LAWS_REPO: ${{ github.workspace }}
+        run: |
+          git branch -f ci-install HEAD
+          bash install/install.sh --ref ci-install --no-setup
+          export PATH="$HOME/.local/bin:$PATH"
+          mkdir -p "$RUNNER_TEMP/proj" && cd "$RUNNER_TEMP/proj"
+          vektra-laws setup --yes --kind all --assigned ci
+          vektra-laws doctor
+          vektra-laws uninstall --yes
+          test ! -e "$HOME/.local/bin/vektra-laws"

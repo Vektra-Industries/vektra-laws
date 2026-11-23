@@ -1,6 +1,26 @@
 {
-  "format": "vektra-laws-lock/v1",
+  "format": "vektra-laws-lock/v2",
   "version": "0.6.0",
+  "sequence": 1,
   "sha256": "fcd52c6c3bd7e7276a84c6083ecc21fa8b21484dbb179ef00f6ef6a6bf78b56a",
-  "signature": null
+  "files": {
+    "laws.yaml": "515e566322db47f86d0dc3a46b906d31c2916d70cd7c0c9990f5df1b4fc503de",
+    "requirements.txt": "3f1920f4c7ccc276e84846791858abef064717cf082fcd1855a8b5ef24dc6df0",
+    "core/vektra_laws_core/__init__.py": "e931dec99a35f007b3f3ac7b36a85dc5050089f7d5c548eabb6c3876c6303dce",
+    "core/vektra_laws_core/__main__.py": "7afeadd4522552160b4980dc798d62c6351e23026023c4dc3f40ef0a286a8f3d",
+    "core/vektra_laws_core/cli.py": "cd16bec453d060c7c2ad365c1c83ce8d55590bc9812d4f64df9c88439c3463b1",
+    "core/vektra_laws_core/engine.py": "7ed7147e9653e6f1538bb5a5d88e97032a15f62bc555dfc620f60bc3ffa87952",
+    "core/vektra_laws_core/integrity.py": "776c1a09f982fbe7005fcfd0a47a759e204b8c6f72810b751bbafabc1c5762b6",
+    "core/vektra_laws_core/plugs/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core/vektra_laws_core/plugs/agent.py": "d2d81288451341499d91406668f5ef2133eba26fc485f660643ee7fddaeda7b2",
+    "core/vektra_laws_core/plugs/model.py": "6973b8f10b495beaaa5aa47e01b359cbb9150ee2fa049681734810190cb22212",
+    "core/vektra_laws_core/plugs/robot.py": "2dc851d4d13f5ec30fa91a3d1c5fd4efc3f71705ee64fb22c174de840bedeee6",
+    "core/vektra_laws_core/plugs/ros2_node.py": "d81ddf9f8312755ed9fe1beb30c069f97ddda8108750819093691637b29fb36a",
+    "core/vektra_laws_core/policy.py": "6001eff9ba964abe19cb644bf7ba4f07c3d6d2f2e5f2f5b8563064245652eaf3",
+    "core/vektra_laws_core/quarantine.py": "a4303315d2b9e04c96b3ee727d270cbc209ef84c4a5d64dab92008a89610e391",
+    "core/vektra_laws_core/server.py": "6b647907a51f7ee37bc63ebd13f781050be473788ced75e40f284b55a0497ca2",
+    "core/vektra_laws_core/wizard.py": "ab3f3b093bcb4d4eb77df56bb64ee50ea003d8480178ac730a0b6fb926800700"
+  },
+  "digest": "0a620f79421cdce0dab3458f1ebdd76c15c81f1d8def8476f93e9ff7a3056385",
+  "signature": "LEPkSuJufp9W9ckbjNj7KxB8fO0unIx4wlLfQ1Qrm9L/6OVaWWp3yoJX5Xe0LBXI2kWYo67pCFDeiOYxFJgnAQ=="
 }
