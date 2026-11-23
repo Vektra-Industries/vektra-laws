@@ -24,6 +24,12 @@ after a review against I, Robot, other fiction and public rulebooks for AI model
   adding the `vektra-laws` command, and start `vektra-laws setup`. The command also has `verify`,
   `doctor`, `check`, `guard`, `test`, `update` (rolls back if the new version does not verify) and
   `uninstall`. See INSTALL.md.
+- The signature now covers the code: LAWS.lock (format v2) lists the hash of `laws.yaml`,
+  `requirements.txt` and every Core file, plus a sequence number, and the steward signs one digest
+  of all of it. Installs refuse an older release than they already have.
+- The installers check the download before any of it runs, with a dependency-free checker built
+  into them (`install/preverify.py`, kept in sync by `tools/embed_preverify.py`), and install
+  releases only (no silent fallback to `main`). Packages install with `pip --require-hashes`.
 - Pinned steward keys: the installers carry the SHA-256 fingerprints of the main and recovery keys
   (`PINNED_KEYS`) and pass them to the engine (`VEKTRA_LAWS_TRUSTED_KEYS`). With keys pinned, the
   Laws must be signed by a pinned key, so a download that swaps the Laws, lock and key together

@@ -15,6 +15,10 @@ download that swaps the Laws, the lock and the key together still fails.
 
 ## Make the keys and sign (steward)
 
+Before you sign, the maintainer runs `python tools/lock_laws.py --release`, which hashes every file
+again, raises the sequence number by one and prints the `digest` to sign. Sign only a digest from a
+commit you have looked at.
+
 Use your own computer with Wi-Fi off. You need OpenSSL 3 (`openssl version` should say 3.x; on macOS
 install it with `brew install openssl` and use that one, since the built-in LibreSSL may not sign
 Ed25519).
@@ -26,8 +30,9 @@ openssl pkey -in steward-ed25519.pem -pubout -out steward-ed25519.pub
 openssl genpkey -algorithm ed25519 -out recovery-ed25519.pem
 openssl pkey -in recovery-ed25519.pem -pubout -out recovery-ed25519.pub
 
-# 2. Sign the lock fingerprint (the sha256 value in core/LAWS.lock) with the MAIN key
-H="PASTE_SHA256_HERE"
+# 2. Sign the lock digest (the "digest" value in core/LAWS.lock, which the maintainer sends you)
+#    with the MAIN key. The digest covers the Laws, every Core file, the version and the sequence.
+H="PASTE_DIGEST_HERE"
 printf "$(printf '%s' "$H" | sed 's/../\\x&/g')" > lock.bin     # 32 bytes
 openssl pkeyutl -sign -rawin -inkey steward-ed25519.pem -in lock.bin | base64 | tr -d '\n'; echo
 

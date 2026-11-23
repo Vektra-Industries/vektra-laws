@@ -32,19 +32,22 @@ those same files, so what you read here is what runs.
 
 1. Checks for Python 3.10 or newer (with `venv`) and git. It tells you the command to install
    either one if it is missing. It never uses sudo.
-2. Downloads Vektra Laws into `~/.vektra-laws/src` (Windows: `%LOCALAPPDATA%\vektra-laws\src`).
-   It uses the newest release tag, or `main` when no release exists yet.
-3. Makes a private Python environment in `~/.vektra-laws/venv` and installs the two dependencies
-   from [requirements.txt](requirements.txt) into it.
-4. Checks that the locked parts of the Laws match [core/LAWS.lock](core/LAWS.lock), and that they
-   are signed by a steward key whose fingerprint is pinned inside the installer (see
-   [VERIFYING.md](VERIFYING.md)). **If the check fails, it stops**, and the command is not added to
-   your PATH. The `vektra-laws` command keeps the same pin, so the engine re-checks it every time it
+2. Downloads the newest Vektra Laws **release** into `~/.vektra-laws/src` (Windows:
+   `%LOCALAPPDATA%\vektra-laws\src`). It never picks unreleased code for you; if no release can be
+   found, it stops.
+3. **Before running any of it**, checks every file against the signed
+   [core/LAWS.lock](core/LAWS.lock) with a checker built into the installer: the Laws, the Core
+   code, the package list, a signature by a steward key pinned inside the installer, and a release
+   no older than one you already have (see [VERIFYING.md](VERIFYING.md)). **If the check fails, it
+   stops**, and nothing is run or added to your PATH.
+4. Makes a private Python environment in `~/.vektra-laws/venv` and installs the dependencies from
+   [requirements.txt](requirements.txt), each one checked against its pinned hash.
+   The `vektra-laws` command keeps the same pin, so the engine re-checks everything every time it
    starts, offline too.
 5. Adds the `vektra-laws` command to `~/.local/bin` (Windows: `%LOCALAPPDATA%\vektra-laws\bin`).
 6. Starts `vektra-laws setup` when you are at a terminal.
 
-Options for `install.sh`: `--ref <tag|branch>`, `--dir <path>`, `--no-setup`,
+Options for `install.sh`: `--ref <tag>` (`--ref main` for unreleased development code), `--dir <path>`, `--no-setup`,
 `--require-signature` (stop unless the Laws are signed by the steward key). The same settings can
 be given as `VEKTRA_LAWS_REF`, `VEKTRA_LAWS_HOME` and `VEKTRA_LAWS_BIN`.
 

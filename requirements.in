@@ -1,0 +1,4 @@
+# What Vektra Laws needs. requirements.txt is made from this file with hashes:
+#   python -m piptools compile --generate-hashes --allow-unsafe --strip-extras --no-header -o requirements.txt requirements.in
+PyYAML==6.0.3
+cryptography>=50.0.2

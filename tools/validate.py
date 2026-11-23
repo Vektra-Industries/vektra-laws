@@ -280,11 +280,19 @@ def check_citation(data: dict) -> None:
 
 def check_lock(data: dict) -> None:
     sys.path.insert(0, str(ROOT / "core"))
-    from vektra_laws_core.integrity import IntegrityError, verify
+    from vektra_laws_core.integrity import IntegrityError, files_changed, verify
     try:
         verify(data)
     except IntegrityError as e:
         err(f"core/LAWS.lock: {e} (after an approved change, run tools/lock_laws.py)")
+        return
+    lock = json.loads((ROOT / "core" / "LAWS.lock").read_text())
+    for rel in files_changed(lock, ROOT):
+        err(f"core/LAWS.lock: {rel} changed since the lock (run tools/lock_laws.py)")
+    import embed_preverify
+    for p, text in embed_preverify.outputs().items():
+        if p.read_text() != text:
+            err(f"{p.relative_to(ROOT)}: built-in checker is out of date (run tools/embed_preverify.py)")
 
 
 def check_docs(data: dict) -> None:

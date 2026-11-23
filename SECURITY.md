@@ -17,6 +17,8 @@ the Understanding Matrix or the conformance cases.*
   a command, a loosened policy, a stop that does not hold, or a changed Laws file that still runs.
   Always report these privately (see below).
 - **Signing key concern.** Any sign that the steward key or a signed lock is not genuine.
+  Compare fingerprints with the three published places listed in [VERIFYING.md](VERIFYING.md#fingerprints):
+  the installers, vektraindustries.com/laws/keys and the steward's pinned post.
 
 ## How to report
 

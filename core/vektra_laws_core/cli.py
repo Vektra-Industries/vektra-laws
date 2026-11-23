@@ -47,7 +47,8 @@ def cmd_verify(a) -> int:
     except IntegrityError as e:
         print(f"FAIL: {e}")
         return 1
-    print(f"OK: Vektra Laws {st['version']} match LAWS.lock\n    sha256 {st['sha256']}")
+    print(f"OK: Vektra Laws {st['version']} match LAWS.lock (sequence {st['sequence']})\n"
+          f"    Laws sha256 {st['sha256']}\n    lock digest {st['digest']}")
     if st["signed"]:
         print(f"    Signed by the steward key {st['key']}"
               + (" (pinned)." if st["pinned"] else ".\n    Compare that fingerprint with VERIFYING.md and vektraindustries.com."))
@@ -144,20 +145,35 @@ def cmd_update(a) -> int:
     if not (ROOT / ".git").exists():
         print("This install is not a git checkout. Rerun the installer to update.")
         return 1
+    # The checker is loaded now, from the release already installed, so the new download is checked
+    # by code that was verified before, not by code that came with it.
+    import yaml
+    from . import integrity
     before = _git("rev-parse", "HEAD")
     if _git("status", "--porcelain", check=False) and not a.force:
         print("The install has local edits. Rerun with --force to discard them.")
         return 1
     _git("fetch", "--tags", "--quiet", "origin")
-    ref = a.ref or _latest_tag() or "origin/main"
+    ref = a.ref or _latest_tag()
+    if not ref:
+        print("No release found. To move to unreleased development code: vektra-laws update --ref origin/main")
+        return 1
     print(f"Updating to {ref} ...")
     _git("checkout", "--quiet", "--force", "--detach", ref)
-    pip = [sys.executable, "-m", "pip", "install", "--quiet", "-r", str(ROOT / "requirements.txt")]
-    if subprocess.call(pip) or cmd_verify(argparse.Namespace(require_signature=False, expect_key=None)):
-        print(f"Update failed checks. Rolling back to {before[:12]}.")
+    try:
+        st = integrity.verify(yaml.safe_load((ROOT / "laws.yaml").read_text()))
+        pip = [sys.executable, "-m", "pip", "install", "--quiet", "--require-hashes",
+               "-r", str(ROOT / "requirements.txt")]
+        if subprocess.call(pip):
+            raise integrity.IntegrityError("a package did not match its hash in requirements.txt.")
+    except (integrity.IntegrityError, KeyError, ValueError) as e:
+        print(f"Update failed checks: {e}\nRolling back to {before[:12]}.")
         _git("checkout", "--quiet", "--force", "--detach", before)
         return 1
-    print(f"Updated: {before[:12]} -> {_git('rev-parse', 'HEAD')[:12]}")
+    state = _home() / integrity.STATE_FILE
+    if state.parent.exists():
+        state.write_text(json.dumps({"min_sequence": max(st["sequence"], integrity.min_sequence())}) + "\n")
+    print(f"Updated: {before[:12]} -> {_git('rev-parse', 'HEAD')[:12]} (Laws {st['version']}, sequence {st['sequence']})")
     return 0
 
 
