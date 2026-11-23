@@ -18,6 +18,12 @@ after a review against I, Robot, other fiction and public rulebooks for AI model
   clauses that no Law overrides.
 
 ### Added
+- Installer and setup wizard (MIT): `install/install.sh` (Linux, macOS, WSL2) and
+  `install/install.ps1` (Windows), served from vektraindustries.com/laws. They install into
+  `~/.vektra-laws` with a private Python environment, verify the Laws against LAWS.lock before
+  adding the `vektra-laws` command, and start `vektra-laws setup`. The command also has `verify`,
+  `doctor`, `check`, `guard`, `test`, `update` (rolls back if the new version does not verify) and
+  `uninstall`. See INSTALL.md.
 - A "Bound by" line under each Law, naming the Laws that check it.
 - 1.10 Emergency mode when its person cannot decide (heart attack, fire, fall, pregnancy).
 - 2.18 Commands come from the people it is assigned to; 2.19 Hear every person with reason;
