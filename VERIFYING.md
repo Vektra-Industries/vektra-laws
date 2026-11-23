@@ -19,8 +19,8 @@ check against them:
 
 | Key | Fingerprint |
 | --- | --- |
-| Main | *published with the first signed release* |
-| Recovery | *published with the first signed release* |
+| Main | `c41973a80abab5a0f8e78513f4c3ba04d684c6fd8183a10f9c2fb816f1183150` |
+| Recovery | `ad45f28f13572602b0c1ffc7b4087d49d3f62243a42536f732edcdd62aa7d0d9` |
 
 The same values are published in three places outside the download: the installers' `PINNED_KEYS`,
 vektraindustries.com/laws/keys, and a pinned post on the steward's profiles. If any two places

@@ -30,7 +30,7 @@ set -euo pipefail
 # then the recovery key). The same values are published in VERIFYING.md, on vektraindustries.com
 # and on the steward's profiles. When this is set, the installer requires the Laws to be signed by
 # one of these keys, and every run of the engine pins them too. Empty until the first signed release.
-PINNED_KEYS=""
+PINNED_KEYS="c41973a80abab5a0f8e78513f4c3ba04d684c6fd8183a10f9c2fb816f1183150,ad45f28f13572602b0c1ffc7b4087d49d3f62243a42536f732edcdd62aa7d0d9"
 
 main() {
 

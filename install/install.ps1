@@ -15,7 +15,7 @@ $ErrorActionPreference = "Stop"
 
 # Steward key fingerprints (SHA-256 of each raw Ed25519 public key), comma-separated: main key, then
 # recovery key. Same values as VERIFYING.md and vektraindustries.com. Empty until the first signed release.
-$PinnedKeys = ""
+$PinnedKeys = "c41973a80abab5a0f8e78513f4c3ba04d684c6fd8183a10f9c2fb816f1183150,ad45f28f13572602b0c1ffc7b4087d49d3f62243a42536f732edcdd62aa7d0d9"
 $Trusted = if ($env:VEKTRA_LAWS_TRUSTED_KEYS) { $env:VEKTRA_LAWS_TRUSTED_KEYS } else { $PinnedKeys }
 
 function Install-VektraLaws {
